@@ -18,9 +18,12 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 .intro{font-size:.92rem;line-height:1.6;opacity:.87;margin-bottom:10px}
 .cnt{margin-top:15px;font-size:.8rem;opacity:.65}
 
-/* Botão Principal */
-.btn-start {margin: 15px 0;padding:14px 40px;background:#fff;color:#7a3e00;border:none;border-radius:50px;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.3);transition:transform .2s;width:100%;max-width:280px}
+/* Contentor de Botões da Capa */
+.btn-group {display: flex;flex-direction: column;gap: 10px;width: 100%;max-width: 280px;margin: 15px 0}
+.btn-start {padding:14px 20px;background:#fff;color:#7a3e00;border:none;border-radius:50px;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.3);transition:transform .2s;width:100%}
 .btn-start:hover{transform:translateY(-2px)}
+.btn-gallery {background: transparent;color: #fff;border: 2px solid #fff;box-shadow: none}
+.btn-gallery:hover {background: rgba(255,255,255,0.15);transform:translateY(-2px)}
 
 /* CAIXA DE SUBSCRIÇÃO CENTRALIZADA */
 .sub-box {background: rgba(255,255,255,0.12);border: 1px solid rgba(255,255,255,0.2);border-radius: 16px;padding: 20px;width: 100%;max-width: 340px;margin: 15px auto 0 auto;backdrop-filter: blur(5px);text-align:center}
@@ -28,33 +31,48 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 .sub-box p {font-size: 0.82rem;opacity: 0.8;margin-bottom: 12px;font-family: sans-serif;line-height: 1.4}
 .sub-form {display: flex;flex-direction: column;gap: 8px}
 .sub-form input {padding: 12px;border: 1px solid rgba(255,255,255,0.3);border-radius: 8px;font-size: 16px;background: rgba(255,255,255,0.95);color: #2c1a0e;outline: none;font-family: sans-serif;text-align: center}
-.sub-form button {padding: 12px;background: #f5b942;color: #3d1000;border: none;border-radius: 8px;font-size: 0.95rem;font-weight: 700;cursor: pointer;transition: background 0.2s;font-family: sans-serif}
+.sub-form button {padding: 12px;background: #f5b942;color: #3d1a00;border: none;border-radius: 8px;font-size: 0.95rem;font-weight: 700;cursor: pointer;transition: background 0.2s;font-family: sans-serif}
 .sub-form button:hover {background: #fff}
 .sub-form button:disabled {background: #aaa;cursor: not-allowed}
 
-/* Bloco de Confirmação de Sucesso */
 #sucesso-container {display: none;color: #fff;animation: fadeIn 0.4s ease-in-out}
 .success-icon {font-size: 32px;margin-bottom: 8px}
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* INDEX */
-#index-page{min-height:100vh;background:#fdf6ee;padding:40px 20px}
-#index-page h2{font-size:2rem;color:#7a3e00;text-align:center;margin-bottom:6px}
+/* INDEX & GALERIA */
+#index-page, #gallery-page {min-height:100vh;background:#fdf6ee;padding:40px 20px}
+#index-page h2, #gallery-page h2 {font-size:2rem;color:#7a3e00;text-align:center;margin-bottom:6px}
 .isub{text-align:center;color:#a0652a;font-size:.9rem;margin-bottom:28px}
-#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;max-width:1050px;margin:0 auto 36px}
-.card{background:#fff;border-radius:12px;padding:16px 18px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.08);border-top:4px solid #c8790a;transition:transform .15s,box-shadow .15s}
+
+#grid, #gallery-grid {display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;max-width:1050px;margin:0 auto 36px}
+
+/* Cards de Texto */
+.card {background:#fff;border-radius:12px;padding:16px 18px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.08);border-top:4px solid #c8790a;transition:transform .15s,box-shadow .15s}
 .card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.14)}
 .card .n{font-size:.75rem;color:#c8790a;font-weight:700;letter-spacing:1px;margin-bottom:4px}
 .card h3{font-size:.98rem;color:#2c1a0e;margin-bottom:8px}
 .tag{display:inline-block;font-size:.7rem;padding:2px 10px;border-radius:20px;font-weight:700}
 .fe{background:#fff3cd;color:#856404}.esperanca{background:#d1ecf1;color:#0c5460}
 .coragem{background:#f8d7da;color:#721c24}.paciencia{background:#d4edda;color:#155724}
-.reflexao{background:#e2d9f3;color:#4a2c7a}.proposito{background:#fde8d8;color:#7a3e00}
-.amor{background:#fce4ec;color:#880e4f}.humildade{background:#e8f5e9;color:#1b5e20}
+
+/* Cards de Mídia (Imagens/GIFs) */
+.media-card {background: #fff;border-radius: 14px;overflow: hidden;box-shadow: 0 4px 12px rgba(0,0,0,0.08);cursor: pointer;transition: transform 0.2s, box-shadow 0.2s;display: flex;flex-direction: column}
+.media-card:hover {transform: translateY(-4px);box-shadow: 0 8px 24px rgba(0,0,0,0.15)}
+.media-wrapper {width: 100%;height: 200px;overflow: hidden;background: #eadaa2;position: relative}
+.media-wrapper img {width: 100%;height: 100%;object-fit: cover;transition: transform 0.3s}
+.media-card:hover .media-wrapper img {transform: scale(1.04)}
+.media-info {padding: 12px 14px;text-align: left}
+.media-info h4 {font-size: 0.92rem;color: #2c1a0e;margin-bottom: 4px;line-height: 1.3}
+.media-tag {display: inline-block;font-size: 0.65rem;font-weight: 700;text-transform: uppercase;letter-spacing: 0.5px;color: #c8790a}
 
 .back{display:block;margin:0 auto;padding:11px 32px;background:#c8790a;color:#fff;border:none;border-radius:50px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .2s}
 .back:hover{background:#a86200}
+
+/* VISUALIZADOR DE IMAGEM INTEIRA (Lightbox) */
+#lightbox {display: none;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(26,10,0,0.95);z-index: 9999;align-items: center;justify-content: center;padding: 20px;backdrop-filter: blur(8px)}
+#lightbox-img {max-width: 100%;max-height: 85vh;border-radius: 8px;box-shadow: 0 10px 40px rgba(0,0,0,0.5);object-fit: contain}
+.lightbox-close {position: absolute;top: 20px;right: 20px;color: #fff;font-size: 30px;font-weight: bold;cursor: pointer;background: rgba(0,0,0,0.3);width: 45px;height: 45px;display: flex;align-items: center;justify-content: center;border-radius: 50%}
 
 /* READER */
 #reader{min-height:100vh;background:#fdf6ee}
@@ -69,22 +87,19 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 .vbox{background:linear-gradient(135deg,#fff8ee,#fdebc8);border-left:4px solid #c8790a;border-radius:0 12px 12px 0;padding:16px 22px;margin-bottom:24px;font-style:italic;font-size:1.03rem;color:#5c3200;line-height:1.7}
 .mtxt{line-height:1.85;font-size:.97rem;color:#2c1a0e}
 .mtxt p{margin-bottom:14px}
-.pbox{background:linear-gradient(135deg,#7a3e00,#c8790a);color:#fff;border-radius:14px;padding:22px 26px;margin:28px 0;text-align:center;font-style:italic;font-size:1.08rem;line-height:1.6;box-shadow:0 4px 20px rgba(122,62,0,.3)}
-.pbox .pl{font-style:normal;font-size:.7rem;font-weight:700;letter-spacing:2px;opacity:.8;margin-bottom:6px;font-family:sans-serif}
+.pbox{background:linear-gradient(135deg,#7a3e00,#c8790a);color:#fff;border-radius:14px;padding:22px 26px;margin:28px 0;text-align:center;font-style:italic;font-size:1.08rem;line-height:1.6}
 .aline{text-align:right;font-style:italic;color:#a0652a;font-size:.88rem;margin-top:18px}
 
-/* CAIXA DE MEDITAÇÃO */
-.mbox{background:#fff9f2;border:1px solid #f0dbc0;border-left:5px solid #c8790a;border-radius:4px 14px 14px 4px;padding:18px 22px;margin-top:32px;display:flex;gap:14px;align-items:flex-start;box-shadow:0 4px 15px rgba(122,62,0,0.06)}
-.mbox .mi{font-size:1.8rem;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.1))}
+.mbox{background:#fff9f2;border:1px solid #f0dbc0;border-left:5px solid #c8790a;border-radius:4px 14px 14px 4px;padding:18px 22px;margin-top:32px;display:flex;gap:14px;align-items:flex-start}
+.mbox .mi{font-size:1.8rem}
 .mbox .ml{font-size:.75rem;font-weight:800;color:#c8790a;letter-spacing:1.5px;margin-bottom:5px;font-family:sans-serif;text-transform:uppercase}
-.mbox p{font-size:.93rem;color:#422200;line-height:1.6;font-weight:500}
+.mbox p{font-size:.93rem;color:#422200;line-height:1.6}
 
 .navb{display:flex;gap:10px;margin-top:32px}
 .nb{flex:1;padding:11px;border:2px solid #c8790a;background:#fff;color:#7a3e00;border-radius:10px;cursor:pointer;font-size:.88rem;font-weight:700;transition:all .2s}
 .nb:hover{background:#c8790a;color:#fff}
 .nb:disabled{opacity:.25;cursor:default}
 .nb.p{background:#c8790a;color:#fff}
-.nb.p:hover{background:#a86200}
 
 /* Loading */
 #loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#fdf6ee;color:#a0652a;font-size:1.1rem;gap:14px}
@@ -102,7 +117,7 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 
 <div id="loading">
   <div class="spinner"></div>
-  <span>Carregando mensagens…</span>
+  <span>Carregando ambiente espiritual…</span>
 </div>
 
 <div id="cover" style="display:none">
@@ -113,7 +128,10 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
     <p class="sub">Reflexões que alimentam a alma</p>
     <p class="intro">Mensagens de encorajamento, fé e esperança para cada etapa da jornada espiritual.</p>
     
-    <button class="btn-start" onclick="showIndex()">Começar a Ler ›</button>
+    <div class="btn-group">
+      <button class="btn-start" onclick="showIndex()">Começar a Ler ›</button>
+      <button class="btn-start btn-gallery" onclick="showGallery()">Galeria de Inspirações ✨</button>
+    </div>
 
     <div class="sub-box">
       <div id="form-container">
@@ -139,51 +157,68 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 </div>
 
 <div id="index-page" style="display:none">
-  <h2>📖 Índice</h2>
-  <p class="isub">Escolha uma mensagem</p>
+  <h2>📖 Índice de Reflexões</h2>
+  <p class="isub">Escolha uma mensagem para edificar o seu dia</p>
   <div id="grid"></div>
+  <button class="back" onclick="showCover()">← Capa</button>
+</div>
+
+<div id="gallery-page" style="display:none">
+  <h2>🎨 Galeria de Inspirações</h2>
+  <p class="isub">Imagens e animações geradas por IA a partir das nossas mensagens</p>
+  <div id="gallery-grid"></div>
   <button class="back" onclick="showCover()">← Capa</button>
 </div>
 
 <div id="reader" style="display:none"></div>
 
+<div id="lightbox" onclick="hideLightbox()">
+  <span class="lightbox-close">&times;</span>
+  <img id="lightbox-img" src="" alt="Visualização">
+</div>
+
 <script>
 let msgs = [];
+let galeriaItens = [];
 let cur = 0;
 
 // IMPORTANTE: Insira aqui o seu e-mail real para receber os dados dos subscritores
-const EMAIL_DESTINO = "fiopsptbr@gmail.com";
+const EMAIL_DESTINO = "SEU_EMAIL_AQUI@EMAIL.COM";
 
-fetch('./mensagens.json')
-  .then(r => { if(!r.ok) throw new Error('no json'); return r.json(); })
-  .then(data => { 
-    // CORREÇÃO LOGICA DE DATA: Constrói manualmente o YYYY-MM-DD perfeito com preenchimento de zeros (Padrão ISO seguro para Mobile)
-    const d = new Date();
-    const ano = d.getFullYear();
-    const mes = String(d.getMonth() + 1).padStart(2, '0');
-    const dia = String(d.getDate()).padStart(2, '0');
-    const hoje = `${ano}-${mes}-${dia}`; 
+// Captura a data de hoje no formato seguro YYYY-MM-DD
+const d = new Date();
+const hoje = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
-    // Filtra comparando se a data da mensagem já chegou ou passou, tolerando as chaves "date" ou "data"
-    msgs = data.filter(m => {
-      const dataMsg = m.date || m.data;
-      if (!dataMsg) return true; // Se a mensagem não tiver data configurada, deixa visível
-      return dataMsg <= hoje;
-    }); 
-    
-    init(); 
-  })
-  .catch(() => { 
-    msgs = getMensagensEmbutidas(); 
-    init(); 
+// Carregar Dados em Paralelo
+Promise.all([
+  fetch('./mensagens.json').then(r => r.json()).catch(() => getMensagensEmbutidas()),
+  fetch('./galeria.json').then(r => r.json()).catch(() => [])
+])
+.then(([dadosMensagens, dadosGaleria]) => {
+  // Filtrar Mensagens por data
+  msgs = dadosMensagens.filter(m => {
+    const dataMsg = m.date || m.data;
+    return !dataMsg || dataMsg <= hoje;
   });
+
+  // Filtrar Mídia por data
+  galeriaItens = dadosGaleria.filter(g => {
+    const dataMidia = g.date || g.data;
+    return !dataMidia || dataMidia <= hoje;
+  });
+
+  init();
+})
+.catch(err => {
+  console.error("Erro geral no processamento:", err);
+  msgs = getMensagensEmbutidas();
+  init();
+});
 
 function init(){
   document.getElementById('loading').style.display = 'none';
   if (msgs.length > 0) {
-    document.getElementById('cnt-cover').textContent = msgs.length + ' mensagens disponíveis';
-  } else {
-    document.getElementById('cnt-cover').textContent = 'Nenhuma mensagem disponível hoje.';
+    document.getElementById('cnt-cover').textContent = msgs.length + ' reflexões disponíveis';
   }
   
   if(localStorage.getItem('user_subscrito') === 'true') {
@@ -194,60 +229,11 @@ function init(){
   showCover();
 }
 
-document.getElementById('subscriptionForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  const nome = document.getElementById('subNome').value;
-  const email = document.getElementById('subEmail').value.trim().toLowerCase();
-  const btn = document.getElementById('btnSubmeter');
-
-  btn.disabled = true;
-  btn.textContent = "A processar... ⏳";
-
-  if(localStorage.getItem('subscrito_' + email)) {
-    alert('Este e-mail já se encontra inscrito neste dispositivo!');
-    btn.disabled = false;
-    btn.textContent = "Quero me inscrever ✨";
-    return;
-  }
-
-  fetch(`https://formsubmit.co/ajax/${EMAIL_DESTINO}`, {
-    method: "POST",
-    headers: { 
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    body: JSON.stringify({
-      Nome: nome,
-      Email: email,
-      Origem: "Website Pão Diário"
-    })
-  })
-  .then(response => response.json())
-  .then(data => {
-    localStorage.setItem('subscrito_' + email, 'true');
-    localStorage.setItem('user_subscrito', 'true');
-    
-    document.getElementById('form-container').style.display = 'none';
-    document.getElementById('sucesso-container').style.display = 'block';
-  })
-  .catch(error => {
-    alert('Ocorreu um problema ao guardar os dados. Por favor, tente novamente.');
-    btn.disabled = false;
-    btn.textContent = "Quero me inscrever ✨";
-  });
-});
-
-function showCover(){
-  hide('index-page'); hide('reader');
-  show('cover');
-  window.scrollTo(0,0);
-}
-
+// NAVEGAÇÃO ENTRE OS ECRÃS
+function showCover(){ hide('index-page'); hide('reader'); hide('gallery-page'); show('cover'); window.scrollTo(0,0); }
 function showIndex(){
-  hide('cover'); hide('reader');
-  const g = document.getElementById('grid');
-  g.innerHTML = '';
+  hide('cover'); hide('reader'); hide('gallery-page');
+  const g = document.getElementById('grid'); g.innerHTML = '';
   msgs.forEach((m,i)=>{
     const d = document.createElement('div');
     d.className = 'card';
@@ -255,25 +241,52 @@ function showIndex(){
     d.onclick = ()=>{ cur=i; showReader(i); };
     g.appendChild(d);
   });
-  show('index-page');
-  window.scrollTo(0,0);
+  show('index-page'); window.scrollTo(0,0);
+}
+
+// EXIBIR GALERIA DE MÍDIA
+function showGallery() {
+  hide('cover'); hide('reader'); hide('index-page');
+  const gGrid = document.getElementById('gallery-grid');
+  gGrid.innerHTML = '';
+
+  if(galeriaItens.length === 0) {
+    gGrid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#a0652a; padding: 20px;">Brevemente teremos artes exclusivas disponíveis aqui! ✨</p>`;
+  } else {
+    galeriaItens.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'media-card';
+      card.innerHTML = `
+        <div class="media-wrapper">
+          <img src="${item.arquivo}" alt="${item.titulo}" loading="lazy">
+        </div>
+        <div class="media-info">
+          <span class="media-tag">${item.tipo || 'Arte'}</span>
+          <h4>${item.titulo}</h4>
+        </div>
+      `;
+      card.onclick = () => showLightbox(item.arquivo);
+      gGrid.appendChild(card);
+    });
+  }
+  show('gallery-page'); window.scrollTo(0,0);
+}
+
+// SISTEMA LIGHTBOX
+function showLightbox(src) {
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lightbox-img').src = src;
+  lb.style.display = 'flex';
+}
+function hideLightbox() {
+  document.getElementById('lightbox').style.display = 'none';
 }
 
 function showReader(i){
-  cur = i;
-  const m = msgs[i];
-  hide('cover'); hide('index-page');
+  cur = i; const m = msgs[i];
+  hide('cover'); hide('index-page'); hide('gallery-page');
   const r = document.getElementById('reader');
-  
-  const mboxHtml = m.meditacao ? `
-    <div class="mbox">
-      <div class="mi">💡</div>
-      <div>
-        <div class="ml">Hora de Refletir</div>
-        <p>${m.meditacao}</p>
-      </div>
-    </div>
-  ` : '';
+  const mboxHtml = m.meditacao ? `<div class="mbox"><div class="mi">💡</div><div><div class="ml">Hora de Refletir</div><p>${m.meditacao}</p></div></div>` : '';
   
   r.innerHTML = `
   <div class="rh">
@@ -285,39 +298,55 @@ function showReader(i){
   <div class="rb">
     <div class="vbox">"${m.versiculoTexto||''}"<div class="aline">— ${m.ref}</div></div>
     <div class="mtxt">${formatarTexto(m.texto)}</div>
-    
     ${mboxHtml}
-    
     <div class="navb">
       <button class="nb" onclick="showReader(${i-1})" ${i===0?'disabled':''}>← Anterior</button>
       <button class="nb p" onclick="showIndex()">Índice</button>
       <button class="nb" onclick="showReader(${i+1})" ${i===msgs.length-1?'disabled':''}>Próxima →</button>
     </div>
   </div>`;
-  show('reader');
-  window.scrollTo(0,0);
+  show('reader'); window.scrollTo(0,0);
 }
+
+// REGISTO FORMULÁRIO (AJAX)
+document.getElementById('subscriptionForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const nome = document.getElementById('subNome').value;
+  const email = document.getElementById('subEmail').value.trim().toLowerCase();
+  const btn = document.getElementById('btnSubmeter');
+
+  btn.disabled = true; btn.textContent = "A processar... ⏳";
+
+  if(localStorage.getItem('subscrito_' + email)) {
+    alert('Este e-mail já se encontra inscrito neste dispositivo!');
+    btn.disabled = false; btn.textContent = "Quero me inscrever ✨";
+    return;
+  }
+
+  fetch(`https://formsubmit.co/ajax/${EMAIL_DESTINO}`, {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({ Nome: nome, Email: email, Origem: "Website Pão Diário" })
+  })
+  .then(response => response.json())
+  .then(() => {
+    localStorage.setItem('subscrito_' + email, 'true');
+    localStorage.setItem('user_subscrito', 'true');
+    document.getElementById('form-container').style.display = 'none';
+    document.getElementById('sucesso-container').style.display = 'block';
+  })
+  .catch(() => {
+    alert('Ocorreu um problema ao guardar os dados. Por favor, tente novamente.');
+    btn.disabled = false; btn.textContent = "Quero me inscrever ✨";
+  });
+});
 
 function show(id){ document.getElementById(id).style.display = 'block'; }
 function hide(id){ document.getElementById(id).style.display = 'none'; }
-
-function formatarTexto(txt){
-  if(!txt) return '';
-  return txt.split('\n').filter(p=>p.trim()!=='').map(p=>`<p>${p}</p>`).join('');
-}
+function formatarTexto(txt){ if(!txt) return ''; return txt.split('\n').filter(p=>p.trim()!=='').map(p=>`<p>${p}</p>`).join(''); }
 
 function getMensagensEmbutidas(){
-  return [{
-    "id": 1,
-    "titulo": "Mensagem Padrão",
-    "icone": "🌱",
-    "mes": "Junho 2026",
-    "ref": "Gênesis 1:1",
-    "versiculoTexto": "No princípio Deus criou os céus e a terra.",
-    "texto": "Acompanhe diariamente nossas postagens de encorajamento espiritual.",
-    "tema": "fe",
-    "meditacao": "Como você pode aplicar a palavra de hoje na sua vida prática?"
-  }];
+  return [{ "id": 1, "titulo": "Mensagem Padrão", "icone": "🌱", "mes": "Junho 2026", "ref": "Gênesis 1:1", "versiculoTexto": "No princípio Deus criou os céus e a terra.", "texto": "Acompanhe diariamente nossas postagens de encorajamento espiritual.", "tema": "fe" }];
 }
 </script>
 </body>
