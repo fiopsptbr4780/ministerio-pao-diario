@@ -2,223 +2,6 @@
   {
     "id": 1,
     "titulo": "Endividado",
-    "icone": "📖",
-    "mes": "Junho 2026",
-    "data": "2026-06-16",
-    "ref": "Romanos 1:8-17",
-    "versiculoTexto": "Pois sou devedor tanto a gregos como a bárbaros...",
-    "texto": "Conteúdo da reflexão sobre o sacrifício de Cristo e nossa dívida de amor...",
-    "tema": "proposito"
-  },
-  {
-    "id": 2,
-    "titulo": "Competir ou convergir",
-    "icone": "📖",
-    "mes": "Junho 2026",
-    "data": "2026-06-17",
-    "ref": "Rute 4:13-22",
-    "versiculoTexto": "...e o Senhor lhe concedeu que concebesse...",
-    "texto": "Reflexão sobre convergir com a vontade de Deus...",
-    "tema": "proposito"
-  },
-  {
-    "id": 3,
-    "titulo": "Morto e morto",
-    "icone": "📖",
-    "mes": "Junho 2026",
-    "data": "2026-06-18",
-    "ref": "1 Coríntios 15:55",
-    "versiculoTexto": "Onde está, ó morte, a tua vitória?…",
-    "texto": "Esperança cristã diante da morte...",
-    "tema": "esperanca"
-  }
-]
-
-[
-  {
-    "id": 1,
-    "titulo": "A Fonte que Nunca Seca",
-    "mes": "Abril 2017",
-    "icone": "💧",
-    "ref": "João 4:14",
-    "tema": "esperanca",
-    "versiculoTexto": "Quem beber da água que eu lhe der nunca mais terá sede. Na verdade, a água que eu lhe der se tornará nele uma fonte de água que jorra para a vida eterna.",
-    "texto": "Jesus disse à mulher samaritana: 'Quem beber da água que eu lhe der nunca mais terá sede.' Deus nos convida a beber da Sua presença todos os dias, encontrando nele a verdadeira satisfação para a alma.\n\nQuando nos sentimos vazios e cansados, é junto à fonte viva que encontramos o refrigério. Não deixemos de nos aproximar d'Ele na oração e na leitura da Sua Palavra.",
-    "oracao": "Senhor, que eu beba diariamente da Tua fonte viva e jamais me afaste da Tua presença. Amém.",
-    "meditacao": "Em quais momentos do dia você tem buscado a presença de Deus como fonte de força?"
-  },
-  {
-    "id": 2,
-    "titulo": "O Pão Que Sustenta",
-    "mes": "Maio 2017",
-    "icone": "🍞",
-    "ref": "João 6:35",
-    "tema": "fe",
-    "versiculoTexto": "Eu sou o pão da vida. Aquele que vem a mim nunca terá fome, e aquele que crê em mim nunca mais terá sede.",
-    "texto": "'Eu sou o pão da vida', declarou Jesus. Assim como o pão alimenta o corpo, a Palavra de Deus alimenta a nossa alma. Cada manhã, ao abrir as Escrituras, recebemos o sustento espiritual de que precisamos para enfrentar o dia.\n\nNão negligencie este alimento precioso; sem ele, a alma definha e perde o vigor. Reserve um tempo cada dia para se nutrir da Palavra de Deus.",
-    "oracao": "Pai, que a Tua Palavra seja para mim o pão de cada dia, sustentando minha fé e renovando minhas forças. Amém.",
-    "meditacao": "Como você pode tornar a leitura da Bíblia um hábito diário mais consistente?"
-  },
-  {
-    "id": 3,
-    "titulo": "Luz no Caminho",
-    "mes": "Junho 2017",
-    "icone": "🕯️",
-    "ref": "Salmos 119:105",
-    "tema": "proposito",
-    "versiculoTexto": "A tua palavra é lâmpada que ilumina os meus passos e luz que clareia o meu caminho.",
-    "texto": "Em momentos de incerteza, quando os caminhos parecem obscuros e difíceis, a Palavra de Deus surge como uma lâmpada que ilumina nossos passos. Não precisamos enxergar o destino final; basta que haja luz suficiente para o próximo passo.\n\nConfie no guia que nunca falhou. Sua Palavra é confiável, Seus caminhos são perfeitos, e Sua luz sempre chegará na hora certa.",
-    "oracao": "Senhor, ilumina meu caminho com Tua Palavra e me dá coragem para caminhar mesmo quando não posso ver o horizonte. Amém.",
-    "meditacao": "Em que área da sua vida você precisa confiar mais na direção de Deus?"
-  },
-  {
-    "id": 4,
-    "titulo": "Forças Renovadas",
-    "mes": "Julho 2017",
-    "icone": "🦅",
-    "ref": "Isaías 40:31",
-    "tema": "coragem",
-    "versiculoTexto": "Mas os que esperam no Senhor renovam as suas forças. Voam alto como águias; correm e não ficam exaustos; caminham e não se cansam.",
-    "texto": "Há momentos na vida em que sentimos que já não temos mais forças para continuar. O cansaço pesa nos ombros, as dificuldades parecem intransponíveis. É exatamente nesse momento que Deus nos convida a esperar Nele.\n\nEsperar não significa ficar parado, mas sim confiar que Deus agirá no tempo certo. Ao depositar nossa confiança Nele, nossas forças são renovadas de uma maneira que supera toda compreensão humana.",
-    "oracao": "Pai, quando minhas forças acabarem, que eu me lembre de correr para Ti. Renova em mim a força que só pode vir de Ti. Amém.",
-    "meditacao": "O que você está esperando de Deus neste momento da sua vida?"
-  },
-  {
-    "id": 5,
-    "titulo": "Paz que Excede",
-    "mes": "Agosto 2017",
-    "icone": "🕊️",
-    "ref": "Filipenses 4:7",
-    "tema": "reflexao",
-    "versiculoTexto": "E a paz de Deus, que excede todo o entendimento, guardará os seus corações e as suas mentes em Cristo Jesus.",
-    "texto": "O mundo oferece muitas formas de tentar encontrar paz: riqueza, sucesso, relacionamentos, prazer. Mas existe uma paz que nenhuma dessas coisas pode oferecer — a paz de Deus, que excede todo entendimento humano.\n\nEssa paz não depende das circunstâncias ao redor; ela vem de dentro, do profundo relacionamento com o Criador. Quando nossa mente e coração estão ancorados em Cristo, podemos ter paz mesmo em meio às tempestades da vida.",
-    "oracao": "Senhor, guarda meu coração e minha mente em Cristo Jesus, que eu experimente a paz que excede todo entendimento. Amém.",
-    "meditacao": "O que rouba a sua paz com mais frequência? Como você pode entregar isso a Deus?"
-  },
-  [
-  {
-    "id": 1,
-    "titulo": "A Fonte que Nunca Seca",
-    "mes": "Abril 2017",
-    "icone": "💧",
-    "ref": "João 4:14",
-    "texto": "Jesus disse à mulher samaritana: 'Quem beber da água que eu lhe der nunca mais terá sede.' Deus nos convida a beber da Sua presença todos os dias, encontrando nele a verdadeira satisfação para a alma. Quando nos sentimos vazios e cansados, é junto à fonte viva que encontramos o refrigério. Não deixemos de nos aproximar d'Ele na oração e na leitura da Sua Palavra."
-  },
-  {
-    "id": 2,
-    "titulo": "O Pão Que Sustenta",
-    "mes": "Maio 2017",
-    "icone": "🍞",
-    "ref": "João 6:35",
-    "texto": "'Eu sou o pão da vida', declarou Jesus. Assim como o pão alimenta o corpo, a Palavra de Deus alimenta a nossa alma. Cada manhã, ao abrir as Escrituras, recebemos o sustento espiritual de que precisamos para enfrentar o dia. Não negligencie este alimento precioso; sem ele, a alma definha."
-  },
-  {
-    "id": 3,
-    "titulo": "Confiança nos Momentos Difíceis",
-    "mes": "Junho 2017",
-    "icone": "🌿",
-    "ref": "Salmo 46:1",
-    "texto": "'Deus é o nosso refúgio e força, socorro bem presente nas tribulações.' Nas tempestades da vida, tendemos a buscar soluções humanas antes de recorrer ao Senhor. Mas a experiência de inúmeros servos de Deus ao longo da história nos ensina que a confiança n'Ele nunca envergonha. Leve hoje os seus fardos ao Pai e descanse no Seu cuidado fiel."
-  },
-  {
-    "id": 4,
-    "titulo": "Luz no Caminho",
-    "mes": "Julho 2017",
-    "icone": "🕯️",
-    "ref": "Salmo 119:105",
-    "texto": "'A tua palavra é lâmpada para os meus pés e luz para o meu caminho.' Vivemos em tempos de muita confusão e incerteza. Os valores mudam, as opiniões divergem e os caminhos se multiplicam. Mas o crente tem um guia seguro: a Bíblia. Leia-a com humildade e obediência, e ela iluminará cada passo da sua jornada."
-  },
-  {
-    "id": 5,
-    "titulo": "A Paz que Excede Todo Entendimento",
-    "mes": "Agosto 2017",
-    "icone": "☮️",
-    "ref": "Filipenses 4:7",
-    "texto": "Paulo escreve de uma prisão romana, exortando os crentes a não se angustiarem por nada, mas a apresentarem os seus pedidos a Deus com ação de graças. A promessa é extraordinária: 'a paz de Deus, que excede todo o entendimento, guardará os vossos corações'. Esta paz não depende das circunstâncias, mas do Senhor das circunstâncias."
-  },
-  {
-    "id": 6,
-    "titulo": "Força no Senhor",
-    "mes": "Setembro 2017",
-    "icone": "💪",
-    "ref": "Isaías 40:31",
-    "texto": "'Os que esperam no Senhor renovam as suas forças; sobem com asas como águias; correm e não se cansam; caminham e não se fatigam.' A vida cristã não é uma corrida de velocidade, mas de resistência. Há momentos em que as forças humanas falham. É nesses momentos que o crente descobre a força sobrenatural que vem de esperar no Senhor."
-  },
-  {
-    "id": 7,
-    "titulo": "O Pastor e as Suas Ovelhas",
-    "mes": "Outubro 2017",
-    "icone": "🐑",
-    "ref": "Salmo 23:1",
-    "texto": "'O Senhor é o meu pastor e nada me faltará.' Estas palavras, escritas por Davi, refletem uma experiência pessoal e profunda de cuidado divino. Como pastor experiente, Davi sabia o que significava guiar, proteger e prover para as ovelhas. E reconhecia que ele próprio era uma ovelha nas mãos do Grande Pastor. Você tem vivido esta realidade?"
-  },
-  {
-    "id": 8,
-    "titulo": "Graça Suficiente",
-    "mes": "Novembro 2017",
-    "icone": "✨",
-    "ref": "2 Coríntios 12:9",
-    "texto": "Quando Paulo clamou três vezes para que um espinho na carne lhe fosse tirado, a resposta de Deus surpreendeu: 'A minha graça te basta.' Por vezes, Deus não remove os nossos problemas; antes, dá-nos graça suficiente para os suportar. É nessa fraqueza que a força de Cristo se manifesta plenamente na nossa vida."
-  },
-  {
-    "id": 9,
-    "titulo": "O Dom do Perdão",
-    "mes": "Dezembro 2017",
-    "icone": "🎁",
-    "ref": "Efésios 1:7",
-    "texto": "'No qual temos a redenção pelo seu sangue, a remissão dos pecados, segundo as riquezas da sua graça.' No Natal, celebramos o maior presente já dado à humanidade: o perdão dos pecados mediante a vinda de Jesus Cristo ao mundo. Este perdão não é ganho por mérito, mas recebido pela fé. Alegre-se hoje nesta dádiva imerecida e maravilhosa!"
-  },
-  {
-    "id": 10,
-    "titulo": "Novo Começo",
-    "mes": "Janeiro 2018",
-    "icone": "🌅",
-    "ref": "Lamentações 3:22-23",
-    "texto": "'As misericórdias do Senhor não têm fim; as suas compaixões não se esgotam; renovam-se cada manhã. Grande é a tua fidelidade.' Ao começarmos um novo ano, é encorajador saber que a fidelidade de Deus se renova cada manhã. Os erros do passado não definem o nosso futuro. Em Cristo, temos sempre a oportunidade de recomeçar."
-  },
-  {
-    "id": 11,
-    "titulo": "O Amor que Tudo Suporta",
-    "mes": "Fevereiro 2018",
-    "icone": "❤️",
-    "ref": "1 Coríntios 13:7",
-    "texto": "'O amor tudo sofre, tudo crê, tudo espera, tudo suporta.' O amor descrito por Paulo não é um sentimento passageiro, mas uma escolha diária e uma graça divina. Em relacionamentos difíceis, quando o amor humano parece insuficiente, podemos pedir ao Senhor que derrame o Seu amor em nossos corações pelo Espírito Santo."
-  },
-  {
-    "id": 12,
-    "titulo": "Sementes de Esperança",
-    "mes": "Março 2018",
-    "icone": "🌱",
-    "ref": "Gálatas 6:9",
-    "texto": "'Não nos cansemos de fazer o bem, porque a seu tempo ceifaremos, se não desfalecermos.' Como o agricultor que semeia com paciência, aguardando a chuva e o sol, o crente é chamado a perseverar no bem sem perder a esperança. O resultado está nas mãos de Deus; o nosso papel é ser fiel na semeadura."
-  },
-  {
-    "id": 13,
-    "titulo": "A Ressurreição: Nossa Esperança",
-    "mes": "Abril 2018",
-    "icone": "🕊️",
-    "ref": "1 Coríntios 15:20",
-    "texto": "'Mas, de fato, Cristo ressuscitou dentre os mortos e é as primícias dos que dormiram.' A ressurreição de Cristo não é apenas um evento histórico; é o fundamento da nossa esperança. Porque Ele vive, nós também viveremos. A morte não tem a última palavra. Esta verdade transforma a maneira como encaramos o sofrimento, a perda e a própria morte."
-  },
-  {
-    "id": 14,
-    "titulo": "Guardado pelo Poder de Deus",
-    "mes": "Maio 2018",
-    "icone": "🛡️",
-    "ref": "1 Pedro 1:5",
-    "texto": "Pedro descreve os crentes como pessoas 'guardadas pelo poder de Deus, mediante a fé, para a salvação que está preparada para ser revelada no último tempo.' Que pensamento reconfortante! Não somos nós que nos mantemos salvos pelo nosso esforço, mas é o poder de Deus que nos guarda. A nossa segurança repousa na fidelidade d'Ele."
-  },
-  {
-    "id": 15,
-    "titulo": "Correndo com Perseverança",
-    "mes": "Junho 2018",
-    "icone": "🏃",
-    "ref": "Hebreus 12:1",
-    "texto": "'Corramos com perseverança a carreira que nos está proposta, olhando para Jesus, autor e consumador da fé.' A vida cristã é comparada a uma corrida. Há obstáculos, cansaço e momentos de desânimo. Mas o segredo da perseverança está em fixar os olhos em Jesus. Ele correu antes de nós, venceu todos os obstáculos e aguarda-nos na chegada com braços abertos."
-  },
-  {
-    "id": 16,
-    "titulo": "Endividado",
     "date": "2026-06-17",
     "mes": "Junho 2026",
     "icone": "✝️",
@@ -229,16 +12,172 @@
     "meditacao": "Como o sacrifício de Cristo pode mudar a nossa responsabilidade para com os outros?"
   },
   {
-    "id": 17,
+    "id": 2,
     "titulo": "Competir ou convergir",
-    "date": "2026-06-18",
+    "icone": "📖",
     "mes": "Junho 2026",
-    "icone": "🕊️",
-    "ref": "Rute 4:13",
+    "data": "2026-06-15",
+    "ref": "Rute 4:13-22",
+    "versiculoTexto": "...e o Senhor lhe concedeu que concebesse...",
+    "texto": "Reflexão sobre convergir com a vontade de Deus...",
+    "tema": "proposito"
+  },
+  {
+    "id": 3,
+    "titulo": "Morto e morto",
+    "icone": "📖",
+    "mes": "Junho 2026",
+    "data": "2026-06-15",
+    "ref": "1 Coríntios 15:55",
+    "versiculoTexto": "Onde está, ó morte, a tua vitória?…",
+    "texto": "Esperança cristã diante da morte...",
+    "tema": "esperanca"
+  },
+  {
+    "id": 4,
+    "titulo": "A Fonte que Nunca Seca",
+    "mes": "Junho 2026",
+    "data": "2026-06-15",
+    "icone": "💧",
+    "ref": "João 4:14",
+    "tema": "esperanca",
+    "versiculoTexto": "Quem beber da água que eu lhe der nunca mais terá sede. Na verdade, a água que eu lhe der se tornará nele uma fonte de água que jorra para a vida eterna.",
+    "texto": "Jesus disse à mulher samaritana: 'Quem beber da água que eu lhe der nunca mais terá sede.' Deus nos convida a beber da Sua presença todos os dias, encontrando nele a verdadeira satisfação para a alma.\n\nQuando nos sentimos vazios e cansados, é junto à fonte viva que encontramos o refrigério. Não deixemos de nos aproximar d'Ele na oração e na leitura da Sua Palavra.",
+    "oracao": "Senhor, que eu beba diariamente da Tua fonte viva e jamais me afaste da Tua presença. Amém.",
+    "meditacao": "Em quais momentos do dia você tem buscado a presença de Deus como fonte de força?"
+  },
+  {
+    "id": 5,
+    "titulo": "O Pão Que Sustenta",
+    "mes": "Junho 2026",
+    "data": "2026-06-15",
+    "icone": "🍞",
+    "ref": "João 6:35",
     "tema": "fe",
-    "versiculoTexto": "...e o Senhor lhe concedeu que concebesse, e teve um filho...",
-    "texto": "Ao caminhar pelo pátio, o professor de um seminário deparou-se com o vigia que lia a Bíblia na hora do almoço. O professor perguntou-lhe o que lia. Apocalipse, disse o vigia. Tenho certeza de que você não entende esse livro, afirmou o professor. Na verdade, entendo. Significa que Jesus vence, respondeu o guarda.\n\nFrente aos desafios da vida, é importante lembrar-se de que, no fim, Deus sempre vence! Como Seus planos sempre são vitoriosos, é muito mais sábio convergir para Sua vontade ao invés de competir com ela.\n\nNa história de Rute, Deus estabeleceu o cenário para que Boaz resgatasse Rute e Noemi de uma vida de pobreza e vergonha, por não terem um herdeiro. Rute podia ter se tornado amargurada, como jovem viúva, e Boaz talvez pensasse que, por ser estrangeira, ela não seria uma esposa ideal. Mas ambos reconheceram a mão de Deus nas circunstâncias e convergiram com os planos dele para suprir as necessidades de Rute. A melhor parte da história é que esta não terminou ali. A salvação para o mundo ainda estava por vir por meio dos seus descendentes — primeiro Davi e depois Jesus (Mateus 1:5-16).\n\nPodemos competir com os planos de Deus e ir atrás de nossos objetivos. Ou podemos convergir e aceitar o plano de Deus e nos juntarmos ao time vencedor. A escolha é nossa.",
-    "meditacao": "Em que área da sua vida você precisa parar de competir com Deus e convergir para a Sua vontade?"
+    "versiculoTexto": "Eu sou o pão da vida. Aquele que vem a mim nunca terá fome, e aquele que crê em mim nunca mais terá sede.",
+    "texto": "'Eu sou o pão da vida', declarou Jesus. Assim como o pão alimenta o corpo, a Palavra de Deus alimenta a nossa alma. Cada manhã, ao abrir as Escrituras, recebemos o sustento espiritual de que precisamos para enfrentar o dia.\n\nNão negligencie este alimento precioso; sem ele, a alma definha e perde o vigor. Reserve um tempo cada dia para se nutrir da Palavra de Deus.",
+    "oracao": "Pai, que a Tua Palavra seja para mim o pão de cada dia, sustentando minha fé e renovando minhas forças. Amém.",
+    "meditacao": "Como você pode tornar a leitura da Bíblia um hábito diário mais consistente?"
+  },
+  {
+    "id": 6,
+    "titulo": "Luz no Caminho",
+    "mes": "Junho 2026",
+    "data": "2026-06-15",
+    "icone": "🕯️",
+    "ref": "Salmos 119:105",
+    "tema": "proposito",
+    "versiculoTexto": "A tua palavra é lâmpada que ilumina os meus passos e luz que clareia o meu caminho.",
+    "texto": "Em momentos de incerteza, quando os caminhos parecem obscuros e difíceis, a Palavra de Deus surge como uma lâmpada que ilumina nossos passos. Não precisamos enxergar o destino final; basta que haja luz suficiente para o próximo passo.\n\nConfie no guia que nunca falhou. Sua Palavra é confiável, Seus caminhos são perfeitos, e Sua luz sempre chegará na hora certa.",
+    "oracao": "Senhor, ilumina meu caminho com Tua Palavra e me dá coragem para caminhar mesmo quando não posso ver o horizonte. Amém.",
+    "meditacao": "Em que área da sua vida você precisa confiar mais na direção de Deus?"
+  },
+  {
+    "id": 7,
+    "titulo": "Forças Renovadas",
+    "mes": "Junho 2026",
+    "data": "2026-06-15",
+    "icone": "🦅",
+    "ref": "Isaías 40:31",
+    "tema": "coragem",
+    "versiculoTexto": "Mas os que esperam no Senhor renovam as suas forças. Voam alto como águias; correm e não ficam exaustos; caminham e não se cansam.",
+    "texto": "Há momentos na vida em que sentimos que já não temos mais forças para continuar. O cansaço pesa nos ombros, as dificuldades parecem intransponíveis. É exatamente nesse momento que Deus nos convida a esperar Nele.\n\nEsperar não significa ficar parado, mas sim confiar que Deus agirá no tempo certo. Ao depositar nossa confiança Nele, nossas forças são renovadas de uma maneira que supera toda compreensão humana.",
+    "oracao": "Pai, quando minhas forças acabarem, que eu me lembre de correr para Ti. Renova em mim a força que só pode vir de Ti. Amém.",
+    "meditacao": "O que você está esperando de Deus neste momento da sua vida?"
+  },
+  {
+    "id": 8,
+    "titulo": "Paz que Excede",
+    "mes": "Junho 2026",
+    "data": "2026-06-15",
+    "icone": "🕊️",
+    "ref": "Filipenses 4:7",
+    "tema": "reflexao",
+    "versiculoTexto": "E a paz de Deus, que excede todo o entendimento, guardará os seus corações e as suas mentes em Cristo Jesus.",
+    "texto": "O mundo oferece muitas formas de tentar encontrar paz: riqueza, sucesso, relacionamentos, prazer. Mas existe uma paz que nenhuma dessas coisas pode oferecer — a paz de Deus, que excede todo entendimento humano.\n\nEssa paz não depende das circunstâncias ao redor; ela vem de dentro, do profundo relacionamento com o Criador. Quando nossa mente e coração estão ancorados em Cristo, podemos ter paz mesmo em meio às tempestades da vida.",
+    "oracao": "Senhor, guarda meu coração e minha mente em Cristo Jesus, que eu experimente a paz que excede todo entendimento. Amém.",
+    "meditacao": "O que rouba a sua paz com mais frequência? Como você pode entregar isso a Deus?"
+  },
+  {
+    "id": 9,
+    "titulo": "A Fonte que Nunca Seca",
+    "mes": "Junho 2026",
+    "data": "2026-06-15",
+    "icone": "💧",
+    "ref": "João 4:14",
+    "texto": "Jesus disse à mulher samaritana: 'Quem beber da água que eu lhe der nunca mais terá sede.' Deus nos convida a beber da Sua presença todos os dias, encontrando nele a verdadeira satisfação para a alma. Quando nos sentimos vazios e cansados, é junto à fonte viva que encontramos o refrigério. Não deixemos de nos aproximar d'Ele na oração e na leitura da Sua Palavra."
+  },
+  {
+    "id": 10,
+    "titulo": "O Pão Que Sustenta",
+    "mes": "Junho 2026",
+    "data": "2026-06-15",
+    "icone": "🍞",
+    "ref": "João 6:35",
+    "texto": "'Eu sou o pão da vida', declarou Jesus. Assim como o pão alimenta o corpo, a Palavra de Deus alimenta a nossa alma. Cada manhã, ao abrir as Escrituras, recebemos o sustento espiritual de que precisamos para enfrentar o dia. Não negligencie este alimento precioso; sem ele, a alma definha."
+  },
+  {
+    "id": 11,
+    "titulo": "Confiança nos Momentos Difíceis",
+    "mes": "Junho 2026",
+    "data": "2026-06-15",
+    "icone": "🌿",
+    "ref": "Salmo 46:1",
+    "texto": "'Deus é o nosso refúgio e força, socorro bem presente nas tribulações.' Nas tempestades da vida, tendemos a buscar soluções humanas antes de recorrer ao Senhor. Mas a experiência de inúmeros servos de Deus ao longo da história nos ensina que a confiança n'Ele nunca envergonha. Leve hoje os seus fardos ao Pai e descanse no Seu cuidado fiel."
+  },
+  {
+    "id": 12,
+    "titulo": "Luz no Caminho",
+    "mes": "Junho 2026",
+    "data": "2026-06-15",
+    "icone": "🕯️",
+    "ref": "Salmo 119:105",
+    "texto": "'A tua palavra é lâmpada para os meus pés e luz para o meu caminho.' Vivemos em tempos de muita confusão e incerteza. Os valores mudam, as opiniões divergem e os caminhos se multiplicam. Mas o crente tem um guia seguro: a Bíblia. Leia-a com humildade e obediência, e ela iluminará cada passo da sua jornada."
+  },
+  {
+    "id": 13,
+    "titulo": "A Paz que Excede Todo Entendimento",
+    "mes": "Junho 2026",
+    "data": "2026-06-15",
+    "icone": "☮️",
+    "ref": "Filipenses 4:7",
+    "texto": "Paulo escreve de uma prisão romana, exortando os crentes a não se angustiarem por nada, mas a apresentarem os seus pedidos a Deus com ação de graças. A promessa é extraordinária: 'a paz de Deus, que excede todo o entendimento, guardará os vossos corações'. Esta paz não depende das circunstâncias, mas do Senhor das circunstâncias."
+  },
+  {
+    "id": 14,
+    "titulo": "Força no Senhor",
+    "mes": "Junho 2026",
+    "data": "2026-06-15",
+    "icone": "💪",
+    "ref": "Isaías 40:31",
+    "texto": "'Os que esperam no Senhor renovam as suas forças; sobem com asas como águias; correm e não se cansam; caminham e não se fatigam.' A vida cristã não é uma corrida de velocidade, mas de resistência. Há momentos em que as forças humanas falham. É nesses momentos que o crente descobre a força sobrenatural que vem de esperar no Senhor."
+  },
+  {
+    "id": 15,
+    "titulo": "O Pastor e as Suas Ovelhas",
+    "mes": "Junho 2026",
+    "data": "2026-06-16",
+    "icone": "🐑",
+    "ref": "Salmo 23:1",
+    "texto": "'O Senhor é o meu pastor e nada me faltará.' Estas palavras, escritas por Davi, refletem uma experiência pessoal e profunda de cuidado divino. Como pastor experiente, Davi sabia o que significava guiar, proteger e prover para as ovelhas. E reconhecia que ele próprio era uma ovelha nas mãos do Grande Pastor. Você tem vivido esta realidade?"
+  },
+  {
+    "id": 16,
+    "titulo": "Graça Suficiente",
+    "mes": "Junho 2026",
+    "data": "2026-06-17",
+    "icone": "✨",
+    "ref": "2 Coríntios 12:9",
+    "texto": "Quando Paulo clamou três vezes para que um espinho na carne lhe fosse tirado, a resposta de Deus surpreendeu: 'A minha graça te basta.' Por vezes, Deus não remove os nossos problemas; antes, dá-nos graça suficiente para os suportar. É nessa fraqueza que a força de Cristo se manifesta plenamente na nossa vida."
+  },
+  {
+    "id": 17,
+    "titulo": "O Dom do Perdão",
+    "mes": "Junho 2026",
+    "data": "2026-06-18",
+    "icone": "🎁",
+    "ref": "Efésios 1:7",
+    "texto": "'No qual temos a redenção pelo seu sangue, a remissão dos pecados, segundo as riquezas da sua graça.' No Natal, celebramos o maior presente já dado à humanidade: o perdão dos pecados mediante a vinda de Jesus Cristo ao mundo. Este perdão não é ganho por mérito, mas recebido pela fé. Alegre-se hoje nesta dádiva imerecida e maravilhosa!"
   },
   {
     "id": 18,
