@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Ministério Pão Diário | https://fiopsptbr4780.github.io/ministerio-pao-diario/ -->
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -110,7 +109,8 @@ fetch('./mensagens.json')
     // Captura o dia de hoje no formato AAAA-MM-DD
     const hoje = new Date().toLocaleDateString('sv-SE'); 
     
-    // FILTRO AUTOMÁTICO: Oculta publicações com datas futuras
+    // FILTRO AUTOMÁTICO: Oculta publicações com datas futuras. 
+    // Garante que só filtra se m.data for válido
     msgs = data.filter(m => !m.data || m.data <= hoje); 
     
     init(); 
