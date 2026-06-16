@@ -8,27 +8,35 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh}
 
-/* COVER - Otimizado para Telemóvel (Sem cortes) */
-#cover{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:100dvh;background:linear-gradient(160deg,#3d1a00,#7a3e00 40%,#c8790a 80%,#f5b942);text-align:center;padding:30px 20px;color:#fff8ee;overflow-y:auto}
+/* COVER - Alinhamento Centralizado Otimizado para Telemóvel */
+#cover{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100dvh;background:linear-gradient(160deg,#3d1a00,#7a3e00 40%,#c8790a 80%,#f5b942);text-align:center;padding:30px 20px;color:#fff8ee;overflow-y:auto}
+.cover-content{display:flex;flex-direction:column;align-items:center;justify-content:center;max-width:500px;width:100%;margin:auto 0}
 .icon{font-size:64px;margin-bottom:10px}
 #cover h1{font-size:clamp(1.8rem,6vw,3rem);font-weight:700;letter-spacing:2px;text-shadow:0 2px 8px rgba(0,0,0,.5);line-height:1.2}
 .sub{font-size:1rem;margin-top:8px;opacity:.9}
 .line{width:60px;height:2px;background:#f5b942;margin:14px auto}
-.intro{max-width:460px;font-size:.92rem;line-height:1.6;opacity:.87;margin-bottom:10px}
-.cnt{margin-top:8px;font-size:.8rem;opacity:.65}
+.intro{font-size:.92rem;line-height:1.6;opacity:.87;margin-bottom:10px}
+.cnt{margin-top:15px;font-size:.8rem;opacity:.65}
 
 /* Botão Principal */
-.btn-start {margin: 20px 0;padding:14px 40px;background:#fff;color:#7a3e00;border:none;border-radius:50px;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.3);transition:transform .2s}
+.btn-start {margin: 15px 0;padding:14px 40px;background:#fff;color:#7a3e00;border:none;border-radius:50px;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.3);transition:transform .2s;width:100%;max-width:280px}
 .btn-start:hover{transform:translateY(-2px)}
 
-/* FORMULÁRIO DE CAPTAÇÃO (Base de Dados Simples) */
-.sub-box {background: rgba(255,255,255,0.12);border: 1px solid rgba(255,255,255,0.2);border-radius: 16px;padding: 20px;max-width: 400px;width: 100%;margin-top: 15px;backdrop-filter: blur(5px)}
+/* CAIXA DE SUBSCRIÇÃO CENTRALIZADA */
+.sub-box {background: rgba(255,255,255,0.12);border: 1px solid rgba(255,255,255,0.2);border-radius: 16px;padding: 20px;width: 100%;max-width: 340px;margin: 15px auto 0 auto;backdrop-filter: blur(5px);text-align:center}
 .sub-box h3 {font-size: 1.05rem;margin-bottom: 5px;color: #fff}
-.sub-box p {font-size: 0.82rem;opacity: 0.8;margin-bottom: 12px;font-family: sans-serif}
+.sub-box p {font-size: 0.82rem;opacity: 0.8;margin-bottom: 12px;font-family: sans-serif;line-height: 1.4}
 .sub-form {display: flex;flex-direction: column;gap: 8px}
-.sub-form input {padding: 12px;border: 1px solid rgba(255,255,255,0.3);border-radius: 8px;font-size: 16px; /* 16px previne zoom automático no iPhone */background: rgba(255,255,255,0.95);color: #2c1a0e;outline: none;font-family: sans-serif}
+.sub-form input {padding: 12px;border: 1px solid rgba(255,255,255,0.3);border-radius: 8px;font-size: 16px;background: rgba(255,255,255,0.95);color: #2c1a0e;outline: none;font-family: sans-serif;text-align: center}
 .sub-form button {padding: 12px;background: #f5b942;color: #3d1a00;border: none;border-radius: 8px;font-size: 0.95rem;font-weight: 700;cursor: pointer;transition: background 0.2s;font-family: sans-serif}
 .sub-form button:hover {background: #fff}
+.sub-form button:disabled {background: #aaa;cursor: not-allowed}
+
+/* Bloco de Confirmação de Sucesso */
+#sucesso-container {display: none;color: #fff;animation: fadeIn 0.4s ease-in-out}
+.success-icon {font-size: 32px;margin-bottom: 8px}
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 /* INDEX */
 #index-page{min-height:100vh;background:#fdf6ee;padding:40px 20px}
@@ -84,8 +92,8 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 @keyframes spin{to{transform:rotate(360deg)}}
 
 @media(max-width:600px){
-  #cover{justify-content: flex-start; padding: 20px 16px;}
-  .icon{font-size: 50px;}
+  #cover{padding: 24px 16px;}
+  .icon{font-size: 52px;}
   .rh{padding:20px 16px}.rb{padding:20px 14px 40px}.navb{flex-direction:column}
 }
 </style>
@@ -98,29 +106,36 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 </div>
 
 <div id="cover" style="display:none">
-  <div class="icon">📖</div>
-  <h1>Ministério<br>Pão Diário</h1>
-  <div class="line"></div>
-  <p class="sub">Reflexões que alimentam a alma</p>
-  <p class="intro">Mensagens de encorajamento, fé e esperança para cada etapa da jornada espiritual.</p>
-  
-  <button class="btn-start" onclick="showIndex()">Começar a Ler ›</button>
-
-  <div class="sub-box">
-    <h3>Receber Mensagens Diárias</h3>
-    <p>Inscreva-se para não perder nenhuma reflexão espiritual.</p>
+  <div class="cover-content">
+    <div class="icon">📖</div>
+    <h1>Ministério<br>Pão Diário</h1>
+    <div class="line"></div>
+    <p class="sub">Reflexões que alimentam a alma</p>
+    <p class="intro">Mensagens de encorajamento, fé e esperança para cada etapa da jornada espiritual.</p>
     
-    <form class="sub-form" action="https://formsubmit.co/fiopsptbr@gmail.com" method="POST">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_next" value="https://fiopsptbr4780.github.io/ministerio-pao-diario/">
-      
-      <input type="text" name="Nome" placeholder="Seu nome" required>
-      <input type="email" name="Email" placeholder="Seu e-mail" required>
-      <button type="submit">Quero me inscrever ✨</button>
-    </form>
-  </div>
+    <button class="btn-start" onclick="showIndex()">Começar a Ler ›</button>
 
-  <p class="cnt" id="cnt-cover"></p>
+    <div class="sub-box">
+      <div id="form-container">
+        <h3>Receber Mensagens Diárias</h3>
+        <p>Inscreva-se para receber as nossas reflexões diretamente.</p>
+        
+        <form class="sub-form" id="subscriptionForm">
+          <input type="text" id="subNome" placeholder="Seu nome" required>
+          <input type="email" id="subEmail" placeholder="Seu e-mail" required>
+          <button type="submit" id="btnSubmeter">Quero me inscrever ✨</button>
+        </form>
+      </div>
+
+      <div id="sucesso-container">
+        <div class="success-icon">✅</div>
+        <h3>Subscrição Confirmada!</h3>
+        <p>Obrigado por se juntar a nós. O seu e-mail foi registado com sucesso na nossa base de dados.</p>
+      </div>
+    </div>
+
+    <p class="cnt" id="cnt-cover"></p>
+  </div>
 </div>
 
 <div id="index-page" style="display:none">
@@ -136,11 +151,14 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 let msgs = [];
 let cur = 0;
 
+// Altere para o seu e-mail real aqui para receber os dados
+const EMAIL_DESTINO = "fiopsptbr@gmail.com";
+
 fetch('./mensagens.json')
   .then(r => { if(!r.ok) throw new Error('no json'); return r.json(); })
   .then(data => { 
     const hoje = new Date().toLocaleDateString('sv-SE'); 
-    msgs = data.filter(m => !m.data || m.data <= hoje); 
+    msgs = data.filter(m => !m.date || m.date <= hoje); 
     init(); 
   })
   .catch(() => { 
@@ -149,15 +167,71 @@ fetch('./mensagens.json')
   });
 
 function init(){
-  document.getElementById('loading').style.none = 'none';
   document.getElementById('loading').style.display = 'none';
   if (msgs.length > 0) {
     document.getElementById('cnt-cover').textContent = msgs.length + ' mensagens disponíveis';
   } else {
     document.getElementById('cnt-cover').textContent = 'Nenhuma mensagem disponível hoje.';
   }
+  
+  // Se o utilizador já se inscreveu antes neste telemóvel, mostra logo a confirmação
+  if(localStorage.getItem('user_subscrito') === 'true') {
+    document.getElementById('form-container').style.display = 'none';
+    document.getElementById('sucesso-container').style.display = 'block';
+  }
+
   showCover();
 }
+
+// LOGICA DE SUBMISSÃO VIA AJAX (Sem recarregar a página)
+document.getElementById('subscriptionForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const nome = document.getElementById('subNome').value;
+  const email = document.getElementById('subEmail').value.trim().toLowerCase();
+  const btn = document.getElementById('btnSubmeter');
+
+  // 1. Evitar múltiplos cliques seguidos
+  btn.disabled = true;
+  btn.textContent = "A processar... ⏳";
+
+  // 2. Bloqueio local contra duplicados
+  if(localStorage.getItem('subscrito_' + email)) {
+    alert('Este e-mail já se encontra inscrito neste dispositivo!');
+    btn.disabled = false;
+    btn.textContent = "Quero me inscrever ✨";
+    return;
+  }
+
+  // 3. Envio em segundo plano (AJAX) para o FormSubmit
+  fetch(`https://formsubmit.co/ajax/${EMAIL_DESTINO}`, {
+    method: "POST",
+    headers: { 
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+      Nome: nome,
+      Email: email,
+      Origem: "Website Pão Diário"
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Guardar estado no navegador para evitar abusos futuros
+    localStorage.setItem('subscrito_' + email, 'true');
+    localStorage.setItem('user_subscrito', 'true');
+    
+    // Transição visual suave para a mensagem de sucesso
+    document.getElementById('form-container').style.display = 'none';
+    document.getElementById('sucesso-container').style.display = 'block';
+  })
+  .catch(error => {
+    alert('Ocorreu um problema ao guardar os dados. Por favor, tente novamente.');
+    btn.disabled = false;
+    btn.textContent = "Quero me inscrever ✨";
+  });
+});
 
 function showCover(){
   hide('index-page'); hide('reader');
