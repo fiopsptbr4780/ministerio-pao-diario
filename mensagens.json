@@ -2,7 +2,7 @@
   {
     "id": 1,
     "titulo": "Endividado",
-    "date": "2026-06-17",
+    "data": "2026-06-17",
     "mes": "Junho 2026",
     "icone": "✝️",
     "ref": "Romanos 1:14",
@@ -182,7 +182,7 @@
   {
     "id": 18,
     "titulo": "Morto e morto",
-    "date": "2026-06-19",
+    "data": "2026-06-19",
     "mes": "Junho 2026",
     "icone": "✨",
     "ref": "1 Coríntios 15:55",
@@ -194,7 +194,7 @@
   {
     "id": 19,
     "titulo": "Deus, responda-me!",
-    "date": "2026-06-20",
+    "data": "2026-06-20",
     "mes": "Junho 2026",
     "icone": "🙏",
     "ref": "Salmo 6:8",
@@ -206,7 +206,7 @@
   {
     "id": 20,
     "titulo": "Celebre",
-    "date": "2026-06-21",
+    "data": "2026-06-21",
     "mes": "Junho 2026",
     "icone": "🎉",
     "ref": "Salmo 30:11",
@@ -218,7 +218,7 @@
   {
     "id": 21,
     "titulo": "Lugar de decisao",
-    "date": "2026-06-22",
+    "data": "2026-06-22",
     "mes": "Junho 2026",
     "icone": "✝️",
     "ref": "Lucas 23:33",
@@ -230,7 +230,7 @@
   {
     "id": 22,
     "titulo": "Uma questao antiga",
-    "date": "2026-06-23",
+    "data": "2026-06-23",
     "mes": "Junho 2026",
     "icone": "💫",
     "ref": "Jo 2:10",
@@ -242,7 +242,7 @@
   {
     "id": 23,
     "titulo": "Fe que vence a morte",
-    "date": "2026-06-24",
+    "data": "2026-06-24",
     "mes": "Junho 2026",
     "icone": "🔥",
     "ref": "1 Coríntios 15:12",
@@ -254,7 +254,7 @@
   {
     "id": 24,
     "titulo": "Instinto de rebanho",
-    "date": "2026-06-25",
+    "data": "2026-06-25",
     "mes": "Junho 2026",
     "icone": "🐑",
     "ref": "João 10:27",
@@ -266,7 +266,7 @@
   {
     "id": 25,
     "titulo": "Mudando o mundo",
-    "date": "2026-06-26",
+    "data": "2026-06-26",
     "mes": "Junho 2026",
     "icone": "🌎",
     "ref": "Lucas 6:42",
@@ -278,7 +278,7 @@
   {
     "id": 26,
     "titulo": "Paz mental",
-    "date": "2026-06-27",
+    "data": "2026-06-27",
     "mes": "Junho 2026",
     "icone": "🙏",
     "ref": "Salmo 23:1",
@@ -290,7 +290,7 @@
   {
     "id": 27,
     "titulo": "Paciencia necessaria",
-    "date": "2026-06-28",
+    "data": "2026-06-28",
     "mes": "Junho 2026",
     "icone": "⏳",
     "ref": "1 Corintios 13:4",
@@ -302,7 +302,7 @@
   {
     "id": 28,
     "titulo": "Viver no presente",
-    "date": "2026-06-29",
+    "data": "2026-06-29",
     "mes": "Junho 2026",
     "icone": "🌟",
     "ref": "Filipenses 4:11",
@@ -314,7 +314,7 @@
   {
     "id": 29,
     "titulo": "Irmandade da cruz",
-    "date": "2026-06-30",
+    "data": "2026-06-30",
     "mes": "Junho 2026",
     "icone": "✝️",
     "ref": "2 Corintios 1:9",
@@ -326,7 +326,7 @@
   {
     "id": 30,
     "titulo": "Maos vazias",
-    "date": "2026-07-01",
+    "data": "2026-07-01",
     "mes": "Julho 2026",
     "icone": "🙌",
     "ref": "Deuteronomio 16:16",
@@ -338,7 +338,7 @@
   {
     "id": 31,
     "titulo": "Olhe para frente",
-    "date": "2026-07-02",
+    "data": "2026-07-02",
     "mes": "Julho 2026",
     "icone": "👀",
     "ref": "Proverbios 24:16",
@@ -350,7 +350,7 @@
   {
     "id": 32,
     "titulo": "O cao-guia",
-    "date": "2026-07-03",
+    "data": "2026-07-03",
     "mes": "Julho 2026",
     "icone": "🐕",
     "ref": "2 Corintios 5:7",
@@ -362,7 +362,7 @@
   {
     "id": 33,
     "titulo": "Ascensao",
-    "date": "2026-07-04",
+    "data": "2026-07-04",
     "mes": "Julho 2026",
     "icone": "✨",
     "ref": "Hebreus 4:14",
@@ -374,7 +374,7 @@
   {
     "id": 34,
     "titulo": "A dor da queda",
-    "date": "2026-07-05",
+    "data": "2026-07-05",
     "mes": "Julho 2026",
     "icone": "💪",
     "ref": "1 Corintios 10:12",
@@ -386,7 +386,7 @@
   {
     "id": 35,
     "titulo": "O arquivo celeste",
-    "date": "2026-07-06",
+    "data": "2026-07-06",
     "mes": "Julho 2026",
     "icone": "☁️",
     "ref": "1 Tessalonicenses 4:17",
@@ -398,7 +398,7 @@
   {
     "id": 36,
     "titulo": "Joia rara",
-    "date": "2026-07-07",
+    "data": "2026-07-07",
     "mes": "Julho 2026",
     "icone": "💎",
     "ref": "Proverbios 3:13",
@@ -410,7 +410,7 @@
   {
     "id": 37,
     "titulo": "Ate quando?",
-    "date": "2026-07-08",
+    "data": "2026-07-08",
     "mes": "Julho 2026",
     "icone": "🙏",
     "ref": "Salmo 13:1",
@@ -422,7 +422,7 @@
   {
     "id": 38,
     "titulo": "O evangelho de Judas",
-    "date": "2026-07-09",
+    "data": "2026-07-09",
     "mes": "Julho 2026",
     "icone": "📚",
     "ref": "2 Timoteo 4:4",
@@ -434,7 +434,7 @@
   {
     "id": 39,
     "titulo": "Qual e a razao?",
-    "date": "2026-07-10",
+    "data": "2026-07-10",
     "mes": "Julho 2026",
     "icone": "❓",
     "ref": "Eclesiastes 12:13",
@@ -446,7 +446,7 @@
   {
     "id": 40,
     "titulo": "Ele nao quis entrar",
-    "date": "2026-07-11",
+    "data": "2026-07-11",
     "mes": "Julho 2026",
     "icone": "🚪",
     "ref": "Lucas 15:28",
@@ -458,7 +458,7 @@
   {
     "id": 41,
     "titulo": "Curiosidade",
-    "date": "2026-07-12",
+    "data": "2026-07-12",
     "mes": "Julho 2026",
     "icone": "🔭",
     "ref": "1 Pedro 1:12",
@@ -470,7 +470,7 @@
   {
     "id": 42,
     "titulo": "O rei que voltara",
-    "date": "2026-07-13",
+    "data": "2026-07-13",
     "mes": "Julho 2026",
     "icone": "👑",
     "ref": "Joao 14:19",
@@ -482,7 +482,7 @@
   {
     "id": 43,
     "titulo": "Algo para a alma",
-    "date": "2026-07-14",
+    "data": "2026-07-14",
     "mes": "Julho 2026",
     "icone": "📚",
     "ref": "Salmo 119:11",
@@ -494,7 +494,7 @@
   {
     "id": 44,
     "titulo": "Seguro para sempre",
-    "date": "2026-07-15",
+    "data": "2026-07-15",
     "mes": "Julho 2026",
     "icone": "🛡️",
     "ref": "Salmo 34:19",
@@ -506,7 +506,7 @@
   {
     "id": 45,
     "titulo": "Atos falam mais alto",
-    "date": "2026-07-16",
+    "data": "2026-07-16",
     "mes": "Julho 2026",
     "icone": "👊",
     "ref": "1 Joao 3:18",
