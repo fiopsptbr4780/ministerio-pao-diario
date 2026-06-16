@@ -1,8 +1,31 @@
-# 📖 Ministério Pão Diário
+# 🍞 Fiops Devocional
 
-Aplicação web de mensagens devocionais com design elegante e navegação intuitiva.
+Iniciativa independente de apoio e divulgação do universo devocional do Pão Diário, com encaminhamento para os canais oficiais de Ministérios Pão Diário Portugal.
 
-🔗 **Acesso ao site:** https://fiopsptbr4780.github.io/ministerio-pao-diario/
+🌐 **Domínio:** https://fiopsdevocional.pt
+
+---
+
+## ⚠️ Aviso institucional
+
+Este projeto é uma **iniciativa independente de apoio e divulgação**. Não representa oficialmente os Ministérios Pão Diário.
+
+Foi criado por um apoiante com o objetivo de ajudar na divulgação do conteúdo e facilitar o acesso de interessados em Portugal ao trabalho de [Ministérios Pão Diário Portugal](https://ministeriospaodiario.org/escritorios/portugal/).
+
+---
+
+## 🔗 Links importantes
+
+- 🏛️ Escritório de Portugal: https://ministeriospaodiario.org/escritorios/portugal/
+- 🎙️ Podcasts oficiais: https://ministeriospaodiario.org/podcasts/
+- 🌐 Domínio do projeto: https://fiopsdevocional.pt
+- 📁 GitHub Pages (fallback): https://fiopsptbr4780.github.io/ministerio-pao-diario/
+
+---
+
+## 🎯 Objetivo
+
+Disponibilizar uma página simples, acessível e organizada para facilitar a descoberta de conteúdos devocionais e encaminhar visitantes para os canais oficiais de Ministérios Pão Diário quando aplicável.
 
 ---
 
@@ -10,7 +33,7 @@ Aplicação web de mensagens devocionais com design elegante e navegação intui
 
 ```
 ministerio-pao-diario/
-├── index.html        ← Página principal (não editar)
+├── index.html        ← Página principal
 ├── mensagens.json    ← ✅ AQUI você adiciona novas mensagens
 └── README.md
 ```
@@ -30,36 +53,25 @@ ministerio-pao-diario/
     "icone": "✨",
     "ref": "Livro 00:00",
     "tema": "fe",
-    "versiculoTexto": "Texto do versículo bíblico completo aqui.",
-    "texto": "Primeiro parágrafo da mensagem.\n\nSegundo parágrafo da mensagem.",
-    "oracao": "Texto da oração (opcional).",
-    "meditacao": "Pergunta ou reflexão do dia (opcional)."
+    "versiculoTexto": "Texto do versículo aqui.",
+    "texto": "Parágrafo 1 da mensagem.\nParágrafo 2 da mensagem.",
+    "oracao": "Texto da oração aqui. Amém.",
+    "meditacao": "Pergunta ou reflexão para o leitor meditar."
   }
 ```
 
-3. Clique em **"Commit changes"** — a mensagem aparece automaticamente no site!
+**Temas disponíveis:** `fe` · `esperanca` · `coragem` · `paciencia` · `reflexao` · `proposito` · `amor` · `humildade`
 
 ---
 
-## 🎨 Temas Disponíveis (campo `tema`)
+## ⚙️ Configuração GitHub Pages
 
-| Valor | Cor | Uso sugerido |
-|-------|-----|--------------|
-| `fe` | Amarelo | Fé, confiança |
-| `esperanca` | Azul claro | Esperança, promessas |
-| `coragem` | Vermelho suave | Coragem, perseverança |
-| `paciencia` | Verde | Paciência, crescimento |
-| `reflexao` | Roxo | Reflexão, meditação |
-| `proposito` | Laranja | Propósito, chamado |
-| `amor` | Rosa | Amor, relacionamentos |
-| `humildade` | Verde escuro | Humildade, serviço |
+Para publicar o site, aceda a **Settings → Pages → Deploy from a branch → main / root** e guarde.
+
+Para o domínio personalizado, insira `fiopsdevocional.pt` no campo **Custom domain** e configure o DNS do seu registrador para apontar para o GitHub Pages.
 
 ---
 
-## 🚀 Ativar GitHub Pages
+## 📜 Nota final
 
-1. Acesse **Settings** do repositório
-2. Clique em **Pages** (menu lateral)
-3. Em *Source*, selecione **Deploy from a branch**
-4. Escolha branch **main** e pasta **/ (root)**
-5. Clique **Save** — em 1-2 minutos o site estará online!
+Todo o conteúdo devocional pertence a **Ministérios Pão Diário**. Este repositório tem fins exclusivamente de divulgação e apoio, sem qualquer fins lucrativos.
