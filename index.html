@@ -110,12 +110,27 @@ let cur = 0;
 // Tenta carregar mensagens.json; se falhar usa os dados embutidos
 fetch('./mensagens.json')
   .then(r => { if(!r.ok) throw new Error('no json'); return r.json(); })
-  .then(data => { msgs = data; init(); })
-  .catch(() => { msgs = getMensagensEmbutidas(); init(); });
+  .then(data => { 
+    // Captura o dia de hoje no fuso horário do leitor (Formato AAAA-MM-DD)
+    const hoje = new Date().toLocaleDateString('sv-SE'); 
+    
+    // FILTRO AUTOMÁTICO: Oculta publicações cujas datas pertencem ao futuro
+    msgs = data.filter(m => !m.data || m.data <= hoje); 
+    
+    init(); 
+  })
+  .catch(() => { 
+    msgs = getMensagensEmbutidas(); 
+    init(); 
+  });
 
 function init(){
   document.getElementById('loading').style.display = 'none';
-  document.getElementById('cnt-cover').textContent = msgs.length + ' mensagens · Desde ' + msgs[0].mes;
+  if (msgs.length > 0) {
+    document.getElementById('cnt-cover').textContent = msgs.length + ' mensagens · Desde ' + msgs[0].mes;
+  } else {
+    document.getElementById('cnt-cover').textContent = 'Nenhuma mensagem disponível hoje.';
+  }
   showCover();
 }
 
@@ -132,7 +147,7 @@ function showIndex(){
   msgs.forEach((m,i)=>{
     const d = document.createElement('div');
     d.className = 'card';
-    d.innerHTML = `<div class="n">${m.mes}</div><h3>${m.icone} ${m.titulo}</h3><span class="tag ${m.tema||'fe'}">${(m.tema||'f\u00e9').charAt(0).toUpperCase()+(m.tema||'f\u00e9').slice(1)}</span>`;
+    d.innerHTML = `<div class="n">${m.mes}</div><h3>${m.icone} ${m.titulo}</h3><span class="tag ${m.tema||'fe'}">${(m.tema||'fé').charAt(0).toUpperCase()+(m.tema||'fé').slice(1)}</span>`;
     d.onclick = ()=>{ cur=i; showReader(i); };
     g.appendChild(d);
   });
@@ -153,34 +168,42 @@ function showReader(i){
     <div class="badges"><span class="bdg">${m.mes}</span><span class="bdg bdgt">${m.ref}</span></div>
   </div>
   <div class="rb">
-    <div class="vbox">"${m.versiculoTexto||''}"<div class="aline">— ${m.ref}</div></div>
-    <div class="mtxt">${(m.texto||'').split('\\n').filter(Boolean).map(p=>`<p>${p}</p>`).join('')}</div>
-    ${m.oracao ? `<div class="pbox"><div class="pl">✦ ORAÇÃO ✦</div>${m.oracao}</div>` : ''}
-    ${m.meditacao ? `<div class="mbox"><div class="mi">🕊️</div><div><div class="ml">MEDITAÇÃO DO DIA</div><p>${m.meditacao}</p></div></div>` : ''}
+    <div class="vbox">“${m.versiculoTexto||''}”<div class="aline">— ${m.ref}</div></div>
+    <div class="mtxt">${formatarTexto(m.texto || m.versiculoTexto)}</div>
+    ${m.oracao ? `<div class="pbox"><div class="pl">♥ ORAÇÃO ♥</div>${m.oracao}</div>` : ''}
+    ${m.meditacao ? `<div class="mbox"><div class="mi">📝</div><div><div class="ml">MEDITAÇÃO DO DIA</div><p>${m.meditacao}</p></div></div>` : ''}
     <div class="navb">
-      <button class="nb" ${i===0?'disabled':''} onclick="showReader(${i-1})">‹ Anterior</button>
+      <button class="nb" onclick="showReader(${i-1})" ${i===0?'disabled':''}>← Anterior</button>
       <button class="nb p" onclick="showIndex()">Índice</button>
-      <button class="nb" ${i===msgs.length-1?'disabled':''} onclick="showReader(${i+1})">Próxima ›</button>
+      <button class="nb" onclick="showReader(${i+1})" ${i===msgs.length-1?'disabled':''}>Próxima →</button>
     </div>
   </div>`;
   show('reader');
   window.scrollTo(0,0);
 }
 
-function show(id){ document.getElementById(id).style.display=''; }
-function hide(id){ document.getElementById(id).style.display='none'; }
+function show(id){ document.getElementById(id).style.display = ''; }
+function hide(id){ document.getElementById(id).style.display = 'none'; }
+
+function formatarTexto(txt){
+  if(!txt) return '';
+  return txt.split('\n').filter(p=>p.trim()!=='').map(p=>`<p>${p}</p>`).join('');
+}
 
 // ============================================================
 // MENSAGENS EMBUTIDAS (fallback quando mensagens.json não existe)
 // ============================================================
 function getMensagensEmbutidas(){
-  return [
-    {id:1,titulo:"A Fonte que Nunca Seca",mes:"Abril 2017",icone:"💧",ref:"João 4:14",tema:"esperanca",versiculoTexto:"Quem beber da água que eu lhe der nunca mais terá sede. Na verdade, a água que eu lhe der se tornará nele uma fonte de água que jorra para a vida eterna.",texto:"Jesus disse à mulher samaritana: 'Quem beber da água que eu lhe der nunca mais terá sede.' Deus nos convida a beber da Sua presença todos os dias, encontrando nele a verdadeira satisfação para a alma.\n\nQuando nos sentimos vazios e cansados, é junto à fonte viva que encontramos o refrigério. Não deixemos de nos aproximar d'Ele na oração e na leitura da Sua Palavra.",oracao:"Senhor, que eu beba diariamente da Tua fonte viva e jamais me afaste da Tua presença. Amém.",meditacao:"Em quais momentos do dia você tem buscado a presença de Deus como fonte de força?"},
-    {id:2,titulo:"O Pão Que Sustenta",mes:"Maio 2017",icone:"🍞",ref:"João 6:35",tema:"fe",versiculoTexto:"Eu sou o pão da vida. Aquele que vem a mim nunca terá fome, e aquele que crê em mim nunca mais terá sede.",texto:"'Eu sou o pão da vida', declarou Jesus. Assim como o pão alimenta o corpo, a Palavra de Deus alimenta a nossa alma. Cada manhã, ao abrir as Escrituras, recebemos o sustento espiritual de que precisamos para enfrentar o dia.\n\nNão negligencie este alimento precioso; sem ele, a alma definha e perde o vigor. Reserve um tempo cada dia para se nutrir da Palavra de Deus.",oracao:"Pai, que a Tua Palavra seja para mim o pão de cada dia, sustentando minha fé e renovando minhas forças. Amém.",meditacao:"Como você pode tornar a leitura da Bíblia um hábito diário mais consistente?"},
-    {id:3,titulo:"Luz no Caminho",mes:"Junho 2017",icone:"🕯️",ref:"Salmos 119:105",tema:"proposito",versiculoTexto:"A tua palavra é lâmpada que ilumina os meus passos e luz que clareia o meu caminho.",texto:"Em momentos de incerteza, quando os caminhos parecem obscuros e difíceis, a Palavra de Deus surge como uma lâmpada que ilumina nossos passos. Não precisamos enxergar o destino final; basta que haja luz suficiente para o próximo passo.\n\nConfie no guia que nunca falhou. Sua Palavra é confiável, Seus caminhos são perfeitos, e Sua luz sempre chegará na hora certa.",oracao:"Senhor, ilumina meu caminho com Tua Palavra e me dá coragem para caminhar mesmo quando não posso ver o horizonte. Amém.",meditacao:"Em que área da sua vida você precisa confiar mais na direção de Deus?"},
-    {id:4,titulo:"Forças Renovadas",mes:"Julho 2017",icone:"🦅",ref:"Isaías 40:31",tema:"coragem",versiculoTexto:"Mas os que esperam no Senhor renovam as suas forças. Voam alto como águilas; correm e não ficam exaustos; caminham e não se cansam.",texto:"Há momentos na vida em que sentimos que já não temos mais forças para continuar. O cansaço pesa nos ombros, as dificuldades parecem intransponíveis. É exatamente nesse momento que Deus nos convida a esperar Nele.\n\nEsperar não significa ficar parado, mas sim confiar que Deus agirá no tempo certo. Ao depositar nossa confiança Nele, nossas forças são renovadas de uma maneira que supera toda compreensão humana.",oracao:"Pai, quando minhas forças acabarem, que eu me lembre de correr para Ti. Renova em mim a força que só pode vir de Ti. Amém.",meditacao:"O que você está esperando de Deus neste momento da sua vida?"},
-    {id:5,titulo:"Paz que Excede",mes:"Agosto 2017",icone:"🕊️",ref:"Filipenses 4:7",tema:"reflexao",versiculoTexto:"E a paz de Deus, que excede todo o entendimento, guardará os seus corações e as suas mentes em Cristo Jesus.",texto:"O mundo oferece muitas formas de tentar encontrar paz: riqueza, sucesso, relacionamentos, prazer. Mas existe uma paz que nenhuma dessas coisas pode oferecer — a paz de Deus, que excede todo entendimento humano.\n\nEssa paz não depende das circunstâncias ao redor; ela vem de dentro, do profundo relacionamento com o Criador. Quando nossa mente e coração estão ancorados em Cristo, podemos ter paz mesmo em meio às tempestades da vida.",oracao:"Senhor, guarda meu coração e minha mente em Cristo Jesus, que eu experimente a paz que excede todo entendimento. Amém.",meditacao:"O que rouba a sua paz com mais frequência? Como você pode entregar isso a Deus?"}
-  ];
+  return [{
+    "id": 1,
+    "titulo": "Bem-vindo",
+    "icone": "🌱",
+    "mes": "Junho 2026",
+    "ref": "Gênesis 1:1",
+    "versiculoTexto": "No princípio Deus criou os céus e a terra.",
+    "texto": "Acompanhe diariamente nossas postagens de encorajamento espiritual.",
+    "tema": "fe"
+  }];
 }
 </script>
 </body>
