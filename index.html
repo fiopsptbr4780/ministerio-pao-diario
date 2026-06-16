@@ -28,7 +28,7 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 .sub-box p {font-size: 0.82rem;opacity: 0.8;margin-bottom: 12px;font-family: sans-serif;line-height: 1.4}
 .sub-form {display: flex;flex-direction: column;gap: 8px}
 .sub-form input {padding: 12px;border: 1px solid rgba(255,255,255,0.3);border-radius: 8px;font-size: 16px;background: rgba(255,255,255,0.95);color: #2c1a0e;outline: none;font-family: sans-serif;text-align: center}
-.sub-form button {padding: 12px;background: #f5b942;color: #3d1a00;border: none;border-radius: 8px;font-size: 0.95rem;font-weight: 700;cursor: pointer;transition: background 0.2s;font-family: sans-serif}
+.sub-form button {padding: 12px;background: #f5b942;color: #3d1000;border: none;border-radius: 8px;font-size: 0.95rem;font-weight: 700;cursor: pointer;transition: background 0.2s;font-family: sans-serif}
 .sub-form button:hover {background: #fff}
 .sub-form button:disabled {background: #aaa;cursor: not-allowed}
 
@@ -151,14 +151,26 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 let msgs = [];
 let cur = 0;
 
-// Altere para o seu e-mail real aqui para receber os dados
+// IMPORTANTE: Insira aqui o seu e-mail real para receber os dados dos subscritores
 const EMAIL_DESTINO = "fiopsptbr@gmail.com";
 
 fetch('./mensagens.json')
   .then(r => { if(!r.ok) throw new Error('no json'); return r.json(); })
   .then(data => { 
-    const hoje = new Date().toLocaleDateString('sv-SE'); 
-    msgs = data.filter(m => !m.date || m.date <= hoje); 
+    // CORREÇÃO LOGICA DE DATA: Constrói manualmente o YYYY-MM-DD perfeito com preenchimento de zeros (Padrão ISO seguro para Mobile)
+    const d = new Date();
+    const ano = d.getFullYear();
+    const mes = String(d.getMonth() + 1).padStart(2, '0');
+    const dia = String(d.getDate()).padStart(2, '0');
+    const hoje = `${ano}-${mes}-${dia}`; 
+
+    // Filtra comparando se a data da mensagem já chegou ou passou, tolerando as chaves "date" ou "data"
+    msgs = data.filter(m => {
+      const dataMsg = m.date || m.data;
+      if (!dataMsg) return true; // Se a mensagem não tiver data configurada, deixa visível
+      return dataMsg <= hoje;
+    }); 
+    
     init(); 
   })
   .catch(() => { 
@@ -174,7 +186,6 @@ function init(){
     document.getElementById('cnt-cover').textContent = 'Nenhuma mensagem disponível hoje.';
   }
   
-  // Se o utilizador já se inscreveu antes neste telemóvel, mostra logo a confirmação
   if(localStorage.getItem('user_subscrito') === 'true') {
     document.getElementById('form-container').style.display = 'none';
     document.getElementById('sucesso-container').style.display = 'block';
@@ -183,7 +194,6 @@ function init(){
   showCover();
 }
 
-// LOGICA DE SUBMISSÃO VIA AJAX (Sem recarregar a página)
 document.getElementById('subscriptionForm').addEventListener('submit', function(e) {
   e.preventDefault();
   
@@ -191,11 +201,9 @@ document.getElementById('subscriptionForm').addEventListener('submit', function(
   const email = document.getElementById('subEmail').value.trim().toLowerCase();
   const btn = document.getElementById('btnSubmeter');
 
-  // 1. Evitar múltiplos cliques seguidos
   btn.disabled = true;
   btn.textContent = "A processar... ⏳";
 
-  // 2. Bloqueio local contra duplicados
   if(localStorage.getItem('subscrito_' + email)) {
     alert('Este e-mail já se encontra inscrito neste dispositivo!');
     btn.disabled = false;
@@ -203,7 +211,6 @@ document.getElementById('subscriptionForm').addEventListener('submit', function(
     return;
   }
 
-  // 3. Envio em segundo plano (AJAX) para o FormSubmit
   fetch(`https://formsubmit.co/ajax/${EMAIL_DESTINO}`, {
     method: "POST",
     headers: { 
@@ -218,11 +225,9 @@ document.getElementById('subscriptionForm').addEventListener('submit', function(
   })
   .then(response => response.json())
   .then(data => {
-    // Guardar estado no navegador para evitar abusos futuros
     localStorage.setItem('subscrito_' + email, 'true');
     localStorage.setItem('user_subscrito', 'true');
     
-    // Transição visual suave para a mensagem de sucesso
     document.getElementById('form-container').style.display = 'none';
     document.getElementById('sucesso-container').style.display = 'block';
   })
