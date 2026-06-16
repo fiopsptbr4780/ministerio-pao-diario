@@ -2,13 +2,13 @@
 
 > Iniciativa independente de apoio e divulgação de conteúdos devocionais, com encaminhamento para os canais oficiais de Ministérios Pão Diário Portugal.
 
-[![Visitar Site](https://img.shields.io/badge/🌐%20Visitar%20Site-GitHub%20Pages-brightgreen?style=for-the-badge)](https://fiopsptbr4780.github.io/ministerio-pao-diario/)
+[![Visitar Site](https://img.shields.io/badge/🌐%20Visitar%20Site-GitHub%20Pages-brightgreen?style=for-the-badge)](https://fiopsptbr4780.github.io/ministerio-pao-diario/index.html)
 
 ---
 
 ## 🌐 Site
 
-**URL:** [https://fiopsptbr4780.github.io/ministerio-pao-diario/](https://fiopsptbr4780.github.io/ministerio-pao-diario/)
+**URL:** [https://fiopsptbr4780.github.io/ministerio-pao-diario/index.html](https://fiopsptbr4780.github.io/ministerio-pao-diario/index.html)
 
 ---
 
@@ -35,6 +35,7 @@ Foi criado por um apoiante com o objetivo de ajudar na divulgação do conteúdo
 ministerio-pao-diario/
 ├── index.html        ← Página principal do site
 ├── mensagens.json    ← Ficheiro com todas as mensagens devocionais
+├── .nojekyll         ← Desativa processamento Jekyll
 └── README.md         ← Este ficheiro
 ```
 
