@@ -7,12 +7,14 @@
     "date": "2026-06-15",
     "tipo": "imagem"
   },
-  {
-    "id": 2,
-    "mensagem_id": 2,
-    "titulo": "Força no Deserto (Animação)",
-    "arquivo": "imagens/deserto.gif",
-    "date": "2026-06-18",
-    "tipo": "gif"
-  }
+{
+  "id": 2,
+  "mensagem_id": 2,
+  "titulo": "Reflexão sobre Assim como o pão alimenta o corpo, a Palavra de Deus alimenta a nossa alma. Cada manhã, ao abrir as Escrituras, recebemos o sustento espiritual de que precisamos para enfrentar o dia. Não negligencie este alimento precioso; sem ele, a alma definha.",
+  "arquivo": "imagens/id_2.png",
+  "date": "2026-06-16",
+  "tipo": "imagem",
+  "prompt": "Imagem inspiradora vertical com atmosfera de paz e serenidade, estilo anime leve, cores suaves, iluminação natural, figuras humanas simples e harmoniosas, união entre culturas, fundo minimalista com céu claro e luz dourada suave, frase curta inspiradora ao fundo, tema: Assim como o pão alimenta o corpo, a Palavra de Deus alimenta a nossa alma. Cada manhã, ao abrir as Escrituras, recebemos o sustento espiritual de que precisamos para enfrentar o dia. Não negligencie este alimento precioso; sem ele, a alma definha."
+}
+
 ]
