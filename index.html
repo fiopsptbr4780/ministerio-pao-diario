@@ -220,7 +220,7 @@ let indexRendered = false;   // Cache de performance (Bug #12)
 let galleryRendered = false; // Cache de performance (Bug #12)
 
 // Segurança (Bug #4 / #5): Substitua pelo Hash MD5 do FormSubmit ou pelo seu e-mail real
-const EMAIL_DESTINO_HASH = "SEU_HASH_OU_EMAIL_AQUI"; 
+const EMAIL_DESTINO_HASH = "5f7cd653dfe248789d1177757db28bde"; 
 document.getElementById('subscriptionForm').action = `https://formsubmit.co/${EMAIL_DESTINO_HASH}`;
 
 // Função de Sanitização contra ataques XSS (Bug #6)
