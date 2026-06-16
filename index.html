@@ -45,7 +45,7 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 .rh h1{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:700}
 .badges{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
 .bdg{font-size:.73rem;padding:3px 12px;border-radius:20px;font-weight:700;background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.3)}
-.bdgt{background:rgba(245,185,66,.3);border-color:rgba(245,185,66,.6)}
+.bdg|t{background:rgba(245,185,66,.3);border-color:rgba(245,185,66,.6)}
 .rb{max-width:740px;margin:0 auto;padding:32px 22px 56px}
 .vbox{background:linear-gradient(135deg,#fff8ee,#fdebc8);border-left:4px solid #c8790a;border-radius:0 12px 12px 0;padding:16px 22px;margin-bottom:24px;font-style:italic;font-size:1.03rem;color:#5c3200;line-height:1.7}
 .mtxt{line-height:1.85;font-size:.97rem;color:#2c1a0e}
@@ -53,10 +53,13 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 .pbox{background:linear-gradient(135deg,#7a3e00,#c8790a);color:#fff;border-radius:14px;padding:22px 26px;margin:28px 0;text-align:center;font-style:italic;font-size:1.08rem;line-height:1.6;box-shadow:0 4px 20px rgba(122,62,0,.3)}
 .pbox .pl{font-style:normal;font-size:.7rem;font-weight:700;letter-spacing:2px;opacity:.8;margin-bottom:6px;font-family:sans-serif}
 .aline{text-align:right;font-style:italic;color:#a0652a;font-size:.88rem;margin-top:18px}
-.mbox{background:#fff;border:1px solid #f0dbc0;border-radius:12px;padding:16px 20px;margin-top:24px;display:flex;gap:12px;align-items:flex-start}
-.mbox .mi{font-size:1.7rem}
-.mbox .ml{font-size:.7rem;font-weight:700;color:#c8790a;letter-spacing:1px;margin-bottom:3px;font-family:sans-serif}
-.mbox p{font-size:.88rem;color:#5c3200;line-height:1.5}
+
+/* CAIXA DE MEDITAÇÃO ATUALIZADA (Mais apelativa e com cor de destaque) */
+.mbox{background:#fff9f2;border:1px solid #f0dbc0;border-left:5px solid #c8790a;border-radius:4px 14px 14px 4px;padding:18px 22px;margin-top:32px;display:flex;gap:14px;align-items:flex-start;box-shadow:0 4px 15px rgba(122,62,0,0.06)}
+.mbox .mi{font-size:1.8rem;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.1))}
+.mbox .ml{font-size:.75rem;font-weight:800;color:#c8790a;letter-spacing:1.5px;margin-bottom:5px;font-family:sans-serif;text-transform:uppercase}
+.mbox p{font-size:.93rem;color:#422200;line-height:1.6;font-weight:500}
+
 .navb{display:flex;gap:10px;margin-top:32px}
 .nb{flex:1;padding:11px;border:2px solid #c8790a;background:#fff;color:#7a3e00;border-radius:10px;cursor:pointer;font-size:.88rem;font-weight:700;transition:all .2s}
 .nb:hover{background:#c8790a;color:#fff}
@@ -102,17 +105,11 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 let msgs = [];
 let cur = 0;
 
-// Tenta carregar mensagens.json; se falhar usa os dados embutidos
 fetch('./mensagens.json')
   .then(r => { if(!r.ok) throw new Error('no json'); return r.json(); })
   .then(data => { 
-    // Captura o dia de hoje no formato AAAA-MM-DD
     const hoje = new Date().toLocaleDateString('sv-SE'); 
-    
-    // FILTRO AUTOMÁTICO: Oculta publicações com datas futuras. 
-    // Garante que só filtra se m.data for válido
     msgs = data.filter(m => !m.data || m.data <= hoje); 
-    
     init(); 
   })
   .catch(() => { 
@@ -157,6 +154,17 @@ function showReader(i){
   hide('cover'); hide('index-page');
   const r = document.getElementById('reader');
   
+  // Bloco de controle: Só monta a caixinha se existir texto no campo "meditacao"
+  const mboxHtml = m.meditacao ? `
+    <div class="mbox">
+      <div class="mi">💡</div>
+      <div>
+        <div class="ml">Hora de Refletir</div>
+        <p>${m.meditacao}</p>
+      </div>
+    </div>
+  ` : '';
+  
   r.innerHTML = `
   <div class="rh">
     <button class="bb" onclick="showIndex()">← Índice</button>
@@ -167,6 +175,10 @@ function showReader(i){
   <div class="rb">
     <div class="vbox">"${m.versiculoTexto||''}"<div class="aline">— ${m.ref}</div></div>
     <div class="mtxt">${formatarTexto(m.texto)}</div>
+    
+    <!-- Renderização da Meditação Prática -->
+    ${mboxHtml}
+    
     <div class="navb">
       <button class="nb" onclick="showReader(${i-1})" ${i===0?'disabled':''}>← Anterior</button>
       <button class="nb p" onclick="showIndex()">Índice</button>
@@ -194,7 +206,8 @@ function getMensagensEmbutidas(){
     "ref": "Gênesis 1:1",
     "versiculoTexto": "No princípio Deus criou os céus e a terra.",
     "texto": "Acompanhe diariamente nossas postagens de encorajamento espiritual.",
-    "tema": "fe"
+    "tema": "fe",
+    "meditacao": "Como você pode aplicar a palavra de hoje na sua vida prática?"
   }];
 }
 </script>
