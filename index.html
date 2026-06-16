@@ -8,16 +8,27 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh}
 
-/* COVER */
-#cover{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(160deg,#3d1a00,#7a3e00 40%,#c8790a 80%,#f5b942);text-align:center;padding:40px 20px;color:#fff8ee}
-.icon{font-size:80px;margin-bottom:16px}
-#cover h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:700;letter-spacing:2px;text-shadow:0 2px 8px rgba(0,0,0,.5)}
-.sub{font-size:1.1rem;margin-top:10px;opacity:.9}
-.line{width:70px;height:2px;background:#f5b942;margin:18px auto}
-.intro{max-width:500px;font-size:.95rem;line-height:1.8;opacity:.87}
-.cnt{margin-top:14px;font-size:.82rem;opacity:.65}
-#cover button{margin-top:36px;padding:13px 38px;background:#fff;color:#7a3e00;border:none;border-radius:50px;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.3);transition:transform .2s}
-#cover button:hover{transform:translateY(-2px)}
+/* COVER - Otimizado para Telemóvel (Sem cortes) */
+#cover{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:100dvh;background:linear-gradient(160deg,#3d1a00,#7a3e00 40%,#c8790a 80%,#f5b942);text-align:center;padding:30px 20px;color:#fff8ee;overflow-y:auto}
+.icon{font-size:64px;margin-bottom:10px}
+#cover h1{font-size:clamp(1.8rem,6vw,3rem);font-weight:700;letter-spacing:2px;text-shadow:0 2px 8px rgba(0,0,0,.5);line-height:1.2}
+.sub{font-size:1rem;margin-top:8px;opacity:.9}
+.line{width:60px;height:2px;background:#f5b942;margin:14px auto}
+.intro{max-width:460px;font-size:.92rem;line-height:1.6;opacity:.87;margin-bottom:10px}
+.cnt{margin-top:8px;font-size:.8rem;opacity:.65}
+
+/* Botão Principal */
+.btn-start {margin: 20px 0;padding:14px 40px;background:#fff;color:#7a3e00;border:none;border-radius:50px;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.3);transition:transform .2s}
+.btn-start:hover{transform:translateY(-2px)}
+
+/* FORMULÁRIO DE CAPTAÇÃO (Base de Dados Simples) */
+.sub-box {background: rgba(255,255,255,0.12);border: 1px solid rgba(255,255,255,0.2);border-radius: 16px;padding: 20px;max-width: 400px;width: 100%;margin-top: 15px;backdrop-filter: blur(5px)}
+.sub-box h3 {font-size: 1.05rem;margin-bottom: 5px;color: #fff}
+.sub-box p {font-size: 0.82rem;opacity: 0.8;margin-bottom: 12px;font-family: sans-serif}
+.sub-form {display: flex;flex-direction: column;gap: 8px}
+.sub-form input {padding: 12px;border: 1px solid rgba(255,255,255,0.3);border-radius: 8px;font-size: 16px; /* 16px previne zoom automático no iPhone */background: rgba(255,255,255,0.95);color: #2c1a0e;outline: none;font-family: sans-serif}
+.sub-form button {padding: 12px;background: #f5b942;color: #3d1a00;border: none;border-radius: 8px;font-size: 0.95rem;font-weight: 700;cursor: pointer;transition: background 0.2s;font-family: sans-serif}
+.sub-form button:hover {background: #fff}
 
 /* INDEX */
 #index-page{min-height:100vh;background:#fdf6ee;padding:40px 20px}
@@ -45,7 +56,7 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 .rh h1{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:700}
 .badges{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
 .bdg{font-size:.73rem;padding:3px 12px;border-radius:20px;font-weight:700;background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.3)}
-.bdg|t{background:rgba(245,185,66,.3);border-color:rgba(245,185,66,.6)}
+.bdg\.t{background:rgba(245,185,66,.3);border-color:rgba(245,185,66,.6)}
 .rb{max-width:740px;margin:0 auto;padding:32px 22px 56px}
 .vbox{background:linear-gradient(135deg,#fff8ee,#fdebc8);border-left:4px solid #c8790a;border-radius:0 12px 12px 0;padding:16px 22px;margin-bottom:24px;font-style:italic;font-size:1.03rem;color:#5c3200;line-height:1.7}
 .mtxt{line-height:1.85;font-size:.97rem;color:#2c1a0e}
@@ -54,7 +65,7 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 .pbox .pl{font-style:normal;font-size:.7rem;font-weight:700;letter-spacing:2px;opacity:.8;margin-bottom:6px;font-family:sans-serif}
 .aline{text-align:right;font-style:italic;color:#a0652a;font-size:.88rem;margin-top:18px}
 
-/* CAIXA DE MEDITAÇÃO ATUALIZADA (Mais apelativa e com cor de destaque) */
+/* CAIXA DE MEDITAÇÃO */
 .mbox{background:#fff9f2;border:1px solid #f0dbc0;border-left:5px solid #c8790a;border-radius:4px 14px 14px 4px;padding:18px 22px;margin-top:32px;display:flex;gap:14px;align-items:flex-start;box-shadow:0 4px 15px rgba(122,62,0,0.06)}
 .mbox .mi{font-size:1.8rem;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.1))}
 .mbox .ml{font-size:.75rem;font-weight:800;color:#c8790a;letter-spacing:1.5px;margin-bottom:5px;font-family:sans-serif;text-transform:uppercase}
@@ -72,7 +83,11 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 .spinner{width:40px;height:40px;border:4px solid #f0dbc0;border-top-color:#c8790a;border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-@media(max-width:600px){.rh{padding:20px 16px}.rb{padding:20px 14px 40px}.navb{flex-direction:column}}
+@media(max-width:600px){
+  #cover{justify-content: flex-start; padding: 20px 16px;}
+  .icon{font-size: 50px;}
+  .rh{padding:20px 16px}.rb{padding:20px 14px 40px}.navb{flex-direction:column}
+}
 </style>
 </head>
 <body>
@@ -88,8 +103,24 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
   <div class="line"></div>
   <p class="sub">Reflexões que alimentam a alma</p>
   <p class="intro">Mensagens de encorajamento, fé e esperança para cada etapa da jornada espiritual.</p>
+  
+  <button class="btn-start" onclick="showIndex()">Começar a Ler ›</button>
+
+  <div class="sub-box">
+    <h3>Receber Mensagens Diárias</h3>
+    <p>Inscreva-se para não perder nenhuma reflexão espiritual.</p>
+    
+    <form class="sub-form" action="https://formsubmit.co/fiopsptbr@gmail.com" method="POST">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://fiopsptbr4780.github.io/ministerio-pao-diario/">
+      
+      <input type="text" name="Nome" placeholder="Seu nome" required>
+      <input type="email" name="Email" placeholder="Seu e-mail" required>
+      <button type="submit">Quero me inscrever ✨</button>
+    </form>
+  </div>
+
   <p class="cnt" id="cnt-cover"></p>
-  <button onclick="showIndex()">Começar a Ler ›</button>
 </div>
 
 <div id="index-page" style="display:none">
@@ -118,9 +149,10 @@ fetch('./mensagens.json')
   });
 
 function init(){
+  document.getElementById('loading').style.none = 'none';
   document.getElementById('loading').style.display = 'none';
   if (msgs.length > 0) {
-    document.getElementById('cnt-cover').textContent = msgs.length + ' mensagens · Desde ' + msgs[0].mes;
+    document.getElementById('cnt-cover').textContent = msgs.length + ' mensagens disponíveis';
   } else {
     document.getElementById('cnt-cover').textContent = 'Nenhuma mensagem disponível hoje.';
   }
@@ -154,7 +186,6 @@ function showReader(i){
   hide('cover'); hide('index-page');
   const r = document.getElementById('reader');
   
-  // Bloco de controle: Só monta a caixinha se existir texto no campo "meditacao"
   const mboxHtml = m.meditacao ? `
     <div class="mbox">
       <div class="mi">💡</div>
@@ -176,7 +207,6 @@ function showReader(i){
     <div class="vbox">"${m.versiculoTexto||''}"<div class="aline">— ${m.ref}</div></div>
     <div class="mtxt">${formatarTexto(m.texto)}</div>
     
-    <!-- Renderização da Meditação Prática -->
     ${mboxHtml}
     
     <div class="navb">
