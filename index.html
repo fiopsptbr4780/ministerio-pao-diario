@@ -100,10 +100,6 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 <div id="reader" style="display:none"></div>
 
 <script>
-// ============================================================
-// DADOS — edite o arquivo mensagens.json para adicionar novas
-// mensagens. Basta seguir o mesmo padrão de objeto abaixo.
-// ============================================================
 let msgs = [];
 let cur = 0;
 
@@ -111,10 +107,10 @@ let cur = 0;
 fetch('./mensagens.json')
   .then(r => { if(!r.ok) throw new Error('no json'); return r.json(); })
   .then(data => { 
-    // Captura o dia de hoje no fuso horário do leitor (Formato AAAA-MM-DD)
+    // Captura o dia de hoje no formato AAAA-MM-DD
     const hoje = new Date().toLocaleDateString('sv-SE'); 
     
-    // FILTRO AUTOMÁTICO: Oculta publicações cujas datas pertencem ao futuro
+    // FILTRO AUTOMÁTICO: Oculta publicações com datas futuras
     msgs = data.filter(m => !m.data || m.data <= hoje); 
     
     init(); 
@@ -160,6 +156,7 @@ function showReader(i){
   const m = msgs[i];
   hide('cover'); hide('index-page');
   const r = document.getElementById('reader');
+  
   r.innerHTML = `
   <div class="rh">
     <button class="bb" onclick="showIndex()">← Índice</button>
@@ -168,10 +165,8 @@ function showReader(i){
     <div class="badges"><span class="bdg">${m.mes}</span><span class="bdg bdgt">${m.ref}</span></div>
   </div>
   <div class="rb">
-    <div class="vbox">“${m.versiculoTexto||''}”<div class="aline">— ${m.ref}</div></div>
-    <div class="mtxt">${formatarTexto(m.texto || m.versiculoTexto)}</div>
-    ${m.oracao ? `<div class="pbox"><div class="pl">♥ ORAÇÃO ♥</div>${m.oracao}</div>` : ''}
-    ${m.meditacao ? `<div class="mbox"><div class="mi">📝</div><div><div class="ml">MEDITAÇÃO DO DIA</div><p>${m.meditacao}</p></div></div>` : ''}
+    <div class="vbox">"${m.versiculoTexto||''}"<div class="aline">— ${m.ref}</div></div>
+    <div class="mtxt">${formatarTexto(m.texto)}</div>
     <div class="navb">
       <button class="nb" onclick="showReader(${i-1})" ${i===0?'disabled':''}>← Anterior</button>
       <button class="nb p" onclick="showIndex()">Índice</button>
@@ -182,7 +177,7 @@ function showReader(i){
   window.scrollTo(0,0);
 }
 
-function show(id){ document.getElementById(id).style.display = ''; }
+function show(id){ document.getElementById(id).style.display = 'block'; }
 function hide(id){ document.getElementById(id).style.display = 'none'; }
 
 function formatarTexto(txt){
@@ -190,13 +185,10 @@ function formatarTexto(txt){
   return txt.split('\n').filter(p=>p.trim()!=='').map(p=>`<p>${p}</p>`).join('');
 }
 
-// ============================================================
-// MENSAGENS EMBUTIDAS (fallback quando mensagens.json não existe)
-// ============================================================
 function getMensagensEmbutidas(){
   return [{
     "id": 1,
-    "titulo": "Bem-vindo",
+    "titulo": "Mensagem Padrão",
     "icone": "🌱",
     "mes": "Junho 2026",
     "ref": "Gênesis 1:1",
