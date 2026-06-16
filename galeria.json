@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "mensagem_id": 1,
+    "titulo": "Reflexão sobre a Gratidão",
+    "arquivo": "imagens/gratidao.png",
+    "date": "2026-06-17",
+    "tipo": "imagem"
+  },
+  {
+    "id": 2,
+    "mensagem_id": 2,
+    "titulo": "Força no Deserto (Animação)",
+    "arquivo": "imagens/deserto.gif",
+    "date": "2026-06-18",
+    "tipo": "gif"
+  }
+]
