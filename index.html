@@ -1,14 +1,29 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ministério Pão Diário</title>
+
+<meta name="description" content="Reflexões espirituais diárias de fé, esperança e encorajamento.">
+<meta property="og:title" content="Ministério Pão Diário">
+<meta property="og:description" content="Reflexões que alimentam a alma">
+<meta property="og:type" content="website">
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh}
+body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh;scroll-behavior:smooth}
 
-/* COVER - Alinhamento Centralizado Otimizado para Telemóvel */
+/* Suporte para Acessibilidade de Movimento (Melhoria Premium #2) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* COVER - Alinhamento Centralizado Otimizado */
 #cover{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100dvh;background:linear-gradient(160deg,#3d1a00,#7a3e00 40%,#c8790a 80%,#f5b942);text-align:center;padding:30px 20px;color:#fff8ee;overflow-y:auto}
 .cover-content{display:flex;flex-direction:column;align-items:center;justify-content:center;max-width:500px;width:100%;margin:auto 0}
 .icon{font-size:64px;margin-bottom:10px}
@@ -18,14 +33,14 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 .intro{font-size:.92rem;line-height:1.6;opacity:.87;margin-bottom:10px}
 .cnt{margin-top:15px;font-size:.8rem;opacity:.65}
 
-/* Contentor de Botões da Capa */
+/* Botões da Capa */
 .btn-group {display: flex;flex-direction: column;gap: 10px;width: 100%;max-width: 280px;margin: 15px 0}
 .btn-start {padding:14px 20px;background:#fff;color:#7a3e00;border:none;border-radius:50px;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.3);transition:transform .2s;width:100%}
 .btn-start:hover{transform:translateY(-2px)}
 .btn-gallery {background: transparent;color: #fff;border: 2px solid #fff;box-shadow: none}
 .btn-gallery:hover {background: rgba(255,255,255,0.15);transform:translateY(-2px)}
 
-/* CAIXA DE SUBSCRIÇÃO CENTRALIZADA */
+/* Caixa de Subscrição */
 .sub-box {background: rgba(255,255,255,0.12);border: 1px solid rgba(255,255,255,0.2);border-radius: 16px;padding: 20px;width: 100%;max-width: 340px;margin: 15px auto 0 auto;backdrop-filter: blur(5px);text-align:center}
 .sub-box h3 {font-size: 1.05rem;margin-bottom: 5px;color: #fff}
 .sub-box p {font-size: 0.82rem;opacity: 0.8;margin-bottom: 12px;font-family: sans-serif;line-height: 1.4}
@@ -40,25 +55,36 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* INDEX & GALERIA */
+/* Ecrãs Principais */
 #index-page, #gallery-page {min-height:100vh;background:#fdf6ee;padding:40px 20px}
 #index-page h2, #gallery-page h2 {font-size:2rem;color:#7a3e00;text-align:center;margin-bottom:6px}
 .isub{text-align:center;color:#a0652a;font-size:.9rem;margin-bottom:28px}
 
 #grid, #gallery-grid {display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;max-width:1050px;margin:0 auto 36px}
 
-/* Cards de Texto */
+/* Cards de Texto e Acessibilidade */
 .card {background:#fff;border-radius:12px;padding:16px 18px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.08);border-top:4px solid #c8790a;transition:transform .15s,box-shadow .15s}
-.card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.14)}
+.card:hover, .card:focus-visible{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.14);outline: 3px solid #c8790a}
 .card .n{font-size:.75rem;color:#c8790a;font-weight:700;letter-spacing:1px;margin-bottom:4px}
 .card h3{font-size:.98rem;color:#2c1a0e;margin-bottom:8px}
-.tag{display:inline-block;font-size:.7rem;padding:2px 10px;border-radius:20px;font-weight:700}
-.fe{background:#fff3cd;color:#856404}.esperanca{background:#d1ecf1;color:#0c5460}
-.coragem{background:#f8d7da;color:#721c24}.paciencia{background:#d4edda;color:#155724}
 
-/* Cards de Mídia (Imagens/GIFs) */
+/* Estilização das Tags (Correção do Bug #2 e Bug #3) */
+.tag{display:inline-block;font-size:.7rem;padding:2px 10px;border-radius:20px;font-weight:700}
+.fe{background:#fff3cd;color:#856404}
+.esperanca{background:#d1ecf1;color:#0c5460}
+.coragem{background:#f8d7da;color:#721c24}
+.paciencia{background:#d4edda;color:#155724}
+.proposito { background:#e8d5f5; color:#5b2d8e }
+.confianca { background:#cce5ff; color:#004085 }
+.reflexao  { background:#e2e3e5; color:#383d41 }
+.transformacao { background:#d6eaf8; color:#1a5276 }
+.salvacao  { background:#fde8d8; color:#7e2811 }
+.biblia    { background:#fef9e7; color:#7d6608 }
+.amor      { background:#fce4ec; color:#880e4f }
+
+/* Cards da Galeria */
 .media-card {background: #fff;border-radius: 14px;overflow: hidden;box-shadow: 0 4px 12px rgba(0,0,0,0.08);cursor: pointer;transition: transform 0.2s, box-shadow 0.2s;display: flex;flex-direction: column}
-.media-card:hover {transform: translateY(-4px);box-shadow: 0 8px 24px rgba(0,0,0,0.15)}
+.media-card:hover, .media-card:focus-visible {transform: translateY(-4px);box-shadow: 0 8px 24px rgba(0,0,0,0.15);outline: 3px solid #c8790a}
 .media-wrapper {width: 100%;height: 200px;overflow: hidden;background: #eadaa2;position: relative}
 .media-wrapper img {width: 100%;height: 100%;object-fit: cover;transition: transform 0.3s}
 .media-card:hover .media-wrapper img {transform: scale(1.04)}
@@ -69,20 +95,20 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 .back{display:block;margin:0 auto;padding:11px 32px;background:#c8790a;color:#fff;border:none;border-radius:50px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .2s}
 .back:hover{background:#a86200}
 
-/* VISUALIZADOR DE IMAGEM INTEIRA (Lightbox) */
+/* Lightbox Corrigido (Bug #9) */
 #lightbox {display: none;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(26,10,0,0.95);z-index: 9999;align-items: center;justify-content: center;padding: 20px;backdrop-filter: blur(8px)}
 #lightbox-img {max-width: 100%;max-height: 85vh;border-radius: 8px;box-shadow: 0 10px 40px rgba(0,0,0,0.5);object-fit: contain}
-.lightbox-close {position: absolute;top: 20px;right: 20px;color: #fff;font-size: 30px;font-weight: bold;cursor: pointer;background: rgba(0,0,0,0.3);width: 45px;height: 45px;display: flex;align-items: center;justify-content: center;border-radius: 50%}
+.lightbox-close {position: absolute;top: 20px;right: 20px;color: #fff;font-size: 30px;font-weight: bold;cursor: pointer;background: rgba(0,0,0,0.3);width: 45px;height: 45px;border: none;display: flex;align-items: center;justify-content: center;border-radius: 50%;font-family: inherit}
 
-/* READER */
+/* LEITOR DE MENSAGENS */
 #reader{min-height:100vh;background:#fdf6ee}
 .rh{background:linear-gradient(135deg,#7a3e00,#c8790a);color:#fff;padding:28px 36px}
-.rh .bb{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:#fff;padding:5px 14px;border-radius:20px;cursor:pointer;font-size:.8rem;margin-bottom:18px;display:inline-block}
+.rh .bb {background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:#fff;padding:5px 14px;border-radius:20px;cursor:pointer;font-size:.8rem;margin-bottom:18px;display:inline-block}
 .rh .pn{font-size:.75rem;opacity:.7;letter-spacing:2px;margin-bottom:6px}
 .rh h1{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:700}
 .badges{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
 .bdg{font-size:.73rem;padding:3px 12px;border-radius:20px;font-weight:700;background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.3)}
-.bdg\.t{background:rgba(245,185,66,.3);border-color:rgba(245,185,66,.6)}
+.bdgt {background:rgba(245,185,66,.3);border-color:rgba(245,185,66,.6)} /* Correção do Bug #2 */
 .rb{max-width:740px;margin:0 auto;padding:32px 22px 56px}
 .vbox{background:linear-gradient(135deg,#fff8ee,#fdebc8);border-left:4px solid #c8790a;border-radius:0 12px 12px 0;padding:16px 22px;margin-bottom:24px;font-style:italic;font-size:1.03rem;color:#5c3200;line-height:1.7}
 .mtxt{line-height:1.85;font-size:.97rem;color:#2c1a0e}
@@ -98,7 +124,7 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 .navb{display:flex;gap:10px;margin-top:32px}
 .nb{flex:1;padding:11px;border:2px solid #c8790a;background:#fff;color:#7a3e00;border-radius:10px;cursor:pointer;font-size:.88rem;font-weight:700;transition:all .2s}
 .nb:hover{background:#c8790a;color:#fff}
-.nb:disabled{opacity:.25;cursor:default}
+.nb:disabled{opacity:.25;cursor:default;background:#eee;border-color:#ccc;color:#999}
 .nb.p{background:#c8790a;color:#fff}
 
 /* Loading */
@@ -120,183 +146,228 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
   <span>Carregando ambiente espiritual…</span>
 </div>
 
-<div id="cover" style="display:none">
-  <div class="cover-content">
-    <div class="icon">📖</div>
-    <h1>Ministério<br>Pão Diário</h1>
-    <div class="line"></div>
-    <p class="sub">Reflexões que alimentam a alma</p>
-    <p class="intro">Mensagens de encorajamento, fé e esperança para cada etapa da jornada espiritual.</p>
-    
-    <div class="btn-group">
-      <button class="btn-start" onclick="showIndex()">Começar a Ler ›</button>
-      <button class="btn-start btn-gallery" onclick="showGallery()">Galeria de Inspirações ✨</button>
-    </div>
-
-    <div class="sub-box">
-      <div id="form-container">
-        <h3>Receber Mensagens Diárias</h3>
-        <p>Inscreva-se para receber as nossas reflexões diretamente.</p>
-        
-        <form class="sub-form" id="subscriptionForm">
-          <input type="text" id="subNome" placeholder="Seu nome" required>
-          <input type="email" id="subEmail" placeholder="Seu e-mail" required>
-          <button type="submit" id="btnSubmeter">Quero me inscrever ✨</button>
-        </form>
+<main id="app-content">
+  <div id="cover" style="display:none">
+    <div class="cover-content">
+      <div class="icon">📖</div>
+      <h1>Ministério<br>Pão Diário</h1>
+      <div class="line"></div>
+      <p class="sub">Reflexões que alimentam a alma</p>
+      <p class="intro">Mensagens de encorajamento, fé e esperança para cada etapa da jornada espiritual.</p>
+      
+      <div class="btn-group">
+        <button class="btn-start" onclick="showIndex()">Começar a Ler ›</button>
+        <button class="btn-start btn-gallery" onclick="showGallery()">Galeria de Inspirações ✨</button>
       </div>
 
-      <div id="sucesso-container">
-        <div class="success-icon">✅</div>
-        <h3>Subscrição Confirmada!</h3>
-        <p>Obrigado por se juntar a nós. O seu e-mail foi registado com sucesso na nossa base de dados.</p>
-      </div>
-    </div>
+      <div class="sub-box">
+        <div id="form-container">
+          <h3>Receber Mensagens Diárias</h3>
+          <p>Inscreva-se para receber as nossas reflexões diretamente.</p>
+          
+          <form class="sub-form" id="subscriptionForm" action="https://formsubmit.co/abc123placeholder" method="POST">
+            <input type="text" id="subNome" name="Nome" placeholder="Seu nome" required>
+            <input type="email" id="subEmail" name="Email" placeholder="Seu e-mail" required>
+            <button type="submit" id="btnSubmeter">Quero me inscrever ✨</button>
+          </form>
+        </div>
 
-    <p class="cnt" id="cnt-cover"></p>
+        <div id="sucesso-container">
+          <div class="success-icon">✅</div>
+          <h3>Subscrição Confirmada!</h3>
+          <p>Obrigado por se juntar a nós. O seu e-mail foi registado com sucesso.</p>
+        </div>
+      </div>
+
+      <p class="cnt" id="cnt-cover"></p>
+    </div>
   </div>
-</div>
 
-<div id="index-page" style="display:none">
-  <h2>📖 Índice de Reflexões</h2>
-  <p class="isub">Escolha uma mensagem para edificar o seu dia</p>
-  <div id="grid"></div>
-  <button class="back" onclick="showCover()">← Capa</button>
-</div>
+  <div id="index-page" style="display:none">
+    <h2>📖 Índice de Reflexões</h2>
+    <p class="isub">Escolha uma mensagem para edificar o seu dia</p>
+    <div id="grid"></div>
+    <button class="back" onclick="showCover()">← Capa</button>
+  </div>
 
-<div id="gallery-page" style="display:none">
-  <h2>🎨 Galeria de Inspirações</h2>
-  <p class="isub">Imagens e animações geradas por IA a partir das nossas mensagens</p>
-  <div id="gallery-grid"></div>
-  <button class="back" onclick="showCover()">← Capa</button>
-</div>
+  <div id="gallery-page" style="display:none">
+    <h2>🎨 Galeria de Inspirações</h2>
+    <p class="isub">Imagens e animações geradas por IA a partir das nossas mensagens</p>
+    <div id="gallery-grid"></div>
+    <button class="back" onclick="showCover()">← Capa</button>
+  </div>
 
-<div id="reader" style="display:none"></div>
+  <div id="reader" style="display:none"></div>
+</main>
 
 <div id="lightbox" onclick="hideLightbox()">
-  <span class="lightbox-close">&times;</span>
-  <img id="lightbox-img" src="" alt="Visualização">
+  <button class="lightbox-close" onclick="hideLightbox()" aria-label="Fechar visualizador">&times;</button>
+  <img id="lightbox-img" src="" alt="Visualização expandida">
 </div>
+
+<noscript>
+  <div style="position:fixed;top:0;left:0;width:100%;height:100%;background:#fdf6ee;text-align:center;padding:40px;font-family:Georgia,serif;z-index:99999">
+    <h2>Ministério Pão Diário</h2>
+    <p style="margin-top:20px;color:#7a3e00;">Este site requer JavaScript ativo para carregar as mensagens. Por favor, ative-o nas configurações do seu navegador.</p>
+  </div>
+</noscript>
 
 <script>
 let msgs = [];
 let galeriaItens = [];
 let cur = 0;
+let indexRendered = false;   // Cache de performance (Bug #12)
+let galleryRendered = false; // Cache de performance (Bug #12)
 
-// IMPORTANTE: Insira aqui o seu e-mail real para receber os dados dos subscritores
-const EMAIL_DESTINO = "SEU_EMAIL_AQUI@EMAIL.COM";
+// Segurança (Bug #4 / #5): Substitua pelo Hash MD5 do FormSubmit ou pelo seu e-mail real
+const EMAIL_DESTINO_HASH = "SEU_HASH_OU_EMAIL_AQUI"; 
+document.getElementById('subscriptionForm').action = `https://formsubmit.co/${EMAIL_DESTINO_HASH}`;
 
-// Captura a data de hoje no formato seguro YYYY-MM-DD
+// Função de Sanitização contra ataques XSS (Bug #6)
+function esc(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// Resolução inteligente do Flexbox/Block para navegação (Bug #1)
+const flexIds = ['cover', 'loading', 'lightbox'];
+function show(id) { document.getElementById(id).style.display = flexIds.includes(id) ? 'flex' : 'block'; }
+function hide(id) { document.getElementById(id).style.display = 'none'; }
+function scrollTopo() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
 const d = new Date();
 const hoje = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
-// Carregar Dados em Paralelo
 Promise.all([
   fetch('./mensagens.json').then(r => r.json()).catch(() => getMensagensEmbutidas()),
   fetch('./galeria.json').then(r => r.json()).catch(() => [])
 ])
 .then(([dadosMensagens, dadosGaleria]) => {
-  // Filtrar Mensagens por data
-  msgs = dadosMensagens.filter(m => {
-    const dataMsg = m.date || m.data;
-    return !dataMsg || dataMsg <= hoje;
-  });
+  // Normalização e Proteção de Chaves de Data (Bug #7)
+  dadosMensagens.forEach(m => { m._date = m.date || m.data || ''; });
+  dadosGaleria.forEach(g => { g._date = g.date || g.data || ''; });
 
-  // Filtrar Mídia por data
-  galeriaItens = dadosGaleria.filter(g => {
-    const dataMidia = g.date || g.data;
-    return !dataMidia || dataMidia <= hoje;
-  });
+  msgs = dadosMensagens.filter(m => !m._date || m._date <= hoje);
+  galeriaItens = dadosGaleria.filter(g => !g._date || g._date <= hoje);
 
   init();
 })
 .catch(err => {
-  console.error("Erro geral no processamento:", err);
+  console.error("Erro no processamento:", err);
   msgs = getMensagensEmbutidas();
   init();
 });
 
 function init(){
-  document.getElementById('loading').style.display = 'none';
+  hide('loading');
   if (msgs.length > 0) {
     document.getElementById('cnt-cover').textContent = msgs.length + ' reflexões disponíveis';
   }
-  
   if(localStorage.getItem('user_subscrito') === 'true') {
-    document.getElementById('form-container').style.display = 'none';
-    document.getElementById('sucesso-container').style.display = 'block';
+    hide('form-container');
+    show('sucesso-container');
   }
-
   showCover();
 }
 
-// NAVEGAÇÃO ENTRE OS ECRÃS
-function showCover(){ hide('index-page'); hide('reader'); hide('gallery-page'); show('cover'); window.scrollTo(0,0); }
+function showCover(){ hide('index-page'); hide('reader'); hide('gallery-page'); show('cover'); scrollTopo(); }
+
 function showIndex(){
   hide('cover'); hide('reader'); hide('gallery-page');
-  const g = document.getElementById('grid'); g.innerHTML = '';
-  msgs.forEach((m,i)=>{
-    const d = document.createElement('div');
-    d.className = 'card';
-    d.innerHTML = `<div class="n">${m.mes}</div><h3>${m.icone} ${m.titulo}</h3><span class="tag ${m.tema||'fe'}">${(m.tema||'fé').charAt(0).toUpperCase()+(m.tema||'fé').slice(1)}</span>`;
-    d.onclick = ()=>{ cur=i; showReader(i); };
-    g.appendChild(d);
-  });
-  show('index-page'); window.scrollTo(0,0);
+  const g = document.getElementById('grid'); 
+  
+  if (!indexRendered) { // Renderiza apenas uma vez para máxima performance (Bug #12)
+    g.innerHTML = '';
+    msgs.forEach((m,i)=>{
+      const card = document.createElement('div');
+      card.className = 'card';
+      // Acessibilidade completa via Teclado (Bug #8)
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', `Ler reflexão: ${m.titulo}`);
+      
+      const temaLimpo = esc(m.tema || 'fe');
+      card.innerHTML = `<div class="n">${esc(m.mes)}</div><h3>${esc(m.icone || '🌱')} ${esc(m.titulo)}</h3><span class="tag ${temaLimpo}">${temaLimpo.charAt(0).toUpperCase() + temaLimpo.slice(1)}</span>`;
+      
+      const abrirMsg = () => { cur=i; showReader(i); };
+      card.onclick = abrirMsg;
+      card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrirMsg(); } });
+      
+      g.appendChild(card);
+    });
+    indexRendered = true;
+  }
+  show('index-page'); scrollTopo();
 }
 
-// EXIBIR GALERIA DE MÍDIA
 function showGallery() {
   hide('cover'); hide('reader'); hide('index-page');
   const gGrid = document.getElementById('gallery-grid');
-  gGrid.innerHTML = '';
 
-  if(galeriaItens.length === 0) {
-    gGrid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#a0652a; padding: 20px;">Brevemente teremos artes exclusivas disponíveis aqui! ✨</p>`;
-  } else {
-    galeriaItens.forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'media-card';
-      card.innerHTML = `
-        <div class="media-wrapper">
-          <img src="${item.arquivo}" alt="${item.titulo}" loading="lazy">
-        </div>
-        <div class="media-info">
-          <span class="media-tag">${item.tipo || 'Arte'}</span>
-          <h4>${item.titulo}</h4>
-        </div>
-      `;
-      card.onclick = () => showLightbox(item.arquivo);
-      gGrid.appendChild(card);
-    });
+  if (!galleryRendered) { // Cache de performance (Bug #12)
+    gGrid.innerHTML = '';
+    if(galeriaItens.length === 0) {
+      gGrid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#a0652a; padding: 20px;">Novas artes inspiradoras em breve! ✨</p>`;
+    } else {
+      galeriaItens.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'media-card';
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('aria-label', `Ver imagem: ${item.titulo}`);
+
+        card.innerHTML = `
+          <div class="media-wrapper">
+            <img src="${esc(item.arquivo)}" alt="${esc(item.titulo)}" loading="lazy">
+          </div>
+          <div class="media-info">
+            <span class="media-tag">${esc(item.tipo || 'Arte')}</span>
+            <h4>${esc(item.titulo)}</h4>
+          </div>
+        `;
+        const abrirLightbox = () => showLightbox(item.arquivo);
+        card.onclick = abrirLightbox;
+        card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrirLightbox(); } });
+        
+        gGrid.appendChild(card);
+      });
+    }
+    galleryRendered = true;
   }
-  show('gallery-page'); window.scrollTo(0,0);
+  show('gallery-page'); scrollTopo();
 }
 
-// SISTEMA LIGHTBOX
 function showLightbox(src) {
   const lb = document.getElementById('lightbox');
   document.getElementById('lightbox-img').src = src;
-  lb.style.display = 'flex';
+  show('lightbox');
 }
-function hideLightbox() {
-  document.getElementById('lightbox').style.display = 'none';
-}
+function hideLightbox() { hide('lightbox'); }
+
+// Fechar Lightbox com a tecla ESC (Melhoria Premium #5)
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hideLightbox(); });
 
 function showReader(i){
   cur = i; const m = msgs[i];
   hide('cover'); hide('index-page'); hide('gallery-page');
   const r = document.getElementById('reader');
-  const mboxHtml = m.meditacao ? `<div class="mbox"><div class="mi">💡</div><div><div class="ml">Hora de Refletir</div><p>${m.meditacao}</p></div></div>` : '';
+  
+  const mboxHtml = m.meditacao ? `<div class="mbox"><div class="mi">💡</div><div><div class="ml">Hora de Refletir</div><p>${esc(m.meditacao)}</p></div></div>` : '';
   
   r.innerHTML = `
   <div class="rh">
     <button class="bb" onclick="showIndex()">← Índice</button>
     <div class="pn">MENSAGEM ${String(m.id).padStart(2,'0')}</div>
-    <h1>${m.icone} ${m.titulo}</h1>
-    <div class="badges"><span class="bdg">${m.mes}</span><span class="bdg bdgt">${m.ref}</span></div>
+    <h1>${esc(m.icone || '🌱')} ${esc(m.titulo)}</h1>
+    <div class="badges"><span class="bdg">${esc(m.mes)}</span><span class="bdg bdgt">${esc(m.ref)}</span></div>
   </div>
   <div class="rb">
-    <div class="vbox">"${m.versiculoTexto||''}"<div class="aline">— ${m.ref}</div></div>
+    <div class="vbox">"${esc(m.versiculoTexto || '')}"<div class="aline">— ${esc(m.ref)}</div></div>
     <div class="mtxt">${formatarTexto(m.texto)}</div>
     ${mboxHtml}
     <div class="navb">
@@ -305,10 +376,9 @@ function showReader(i){
       <button class="nb" onclick="showReader(${i+1})" ${i===msgs.length-1?'disabled':''}>Próxima →</button>
     </div>
   </div>`;
-  show('reader'); window.scrollTo(0,0);
+  show('reader'); scrollTopo();
 }
 
-// REGISTO FORMULÁRIO (AJAX)
 document.getElementById('subscriptionForm').addEventListener('submit', function(e) {
   e.preventDefault();
   const nome = document.getElementById('subNome').value;
@@ -323,7 +393,7 @@ document.getElementById('subscriptionForm').addEventListener('submit', function(
     return;
   }
 
-  fetch(`https://formsubmit.co/ajax/${EMAIL_DESTINO}`, {
+  fetch(this.action, {
     method: "POST",
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
     body: JSON.stringify({ Nome: nome, Email: email, Origem: "Website Pão Diário" })
@@ -332,8 +402,8 @@ document.getElementById('subscriptionForm').addEventListener('submit', function(
   .then(() => {
     localStorage.setItem('subscrito_' + email, 'true');
     localStorage.setItem('user_subscrito', 'true');
-    document.getElementById('form-container').style.display = 'none';
-    document.getElementById('sucesso-container').style.display = 'block';
+    hide('form-container');
+    show('sucesso-container');
   })
   .catch(() => {
     alert('Ocorreu um problema ao guardar os dados. Por favor, tente novamente.');
@@ -341,9 +411,10 @@ document.getElementById('subscriptionForm').addEventListener('submit', function(
   });
 });
 
-function show(id){ document.getElementById(id).style.display = 'block'; }
-function hide(id){ document.getElementById(id).style.display = 'none'; }
-function formatarTexto(txt){ if(!txt) return ''; return txt.split('\n').filter(p=>p.trim()!=='').map(p=>`<p>${p}</p>`).join(''); }
+function formatarTexto(txt){ 
+  if(!txt) return ''; 
+  return txt.split('\n').filter(p=>p.trim()!=='').map(p=>`<p>${esc(p)}</p>`).join(''); 
+}
 
 function getMensagensEmbutidas(){
   return [{ "id": 1, "titulo": "Mensagem Padrão", "icone": "🌱", "mes": "Junho 2026", "ref": "Gênesis 1:1", "versiculoTexto": "No princípio Deus criou os céus e a terra.", "texto": "Acompanhe diariamente nossas postagens de encorajamento espiritual.", "tema": "fe" }];
