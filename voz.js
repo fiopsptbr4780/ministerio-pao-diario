@@ -1,13 +1,14 @@
 /*
   voz.js
   Leitura em voz alta (Web Speech API) das mensagens do Ministerio Pao Diario.
-  Integrado com a estrutura real do index.html: usa as variaveis globais
-  "msgs" e "cur" definidas la, e injeta os botoes dentro do cabecalho ".rh"
-  sempre que showReader(i) e chamado.
 
-  v2: corrige problema de "botao aparece mas nao sai som", causado por
-  vozes ainda nao carregadas (getVoices() assincrono) e por navegadores
-  (ex: Brave) que exigem retomar o synth apos inatividade.
+  v3: corrige a causa raiz do "sem som em nenhum navegador": no index.html as
+  variaveis "msgs" e "cur" sao declaradas com "let" dentro do <script>, logo
+  NAO existem como window.msgs / window.cur (let/const de topo de script nao
+  cria propriedade em window). O voz.js tentava ler window.msgs e falhava
+  silenciosamente. Agora extrai o texto diretamente do DOM ja renderizado
+  por showReader (h1, .vbox, .mtxt, .mbox p), que sempre reflete a mensagem
+  correta, sem depender de variaveis globais.
 */
 
 (function () {
@@ -31,14 +32,26 @@
     );
   }
 
-  function montarTextoFala(m) {
-    if (!m) return '';
+  function textoLimpo(el) {
+    return el ? el.textContent.replace(/\s+/g, ' ').trim() : '';
+  }
+
+  function montarTextoFalaDoDOM() {
+    var reader = document.getElementById('reader');
+    if (!reader) return '';
+
+    var titulo = textoLimpo(reader.querySelector('.rh h1'));
+    var ref = textoLimpo(reader.querySelector('.rh .bdgt'));
+    var versiculo = textoLimpo(reader.querySelector('.vbox'));
+    var corpo = textoLimpo(reader.querySelector('.mtxt'));
+    var meditacao = textoLimpo(reader.querySelector('.mbox p'));
+
     var partes = [];
-    if (m.titulo) partes.push(m.titulo);
-    if (m.ref) partes.push(m.ref);
-    if (m.versiculoTexto) partes.push(m.versiculoTexto);
-    if (m.texto) partes.push(m.texto);
-    if (m.meditacao) partes.push('Reflexao: ' + m.meditacao);
+    if (titulo) partes.push(titulo);
+    if (versiculo) partes.push(versiculo);
+    if (corpo) partes.push(corpo);
+    if (meditacao) partes.push('Reflexao: ' + meditacao);
+
     return partes.join('. ').replace(/\s+/g, ' ').trim();
   }
 
@@ -114,14 +127,9 @@
     };
 
     window.speechSynthesis.cancel();
-
-    // Alguns navegadores (Brave/Chrome) "adormecem" o synth apos inatividade.
-    // Um resume() antes do speak() evita falha silenciosa.
     window.speechSynthesis.resume();
     window.speechSynthesis.speak(utteranceAtual);
 
-    // Watchdog: se depois de 400ms nada estiver "falando" nem "pendente",
-    // tenta novamente uma vez (contorna bug conhecido do Chrome/Brave).
     setTimeout(function () {
       if (!window.speechSynthesis.speaking && !window.speechSynthesis.pending) {
         window.speechSynthesis.speak(utteranceAtual);
@@ -129,21 +137,22 @@
     }, 400);
   }
 
-  function iniciarLeitura(mensagem, btnOuvir) {
+  function iniciarLeitura(btnOuvir) {
     if (!('speechSynthesis' in window)) {
       alert('O seu navegador nao suporta leitura em voz alta.');
       return;
     }
 
-    var texto = montarTextoFala(mensagem);
-    if (!texto) return;
+    var texto = montarTextoFalaDoDOM();
 
-    if (!vozesPronto) {
-      atualizarVozes();
+    if (!texto) {
+      alert('Nao foi possivel encontrar o texto da mensagem para ler.');
+      return;
     }
 
+    if (!vozesPronto) atualizarVozes();
+
     if (!vozesPronto) {
-      // Espera as vozes carregarem (max 1.5s) antes de falar.
       var tentativas = 0;
       var esperar = setInterval(function () {
         tentativas++;
@@ -174,8 +183,7 @@
     var btnParar = controlos.querySelector('#pararMensagemBtn');
 
     btnOuvir.addEventListener('click', function () {
-      var mensagemAtual = (window.msgs && window.msgs[window.cur]) ? window.msgs[window.cur] : null;
-      iniciarLeitura(mensagemAtual, btnOuvir);
+      iniciarLeitura(btnOuvir);
     });
 
     btnParar.addEventListener('click', function () {
@@ -216,6 +224,8 @@
     interceptarShowIndexEShowCover();
     if (!ok) {
       setTimeout(tentarInicializar, 200);
+    } else {
+      setInterval(interceptarShowReader, 1000);
     }
   }
 
