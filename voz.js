@@ -4,18 +4,29 @@
   Integrado com a estrutura real do index.html: usa as variaveis globais
   "msgs" e "cur" definidas la, e injeta os botoes dentro do cabecalho ".rh"
   sempre que showReader(i) e chamado.
+
+  v2: corrige problema de "botao aparece mas nao sai som", causado por
+  vozes ainda nao carregadas (getVoices() assincrono) e por navegadores
+  (ex: Brave) que exigem retomar o synth apos inatividade.
 */
 
 (function () {
   var utteranceAtual = null;
   var origemShowReader = null;
+  var vozesPronto = false;
+  var vozesCache = [];
+
+  function atualizarVozes() {
+    vozesCache = window.speechSynthesis.getVoices();
+    if (vozesCache && vozesCache.length > 0) vozesPronto = true;
+  }
 
   function obterVozPortuguesa() {
-    var vozes = window.speechSynthesis.getVoices();
+    atualizarVozes();
     return (
-      vozes.find(function (v) { return v.lang.toLowerCase() === 'pt-pt'; }) ||
-      vozes.find(function (v) { return v.lang.toLowerCase() === 'pt-br'; }) ||
-      vozes.find(function (v) { return v.lang.toLowerCase().indexOf('pt') === 0; }) ||
+      vozesCache.find(function (v) { return v.lang.toLowerCase() === 'pt-pt'; }) ||
+      vozesCache.find(function (v) { return v.lang.toLowerCase() === 'pt-br'; }) ||
+      vozesCache.find(function (v) { return v.lang.toLowerCase().indexOf('pt') === 0; }) ||
       null
     );
   }
@@ -76,21 +87,12 @@
     }
   }
 
-  function iniciarLeitura(mensagem, btnOuvir) {
-    if (!('speechSynthesis' in window)) {
-      alert('O seu navegador nao suporta leitura em voz alta.');
-      return;
-    }
-
-    window.speechSynthesis.cancel();
-
-    var texto = montarTextoFala(mensagem);
-    if (!texto) return;
-
+  function falarAgora(texto, btnOuvir) {
     utteranceAtual = new SpeechSynthesisUtterance(texto);
     utteranceAtual.lang = 'pt-PT';
     utteranceAtual.rate = 0.95;
     utteranceAtual.pitch = 1;
+    utteranceAtual.volume = 1;
 
     var voz = obterVozPortuguesa();
     if (voz) utteranceAtual.voice = voz;
@@ -102,12 +104,58 @@
       btnOuvir.textContent = '\uD83D\uDD0A Ouvir mensagem';
       btnOuvir.disabled = false;
     };
-    utteranceAtual.onerror = function () {
+    utteranceAtual.onerror = function (e) {
+      console.warn('Erro na leitura em voz alta:', e.error);
       btnOuvir.textContent = '\uD83D\uDD0A Ouvir mensagem';
       btnOuvir.disabled = false;
+      if (e.error === 'not-allowed' || e.error === 'audio-busy') {
+        alert('O navegador bloqueou o audio. Tente clicar novamente no botao.');
+      }
     };
 
+    window.speechSynthesis.cancel();
+
+    // Alguns navegadores (Brave/Chrome) "adormecem" o synth apos inatividade.
+    // Um resume() antes do speak() evita falha silenciosa.
+    window.speechSynthesis.resume();
     window.speechSynthesis.speak(utteranceAtual);
+
+    // Watchdog: se depois de 400ms nada estiver "falando" nem "pendente",
+    // tenta novamente uma vez (contorna bug conhecido do Chrome/Brave).
+    setTimeout(function () {
+      if (!window.speechSynthesis.speaking && !window.speechSynthesis.pending) {
+        window.speechSynthesis.speak(utteranceAtual);
+      }
+    }, 400);
+  }
+
+  function iniciarLeitura(mensagem, btnOuvir) {
+    if (!('speechSynthesis' in window)) {
+      alert('O seu navegador nao suporta leitura em voz alta.');
+      return;
+    }
+
+    var texto = montarTextoFala(mensagem);
+    if (!texto) return;
+
+    if (!vozesPronto) {
+      atualizarVozes();
+    }
+
+    if (!vozesPronto) {
+      // Espera as vozes carregarem (max 1.5s) antes de falar.
+      var tentativas = 0;
+      var esperar = setInterval(function () {
+        tentativas++;
+        atualizarVozes();
+        if (vozesPronto || tentativas > 15) {
+          clearInterval(esperar);
+          falarAgora(texto, btnOuvir);
+        }
+      }, 100);
+    } else {
+      falarAgora(texto, btnOuvir);
+    }
   }
 
   function injetarBotoes() {
@@ -172,7 +220,8 @@
   }
 
   if ('speechSynthesis' in window) {
-    window.speechSynthesis.onvoiceschanged = function () {};
+    atualizarVozes();
+    window.speechSynthesis.onvoiceschanged = atualizarVozes;
   }
 
   if (document.readyState === 'loading') {
