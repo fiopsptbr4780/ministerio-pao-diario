@@ -1,0 +1,6 @@
+﻿model_id;status;latency_s;response;error
+meta/llama-3.2-11b-vision-instruct;OK;0.54;OK;
+meta/llama-3.2-90b-vision-instruct;TIMEOUT;10.27;;Timeout após 10s
+microsoft/phi-3-vision-128k-instruct;NOT_FOUND_404;0.43;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/llama-3.2-nemoretriever-1b-vlm-embed-v1;NOT_FOUND_404;0.3;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/llama-nemotron-embed-vl-1b-v2;NOT_FOUND_404;0.3;;HTTP 404: Modelo não encontrado no endpoint

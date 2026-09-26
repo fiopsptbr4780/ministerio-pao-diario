@@ -1,0 +1,21 @@
+﻿model_id;status;latency_s;response;error
+01-ai/yi-large;NOT_FOUND_404;0.44;;HTTP 404: Modelo não encontrado no endpoint
+adept/fuyu-8b;NOT_FOUND_404;0.45;;HTTP 404: Modelo não encontrado no endpoint
+ai21labs/jamba-1.5-large-instruct;NOT_FOUND_404;0.42;;HTTP 404: Modelo não encontrado no endpoint
+aisingapore/sea-lion-7b-instruct;NOT_FOUND_404;0.4;;HTTP 404: Modelo não encontrado no endpoint
+bigcode/starcoder2-15b;NOT_FOUND_404;0.29;;HTTP 404: Modelo não encontrado no endpoint
+databricks/dbrx-instruct;NOT_FOUND_404;0.4;;HTTP 404: Modelo não encontrado no endpoint
+deepseek-ai/deepseek-coder-6.7b-instruct;NOT_FOUND_404;0.38;;HTTP 404: Modelo não encontrado no endpoint
+deepseek-ai/deepseek-v4.1-flash;TIMEOUT;20.27;;Timeout após 20s
+google/codegemma-1.1-7b;NOT_FOUND_404;0.42;;HTTP 404: Modelo não encontrado no endpoint
+google/codegemma-7b;NOT_FOUND_404;0.45;;HTTP 404: Modelo não encontrado no endpoint
+google/deplot;NOT_FOUND_404;0.4;;HTTP 404: Modelo não encontrado no endpoint
+google/diffusiongemma-26b-a4b-it;OK;1.52;;
+google/gemma-2b;NOT_FOUND_404;0.38;;HTTP 404: Modelo não encontrado no endpoint
+google/gemma-3-12b-it;NOT_FOUND_404;0.38;;HTTP 404: Modelo não encontrado no endpoint
+google/gemma-3-4b-it;NOT_FOUND_404;0.39;;HTTP 404: Modelo não encontrado no endpoint
+google/gemma-4-31b-it;TIMEOUT;20.25;;Timeout após 20s
+google/recurrentgemma-2b;NOT_FOUND_404;0.43;;HTTP 404: Modelo não encontrado no endpoint
+ibm/granite-3.0-3b-a800m-instruct;NOT_FOUND_404;0.41;;HTTP 404: Modelo não encontrado no endpoint
+ibm/granite-3.0-8b-instruct;NOT_FOUND_404;0.4;;HTTP 404: Modelo não encontrado no endpoint
+ibm/granite-34b-code-instruct;NOT_FOUND_404;0.38;;HTTP 404: Modelo não encontrado no endpoint

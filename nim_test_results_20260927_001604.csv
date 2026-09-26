@@ -1,0 +1,18 @@
+﻿model_id;status;latency_s;response;error
+mistralai/mistral-nemotron;TIMEOUT;10.25;;Timeout após 10s
+nvidia/llama-3.1-nemotron-51b-instruct;NOT_FOUND_404;0.43;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/llama-3.1-nemotron-70b-instruct;NOT_FOUND_404;0.4;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/llama-3.1-nemotron-safety-guard-8b-v3;TIMEOUT;10.23;;Timeout após 10s
+nvidia/llama-3.1-nemotron-ultra-253b-v1;NOT_FOUND_404;0.42;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/llama-nemotron-embed-vl-1b-v2;NOT_FOUND_404;0.3;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/nemotron-3-embed-1b;NOT_FOUND_404;0.31;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/nemotron-3-nano-omni-30b-a3b-reasoning;HTTP_503;0.41;;"{""error"":{""message"":""ResourceExhausted: Worker local total request limit reached (3337/16)"",""type"":""Service Unavailable"",""code"":503}}"
+nvidia/nemotron-3-super-120b-a12b;OK;0.66;"The user says: ""Responda apenas:";
+nvidia/nemotron-3-ultra-550b-a55b;OK;0.76;"The user wants me to answer only ""OK"".";
+nvidia/nemotron-3.5-content-safety;OK;0.5;User Safety: safe;
+nvidia/nemotron-3.5-lightning-30b-a3b;TIMEOUT;10.25;;Timeout após 10s
+nvidia/nemotron-4-340b-instruct;NOT_FOUND_404;0.42;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/nemotron-4-340b-reward;NOT_FOUND_404;0.42;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/nemotron-nano-3-30b-a3b;NOT_FOUND_404;0.42;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/nemotron-parse;HTTP_400;0.33;;"{""object"":""error"",""message"":""Content cannot be a plain string. The model does not support text input. Content cannot be a plain string. The model does not support text input."",""type"":""BadRequestError"""
+nvidia/nemotron-parse-2.0;OK;0.42;enenenenenenenenenen;

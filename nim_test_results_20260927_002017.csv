@@ -1,0 +1,85 @@
+﻿model_id;status;latency_s;response;error
+01-ai/yi-large;NOT_FOUND_404;0.42;;HTTP 404: Modelo não encontrado no endpoint
+adept/fuyu-8b;NOT_FOUND_404;0.45;;HTTP 404: Modelo não encontrado no endpoint
+ai21labs/jamba-1.5-large-instruct;NOT_FOUND_404;0.42;;HTTP 404: Modelo não encontrado no endpoint
+aisingapore/sea-lion-7b-instruct;NOT_FOUND_404;0.42;;HTTP 404: Modelo não encontrado no endpoint
+bigcode/starcoder2-15b;NOT_FOUND_404;0.3;;HTTP 404: Modelo não encontrado no endpoint
+databricks/dbrx-instruct;NOT_FOUND_404;0.38;;HTTP 404: Modelo não encontrado no endpoint
+deepseek-ai/deepseek-coder-6.7b-instruct;NOT_FOUND_404;0.39;;HTTP 404: Modelo não encontrado no endpoint
+deepseek-ai/deepseek-v4.1-flash;TIMEOUT;10.25;;Timeout após 10s
+google/codegemma-1.1-7b;NOT_FOUND_404;0.4;;HTTP 404: Modelo não encontrado no endpoint
+google/codegemma-7b;NOT_FOUND_404;0.38;;HTTP 404: Modelo não encontrado no endpoint
+google/deplot;NOT_FOUND_404;0.43;;HTTP 404: Modelo não encontrado no endpoint
+google/diffusiongemma-26b-a4b-it;OK;0.86;;
+google/gemma-2b;NOT_FOUND_404;0.44;;HTTP 404: Modelo não encontrado no endpoint
+google/gemma-3-12b-it;NOT_FOUND_404;0.42;;HTTP 404: Modelo não encontrado no endpoint
+google/gemma-3-4b-it;NOT_FOUND_404;0.41;;HTTP 404: Modelo não encontrado no endpoint
+google/gemma-4-31b-it;TIMEOUT;10.24;;Timeout após 10s
+google/recurrentgemma-2b;NOT_FOUND_404;0.43;;HTTP 404: Modelo não encontrado no endpoint
+ibm/granite-3.0-3b-a800m-instruct;NOT_FOUND_404;0.39;;HTTP 404: Modelo não encontrado no endpoint
+ibm/granite-3.0-8b-instruct;NOT_FOUND_404;0.38;;HTTP 404: Modelo não encontrado no endpoint
+ibm/granite-34b-code-instruct;NOT_FOUND_404;0.4;;HTTP 404: Modelo não encontrado no endpoint
+ibm/granite-8b-code-instruct;NOT_FOUND_404;0.4;;HTTP 404: Modelo não encontrado no endpoint
+meta/codellama-70b;NOT_FOUND_404;0.41;;HTTP 404: Modelo não encontrado no endpoint
+meta/llama-3.2-11b-vision-instruct;OK;1.32;OK;
+meta/llama-3.2-90b-vision-instruct;TIMEOUT;10.27;;Timeout após 10s
+meta/llama-guard-4-12b;TIMEOUT;10.28;;Timeout após 10s
+meta/llama2-70b;NOT_FOUND_404;0.43;;HTTP 404: Modelo não encontrado no endpoint
+meta/muse-glimmer-30b;ERROR;0.55;;'NoneType' object is not subscriptable
+microsoft/kosmos-2;NOT_FOUND_404;0.48;;HTTP 404: Modelo não encontrado no endpoint
+microsoft/phi-3-vision-128k-instruct;NOT_FOUND_404;0.39;;HTTP 404: Modelo não encontrado no endpoint
+microsoft/phi-3.5-moe-instruct;NOT_FOUND_404;0.43;;HTTP 404: Modelo não encontrado no endpoint
+mistralai/codestral-22b-instruct-v0.1;NOT_FOUND_404;0.43;;HTTP 404: Modelo não encontrado no endpoint
+mistralai/mistral-7b-instruct-v0.3;NOT_FOUND_404;0.39;;HTTP 404: Modelo não encontrado no endpoint
+mistralai/mistral-large;NOT_FOUND_404;0.45;;HTTP 404: Modelo não encontrado no endpoint
+mistralai/mistral-large-2-instruct;NOT_FOUND_404;0.4;;HTTP 404: Modelo não encontrado no endpoint
+mistralai/mistral-nemotron;TIMEOUT;10.27;;Timeout após 10s
+mistralai/mixtral-8x22b-v0.1;NOT_FOUND_404;0.42;;HTTP 404: Modelo não encontrado no endpoint
+moonshotai/kimi-k2.6;NOT_FOUND_404;0.38;;HTTP 404: Modelo não encontrado no endpoint
+moonshotai/kimi-k3;TIMEOUT;10.25;;Timeout após 10s
+nv-mistralai/mistral-nemo-12b-instruct;NOT_FOUND_404;0.41;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/ai-synthetic-video-detector;HTTP_500;0.34;;"{""type"":""urn:nvcf-worker-service:problem-details:internal-server-error"",""title"":""Internal Server Error"",""status"":500,""detail"":""Internal error while making inference request""}"
+nvidia/cosmos-reason2-8b;NOT_FOUND_404;0.41;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/embed-qa-4;NOT_FOUND_404;0.32;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/ising-calibration-1.5-31b;OK;0.64;OK;
+nvidia/llama-3.1-nemoguard-8b-content-safety;TIMEOUT;10.26;;Timeout após 10s
+nvidia/llama-3.1-nemoguard-8b-topic-control;HTTP_500;0.37;;"{""error"":""Error during inference of request chat-3a7ef022f2a747bd9fe21a149fca6e08 -- Encountered an error in forwardAsync function: [TensorRT-LLM][ERROR] CUDA runtime error in cudaMemcpyAsync(dst, src"
+nvidia/llama-3.1-nemotron-51b-instruct;NOT_FOUND_404;0.42;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/llama-3.1-nemotron-70b-instruct;NOT_FOUND_404;0.38;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/llama-3.1-nemotron-safety-guard-8b-v3;TIMEOUT;10.28;;Timeout após 10s
+nvidia/llama-3.1-nemotron-ultra-253b-v1;NOT_FOUND_404;0.4;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/llama-3.2-nemoretriever-1b-vlm-embed-v1;NOT_FOUND_404;0.3;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/llama-3.2-nv-embedqa-1b-v1;NOT_FOUND_404;0.33;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/llama-nemotron-embed-vl-1b-v2;NOT_FOUND_404;0.3;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/llama3-chatqa-1.5-70b;NOT_FOUND_404;0.41;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/mistral-nemo-minitron-8b-8k-instruct;NOT_FOUND_404;0.44;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/nemotron-3-embed-1b;NOT_FOUND_404;0.3;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/nemotron-3-nano-omni-30b-a3b-reasoning;OK;1.25;OK;
+nvidia/nemotron-3-super-120b-a12b;OK;0.71;"The user says: ""Responda apenas:";
+nvidia/nemotron-3-ultra-550b-a55b;OK;1.0;"The user wants me to answer only ""OK"".";
+nvidia/nemotron-3.5-content-safety;OK;0.43;User Safety: safe;
+nvidia/nemotron-3.5-lightning-30b-a3b;OK;0.63;"Here's a thinking process:
+
+1.  **";
+nvidia/nemotron-4-340b-instruct;NOT_FOUND_404;0.39;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/nemotron-4-340b-reward;NOT_FOUND_404;0.39;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/nemotron-nano-3-30b-a3b;NOT_FOUND_404;0.43;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/nemotron-parse;HTTP_400;0.35;;"{""object"":""error"",""message"":""Content cannot be a plain string. The model does not support text input. Content cannot be a plain string. The model does not support text input."",""type"":""BadRequestError"""
+nvidia/nemotron-parse-2.0;OK;0.37;enenenenenenenenenen;
+nvidia/neva-22b;NOT_FOUND_404;0.4;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/nv-embedqa-mistral-7b-v2;NOT_FOUND_404;0.29;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/nvclip;NOT_FOUND_404;0.3;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/riva-translate-4b-instruct;NOT_FOUND_404;0.41;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/riva-translate-4b-instruct-v1.1;OK;0.49;Answer only: OK;
+nvidia/riva-translate-4b-instruct-v2;OK;0.43;Answer only: OK;
+nvidia/vila;NOT_FOUND_404;0.39;;HTTP 404: Modelo não encontrado no endpoint
+openai/gpt-oss-20b;ERROR;0.67;;'NoneType' object is not subscriptable
+poolside/laguna-xs-2.1;TIMEOUT;10.26;;Timeout após 10s
+snowflake/arctic-embed-l;NOT_FOUND_404;0.32;;HTTP 404: Modelo não encontrado no endpoint
+writer/palmyra-creative-122b;NOT_FOUND_404;0.42;;HTTP 404: Modelo não encontrado no endpoint
+writer/palmyra-fin-70b-32k;NOT_FOUND_404;0.4;;HTTP 404: Modelo não encontrado no endpoint
+writer/palmyra-med-70b;NOT_FOUND_404;0.42;;HTTP 404: Modelo não encontrado no endpoint
+writer/palmyra-med-70b-32k;NOT_FOUND_404;0.47;;HTTP 404: Modelo não encontrado no endpoint
+z-ai/glm-5.3;TIMEOUT;10.24;;Timeout após 10s
+z-ai/glm-5.3-flash;TIMEOUT;10.28;;Timeout após 10s
+zyphra/zamba2-7b-instruct;NOT_FOUND_404;0.43;;HTTP 404: Modelo não encontrado no endpoint

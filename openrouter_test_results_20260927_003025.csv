@@ -1,0 +1,27 @@
+﻿model_id;status;latency_s;response;error;is_free;context_length;modality
+stealth/space-bunny-alpha;ERROR;1.24;;'NoneType' object is not subscriptable;SIM;1000000;text+image+video->text
+inclusionai/ling-3.0-flash-sante:free;ERROR;1.6;;'NoneType' object is not subscriptable;SIM;262144;text->text
+inclusionai/ling-3.0-flash-fin:free;ERROR;0.9;;'NoneType' object is not subscriptable;SIM;262144;text->text
+qwen/qwen3.8-27b:free;RATE_LIMITED_429;0.41;;Rate limited;SIM;262144;text+image+video->text
+dots-studio/dots-3-note-preview:free;OK;1.66;"
+
+OK";;SIM;512000;text+image->text
+liquid/lfm-2.5-2.6b:free;ERROR;0.63;;'NoneType' object is not subscriptable;SIM;65536;text->text
+nvidia/nemotron-3.5-lightning:free;OK;0.5;"Here's a thinking process:
+
+1.  **";;SIM;1000000;text->text
+thinkingmachines/inkling-small:free;HTTP_403;0.22;;"{""error"":{""message"":""thinkingmachines/inkling-small:free is only available on agentic harnesses. Try plugging it into a coding agent or productivity app listed on https://openrouter.ai/apps"",""code"":40";SIM;1048576;text+image+audio->text
+poolside/laguna-s-2.1:free;ERROR;2.38;;'NoneType' object is not subscriptable;SIM;262144;text->text
+thinkingmachines/inkling:free;HTTP_403;0.24;;"{""error"":{""message"":""thinkingmachines/inkling:free is only available on agentic harnesses. Try plugging it into a coding agent or productivity app listed on https://openrouter.ai/apps"",""code"":403,""met";SIM;1048576;text+image+audio->text
+poolside/laguna-xs-2.1:free;RATE_LIMITED_429;0.38;;Rate limited;SIM;262144;text->text
+cohere/north-mini-code:free;ERROR;0.55;;'NoneType' object is not subscriptable;SIM;256000;text->text
+nvidia/nemotron-3.5-content-safety:free;ERROR;0.51;;'NoneType' object is not subscriptable;SIM;128000;text+image->text
+nvidia/nemotron-3-ultra-550b-a55b:free;OK;0.71;"The user wants me to answer only ""OK"".";;SIM;1000000;text->text
+nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free;OK;1.16;OK;;SIM;256000;text+image+audio+video->text
+google/gemma-4-26b-a4b-it:free;RATE_LIMITED_429;0.38;;Rate limited;SIM;262144;text+image+video->text
+google/gemma-4-31b-it:free;RATE_LIMITED_429;0.29;;Rate limited;SIM;262144;text+image+video->text
+google/lyria-3-pro-preview;OK;0.89;"
+";;SIM;1048576;text+image->text+audio
+google/lyria-3-clip-preview;HTTP_502;0.98;;"{""error"":{""message"":""Provider returned error"",""code"":502,""metadata"":{""raw"":""{\n  \""error\"": {\n    \""code\"": 500,\n    \""message\"": \""Internal error encountered.\"",\n    \""status\"": \""INTERNAL\""\n  }\";SIM;1048576;text+image->text+audio
+nvidia/nemotron-3-super-120b-a12b:free;OK;0.99;"The user says: ""Responda apenas:";;SIM;262144;text->text
+openrouter/free;OK;1.54;OK;;SIM;200000;text+image->text

@@ -1,0 +1,11 @@
+Arquivo de histórico de alterações
+
+[2026-09-26 23:28:00] Backup original do mensagens.json criado: mensagens_backup_20260926_original.json (48.794 bytes)
+[2026-09-26 23:32:00] Script analisar_pasta_ministerio.py copiado para o workspace
+[2026-09-26 23:32:00] Script adaptado gerar_mensagens_do_outlook.py criado para gerar mensagens do Outlook para mensagens.json
+[2026-09-26 23:45:00] Script avançado gerar_mensagens_com_ia.py criado com suporte a múltiplos provedores IA:
+  - OpenRouter (modelos gratuitos: nemotron-3-ultra, gemma-4, qwen3.8, etc.)
+  - NVIDIA NIM (nemotron-ultra-253b, llama-3.2-vision, etc.)
+  - Ollama local (qwen3:4b, qwen2.5:7b, phi4-mini, etc.)
+  - Fallback automático para extração básica se IA falhar
+[2026-09-26 23:45:00] Arquivo .env.example criado para configuração de chaves de API[2026-09-27 00:55:19] Adicionadas 5 mensagens via IA (openrouter/nvidia/nemotron-3-ultra-550b-a55b:free) - backup: mensagens_backup_20260927_005519.json

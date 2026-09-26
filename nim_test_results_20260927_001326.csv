@@ -1,0 +1,16 @@
+﻿model_id;status;latency_s;response;error
+meta/codellama-70b;NOT_FOUND_404;0.41;;HTTP 404: Modelo não encontrado no endpoint
+meta/llama-3.2-11b-vision-instruct;OK;1.63;OK;
+meta/llama-3.2-90b-vision-instruct;TIMEOUT;30.25;;Timeout após 30s
+meta/llama-guard-4-12b;TIMEOUT;30.25;;Timeout após 30s
+meta/llama2-70b;NOT_FOUND_404;0.43;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/llama-3.1-nemoguard-8b-content-safety;TIMEOUT;30.26;;Timeout após 30s
+nvidia/llama-3.1-nemoguard-8b-topic-control;HTTP_500;0.37;;"{""error"":""Error during inference of request chat-48849d3e0ce845ba9c5182d9b6a5a863 -- Encountered an error in forwardAsync function: [TensorRT-LLM][ERROR] CUDA runtime error in cudaMemcpyAsync(dst, src"
+nvidia/llama-3.1-nemotron-51b-instruct;NOT_FOUND_404;0.42;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/llama-3.1-nemotron-70b-instruct;NOT_FOUND_404;0.43;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/llama-3.1-nemotron-safety-guard-8b-v3;TIMEOUT;30.26;;Timeout após 30s
+nvidia/llama-3.1-nemotron-ultra-253b-v1;NOT_FOUND_404;0.39;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/llama-3.2-nemoretriever-1b-vlm-embed-v1;NOT_FOUND_404;0.31;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/llama-3.2-nv-embedqa-1b-v1;NOT_FOUND_404;0.3;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/llama-nemotron-embed-vl-1b-v2;NOT_FOUND_404;0.3;;HTTP 404: Modelo não encontrado no endpoint
+nvidia/llama3-chatqa-1.5-70b;NOT_FOUND_404;0.39;;HTTP 404: Modelo não encontrado no endpoint
