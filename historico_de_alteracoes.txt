@@ -17,3 +17,9 @@ Arquivo de histórico de alterações
   - Feedback sonoro instantâneo ao ajustar sliders ou selecionar presets quando inativo.
   - Ampliação da escala de tom (0.50 a 1.30) para personalização de gravidade perceptível.
   - Novos presets devocionais: Pastoral Sénior (Grave & Sereno), Oração Profunda (Solene), Leitura Suave e Dinâmica.
+[2026-09-27 02:10:00] Humanização da narração e correção de citações bíblicas em voz.js:
+  - Eliminação definitiva da leitura de referências bíblicas como horas/minutos (ex: João 15:13 lido como "capítulo 15, versículo 13" em vez de "15 horas e 13 minutos").
+  - Aplicação da humanização em todo o corpo textual: cabeçalhos, versículos, parágrafos, oração e hora de refletir.
+  - Eliminação do som mecânico/robótico: prioridade absoluta a vozes neurais e naturais de estúdio (Duarte, Antonio, Raquel, Google) e afastamento de vozes SAPI5 legadas.
+  - Aumento da velocidade de leitura para 1.10x padrão (ritmo ágil, dinâmico e natural) com tom neutro de estúdio (1.00).
+  - Novos presets dinâmicos: Natural & Fluida (1.10x), Rápida & Ágil (1.22x), Narrador de Estúdio (1.05x) e Serena (0.96x).

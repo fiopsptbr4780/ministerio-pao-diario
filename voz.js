@@ -1,16 +1,16 @@
 /*
-  voz.js — Narração Devocional Humanizada com Voz Sénior, Grave e Ajustes Reativos
+  voz.js — Narração Devocional Humanizada com Voz Natural de Estúdio e Ritmo Fluido
   Ministério Pão Diário
 
   Recursos implementados:
-  - Perfil de voz sénior, maduro e acolhedor (padrão pastoral grave: tom 0.80, ritmo sereno: 0.84x).
-  - Algoritmo de deteção que prioriza vozes masculinas, profundas e solenes (Duarte, Antonio, Daniel).
-  - Ajustes em tempo real: alteração imediata de velocidade e tom durante a reprodução.
-  - Feedback audível instantâneo com reprodução de amostra ao mudar valores ou presets.
-  - Suporte a amplo alcance de tom (0.50 a 1.30) para personalização de gravidade verdadeiramente perceptível.
-  - Pausas contemplativas e humanização de referências bíblicas e momentos de oração.
-  - Remoção inteligente de emojis para fala fluida e reverente.
-  - Presets rápidos: Pastoral Sénior, Oração Profunda, Leitura Suave e Dinâmica.
+  - Síntese com vozes neurais e naturais de alta definição (Duarte, Antonio, Raquel, Google).
+  - Ritmo ágil, dinâmico e natural (cadência humana padrão: 1.10x, tom neutro humano: 1.00).
+  - Conversão integral de citações e referências bíblicas em todo o texto (impede leitura de "horas e minutos" em passagens como João 15:13).
+  - Expansão de abreviações de livros bíblicos e versículos (v.15 -> versículo 15, vv. 15-17 -> versículos 15 a 17).
+  - Remoção inteligente de emojis e suavização de pontuação para evitar pausas mecânicas.
+  - Ajustes em tempo real: alteração imediata de velocidade e tom com atualização instantânea.
+  - Amostra audível imediata ao mudar opções ou presets.
+  - Presets rápidos de 1 clique: Natural & Fluida, Rápida & Ágil, Narrador de Estúdio, Serena.
   - Destaque visual sincronizado no versículo e parágrafo em leitura.
   - Proteção ativa contra corte de áudio e recolha de lixo da Web Speech API.
 */
@@ -18,15 +18,15 @@
 (function () {
   'use strict';
 
-  var STORAGE_KEY = 'pao_diario_audio_config_v5';
+  var STORAGE_KEY = 'pao_diario_audio_config_v7';
 
   var CONFIG_DEFAULT = {
-    rate: 0.84,               // Ritmo meditativo pastoral sereno e compassado
-    pitch: 0.80,              // Tom grave, aveludado e maduro (perfil sénior ideal para reflexão espiritual)
+    rate: 1.10,               // Ritmo ágil, dinâmico, natural e envolvente (sem lentidão)
+    pitch: 1.00,              // Tom neutro humano (preserva a entonação natural da voz de estúdio)
     volume: 1.0,              // Volume total
-    voiceURI: '',             // Melhor voz masculina/sénior detetada automaticamente
-    pausasMeditativas: true,  // Pausas silenciosas de reflexão entre blocos
-    humanizarReferencias: true,// "Romanos 1:14" -> "Romanos, capítulo 1, versículo 14"
+    voiceURI: '',             // Melhor voz neural/natural detetada automaticamente
+    pausasMeditativas: true,  // Pausas naturais de respiração entre blocos
+    humanizarReferencias: true,// "João 15:13" -> "João capítulo 15, versículo 13"
     destacarTexto: true       // Iluminação visual do parágrafo lido
   };
 
@@ -59,8 +59,10 @@
         var parsed = JSON.parse(guardado);
         return Object.assign({}, CONFIG_DEFAULT, parsed);
       }
-      // Limpeza de preferências antigas para garantir o novo perfil sénior/grave por defeito
+      // Limpeza de versões anteriores com configurações lentas ou vozes robóticas antigas
       try {
+        localStorage.removeItem('pao_diario_audio_config_v6');
+        localStorage.removeItem('pao_diario_audio_config_v5');
         localStorage.removeItem('pao_diario_audio_config_v4');
         localStorage.removeItem('pao_diario_audio_config_v3');
       } catch (err) {}
@@ -79,7 +81,7 @@
   }
 
   // ==========================================================================
-  // GESTÃO DE VOZES E DETEÇÃO DA MELHOR VOZ MASCULINA / SÉNIOR
+  // GESTÃO DE VOZES E DETEÇÃO DA MELHOR VOZ NATURAL (HUMANIZADA)
   // ==========================================================================
   function atualizarVozes() {
     if (!('speechSynthesis' in window)) return;
@@ -90,28 +92,16 @@
     }
   }
 
-  function ehVozMasculinaSenior(v) {
+  function ehVozNaturalEstudio(v) {
     var nome = (v.name || '').toLowerCase();
-    var nomesMasc = [
-      'antonio', 'antónio', 'duarte', 'daniel', 'jorge', 'joaquim',
-      'felipe', 'male', 'homem', 'masculin', 'baritone', 'senhor'
-    ];
-    for (var i = 0; i < nomesMasc.length; i++) {
-      if (nome.indexOf(nomesMasc[i]) !== -1) return true;
-    }
-    return false;
-  }
-
-  function ehVozFeminina(v) {
-    var nome = (v.name || '').toLowerCase();
-    var nomesFem = [
-      'raquel', 'francisca', 'maria', 'helia', 'hélia', 'joana',
-      'luciana', 'female', 'mulher', 'feminina', 'vitória', 'vitoria', 'camila'
-    ];
-    for (var i = 0; i < nomesFem.length; i++) {
-      if (nome.indexOf(nomesFem[i]) !== -1) return true;
-    }
-    return false;
+    return (
+      nome.indexOf('natural') !== -1 ||
+      nome.indexOf('neural') !== -1 ||
+      nome.indexOf('online') !== -1 ||
+      nome.indexOf('premium') !== -1 ||
+      nome.indexOf('enhanced') !== -1 ||
+      nome.indexOf('google') !== -1
+    );
   }
 
   function classificarVoz(v) {
@@ -119,29 +109,30 @@
     var lang = (v.lang || '').toLowerCase();
     var nome = (v.name || '').toLowerCase();
 
-    // Prioridade de Idioma: Português
+    // 1. Idioma: Português
     if (lang === 'pt-pt') pontuacao += 100;
     else if (lang === 'pt-br') pontuacao += 95;
-    else if (lang.indexOf('pt') === 0) pontuacao += 85;
-    else return -200; // Excluir idiomas não-portugueses do topo
+    else if (lang.indexOf('pt') === 0) pontuacao += 80;
+    else return -500; // Desconsiderar idiomas estrangeiros do topo
 
-    // Prioridade máxima para perfil de voz masculina, madura e sénior
-    if (ehVozMasculinaSenior(v)) {
-      pontuacao += 130;
-    } else if (ehVozFeminina(v)) {
-      pontuacao -= 60; // Reduz pontuação para priorizar perfil sénior masculino
+    // 2. PRIORIDADE MÁXIMA ABSOLUTA: VOZES NATURAIS / NEURAIS DE ESTÚDIO
+    // Evita a todo custo vozes robóticas legadas (SAPI5 antigas tipo Daniel/Maria)
+    if (nome.indexOf('natural') !== -1 || nome.indexOf('neural') !== -1 || nome.indexOf('online') !== -1) {
+      pontuacao += 350; // Vozes neurais de alta fidelidade do Microsoft Edge / Azure
+    } else if (nome.indexOf('google') !== -1) {
+      pontuacao += 220; // Voz neural do Google Chrome
+    } else if (nome.indexOf('premium') !== -1 || nome.indexOf('enhanced') !== -1) {
+      pontuacao += 220; // Vozes de estúdio Apple Siri / macOS
+    } else {
+      // Vozes locais antigas de sistema sintetizadas por formantes mecânicos
+      pontuacao -= 80;
     }
 
-    // Bónus para nomes com perfil reconhecidamente grave/sénior
-    if (nome.indexOf('antonio') !== -1 || nome.indexOf('antónio') !== -1) pontuacao += 45;
+    // 3. Preferência de oradores de estúdio acolhedores e solenes
     if (nome.indexOf('duarte') !== -1) pontuacao += 40;
-    if (nome.indexOf('daniel') !== -1) pontuacao += 35; // Excelente suporte a tom grave no Windows
-
-    // Bónus para qualidade de síntese
-    if (nome.indexOf('natural') !== -1) pontuacao += 35;
-    if (nome.indexOf('neural') !== -1) pontuacao += 30;
-    if (nome.indexOf('online') !== -1) pontuacao += 15;
-    if (nome.indexOf('premium') !== -1 || nome.indexOf('enhanced') !== -1) pontuacao += 20;
+    if (nome.indexOf('antonio') !== -1 || nome.indexOf('antónio') !== -1) pontuacao += 35;
+    if (nome.indexOf('raquel') !== -1) pontuacao += 30;
+    if (nome.indexOf('francisca') !== -1) pontuacao += 25;
 
     return pontuacao;
   }
@@ -156,7 +147,7 @@
       if (encontrada) return encontrada;
     }
 
-    // Selecionar a melhor voz portuguesa pelo algoritmo de qualidade e gravidade
+    // Selecionar a melhor voz portuguesa pelo algoritmo de qualidade neural
     var vozesPT = vozesCache
       .filter(function (v) { return (v.lang || '').toLowerCase().indexOf('pt') === 0; })
       .sort(function (a, b) { return classificarVoz(b) - classificarVoz(a); });
@@ -169,7 +160,7 @@
   }
 
   // ==========================================================================
-  // HUMANIZAÇÃO DO TEXTO E REFERÊNCIAS BÍBLICAS
+  // HUMANIZAÇÃO COMPLETA DE TEXTO E TRATAMENTO DE CITAÇÕES BÍBLICAS
   // ==========================================================================
   function limparEmojis(str) {
     if (!str) return '';
@@ -182,62 +173,87 @@
       .trim();
   }
 
-  function humanizarReferenciaBiblica(ref) {
-    if (!ref || !config.humanizarReferencias) return ref || '';
-    var r = ' ' + ref.trim() + ' ';
+  /*
+    humanizarTextoCompleto:
+    Resolve definitivamente a leitura mecânica de passagens bíblicas,
+    impedindo que o motor leia "João 15:13" como "15 horas e 13 minutos",
+    expandindo abreviações como (v.15), (vv. 15-17), livros abreviados
+    e suavizando a pontuação para fala natural.
+  */
+  function humanizarTextoCompleto(str) {
+    if (!str) return '';
+    var r = ' ' + str.trim() + ' ';
 
+    // 1. Limpeza de emojis e caracteres especiais
+    r = limparEmojis(r);
+
+    // 2. Abreviações de versículos no texto: (v.15), (vv. 15-17), (v. 15)
+    r = r.replace(/\bvv\.\s*(\d+)\s*[-–—]\s*(\d+)/gi, 'versículos $1 a $2');
+    r = r.replace(/\bv\.\s*(\d+)\s*[-–—]\s*(\d+)/gi, 'versículos $1 a $2');
+    r = r.replace(/\bv\.\s*(\d+)/gi, 'versículo $1');
+    r = r.replace(/\(v\s*(\d+)\)/gi, '(versículo $1)');
+
+    // 3. Livros bíblicos (com proteção Unicode contra substituições indevidas)
     var mapeamento = [
       [/\b1\s*Cor[íi]ntios\b/gi, 'Primeira Coríntios'],
       [/\b2\s*Cor[íi]ntios\b/gi, 'Segunda Coríntios'],
-      [/\b1\s*Co\b/gi, 'Primeira Coríntios'],
-      [/\b2\s*Co\b/gi, 'Segunda Coríntios'],
-      [/\b1\s*Ts\b|\b1\s*Tessalonicenses\b/gi, 'Primeira Tessalonicenses'],
-      [/\b2\s*Ts\b|\b2\s*Tessalonicenses\b/gi, 'Segunda Tessalonicenses'],
-      [/\b1\s*Tm\b|\b1\s*Tim[óo]teo\b/gi, 'Primeira Timóteo'],
-      [/\b2\s*Tm\b|\b2\s*Tim[óo]teo\b/gi, 'Segunda Timóteo'],
-      [/\b1\s*Pe\b|\b1\s*Pedro\b/gi, 'Primeira Pedro'],
-      [/\b2\s*Pe\b|\b2\s*Pedro\b/gi, 'Segunda Pedro'],
-      [/\b1\s*Jo\b|\b1\s*Jo[ãa]o\b/gi, 'Primeira João'],
-      [/\b2\s*Jo\b|\b2\s*Jo[ãa]o\b/gi, 'Segunda João'],
-      [/\b3\s*Jo\b|\b3\s*Jo[ãa]o\b/gi, 'Terceira João'],
-      [/\b1\s*Sm\b|\b1\s*Samuel\b/gi, 'Primeiro Samuel'],
-      [/\b2\s*Sm\b|\b2\s*Samuel\b/gi, 'Segundo Samuel'],
-      [/\b1\s*Rs\b|\b1\s*Reis\b/gi, 'Primeiro Reis'],
-      [/\b2\s*Rs\b|\b2\s*Reis\b/gi, 'Segundo Reis'],
-      [/\b1\s*Cr\b|\b1\s*Cr[ôo]nicas\b/gi, 'Primeiro Crônicas'],
-      [/\b2\s*Cr\b|\b2\s*Cr[ôo]nicas\b/gi, 'Segundo Crônicas'],
-      [/\bSl\b|\bSal\b/gi, 'Salmo'],
-      [/\bPv\b|\bProv\b/gi, 'Provérbios'],
-      [/\bMt\b|\bMat\b/gi, 'Mateus'],
-      [/\bMc\b|\bMar\b/gi, 'Marcos'],
-      [/\bLc\b|\bLuc\b/gi, 'Lucas'],
-      [/\bJo\b/gi, 'João'],
-      [/\bAt\b|\bAct\b/gi, 'Atos'],
-      [/\bRm\b|\bRom\b/gi, 'Romanos'],
-      [/\bGl\b|\bGal\b/gi, 'Gálatas'],
-      [/\bEf\b/gi, 'Efésios'],
-      [/\bFp\b|\bFil\b/gi, 'Filipenses'],
-      [/\bCl\b|\bCol\b/gi, 'Colossenses'],
-      [/\bHb\b|\bHeb\b/gi, 'Hebreus'],
-      [/\bTg\b/gi, 'Tiago'],
-      [/\bAp\b|\bApoc\b/gi, 'Apocalipse'],
-      [/\bGn\b|\bGen\b/gi, 'Gênesis'],
-      [/\bÊx\b|\bEx\b/gi, 'Êxodo']
+      [/\b1\s*Co(?![a-zà-ÿ])/gi, 'Primeira Coríntios'],
+      [/\b2\s*Co(?![a-zà-ÿ])/gi, 'Segunda Coríntios'],
+      [/\b1\s*Tessalonicenses\b|\b1\s*Ts(?![a-zà-ÿ])/gi, 'Primeira Tessalonicenses'],
+      [/\b2\s*Tessalonicenses\b|\b2\s*Ts(?![a-zà-ÿ])/gi, 'Segunda Tessalonicenses'],
+      [/\b1\s*Tim[óo]teo\b|\b1\s*Tm(?![a-zà-ÿ])/gi, 'Primeira Timóteo'],
+      [/\b2\s*Tim[óo]teo\b|\b2\s*Tm(?![a-zà-ÿ])/gi, 'Segunda Timóteo'],
+      [/\b1\s*Pedro\b|\b1\s*Pe(?![a-zà-ÿ])/gi, 'Primeira Pedro'],
+      [/\b2\s*Pedro\b|\b2\s*Pe(?![a-zà-ÿ])/gi, 'Segunda Pedro'],
+      [/\b1\s*Jo[ãa]o\b|\b1\s*Jo(?![a-zà-ÿ])/gi, 'Primeira João'],
+      [/\b2\s*Jo[ãa]o\b|\b2\s*Jo(?![a-zà-ÿ])/gi, 'Segunda João'],
+      [/\b3\s*Jo[ãa]o\b|\b3\s*Jo(?![a-zà-ÿ])/gi, 'Terceira João'],
+      [/\b1\s*Samuel\b|\b1\s*Sm(?![a-zà-ÿ])/gi, 'Primeiro Samuel'],
+      [/\b2\s*Samuel\b|\b2\s*Sm(?![a-zà-ÿ])/gi, 'Segundo Samuel'],
+      [/\b1\s*Reis\b|\b1\s*Rs(?![a-zà-ÿ])/gi, 'Primeiro Reis'],
+      [/\b2\s*Reis\b|\b2\s*Rs(?![a-zà-ÿ])/gi, 'Segundo Reis'],
+      [/\b1\s*Cr[ôo]nicas\b|\b1\s*Cr(?![a-zà-ÿ])/gi, 'Primeiro Crônicas'],
+      [/\b2\s*Cr[ôo]nicas\b|\b2\s*Cr(?![a-zà-ÿ])/gi, 'Segundo Crônicas'],
+      [/\bSalmos\b|\bSl(?![a-zà-ÿ])|\bSal(?![a-zà-ÿ])/gi, 'Salmo'],
+      [/\bProv[ée]rbios\b|\bPv(?![a-zà-ÿ])|\bProv(?![a-zà-ÿ])/gi, 'Provérbios'],
+      [/\bMateus\b|\bMt(?![a-zà-ÿ])|\bMat(?![a-zà-ÿ])/gi, 'Mateus'],
+      [/\bMarcos\b|\bMc(?![a-zà-ÿ])|\bMar(?![a-zà-ÿ])/gi, 'Marcos'],
+      [/\bLucas\b|\bLc(?![a-zà-ÿ])|\bLuc(?![a-zà-ÿ])/gi, 'Lucas'],
+      [/\bJoao\b/gi, 'João'],
+      [/\bAtos\b|\bAt(?![a-zà-ÿ])|\bAct(?![a-zà-ÿ])/gi, 'Atos'],
+      [/\bRomanos\b|\bRm(?![a-zà-ÿ])|\bRom(?![a-zà-ÿ])/gi, 'Romanos'],
+      [/\bG[áa]latas\b|\bGl(?![a-zà-ÿ])|\bGal(?![a-zà-ÿ])/gi, 'Gálatas'],
+      [/\bEf[ée]sios\b|\bEf(?![a-zà-ÿ])/gi, 'Efésios'],
+      [/\bFilipenses\b|\bFp(?![a-zà-ÿ])|\bFil(?![a-zà-ÿ])/gi, 'Filipenses'],
+      [/\bColossenses\b|\bCl(?![a-zà-ÿ])|\bCol(?![a-zà-ÿ])/gi, 'Colossenses'],
+      [/\bHebreus\b|\bHb(?![a-zà-ÿ])|\bHeb(?![a-zà-ÿ])/gi, 'Hebreus'],
+      [/\bTiago\b|\bTg(?![a-zà-ÿ])/gi, 'Tiago'],
+      [/\bApocalipse\b|\bAp(?![a-zà-ÿ])|\bApoc(?![a-zà-ÿ])/gi, 'Apocalipse'],
+      [/\bG[êe]nesis\b|\bGn(?![a-zà-ÿ])|\bGen(?![a-zà-ÿ])/gi, 'Gênesis'],
+      [/\b[ÊE]xodo\b|\bÊx(?![a-zà-ÿ])|\bEx(?![a-zà-ÿ])/gi, 'Êxodo']
     ];
 
     mapeamento.forEach(function (par) {
       r = r.replace(par[0], par[1]);
     });
 
-    // Formatação de capítulos e versículos
+    // 4. Conversão essencial de capítulos e versículos
+    // Transforma padrões como 15:13-17 ou 15:13 em texto por extenso
+    // Isto IMPEDE que o navegador interprete números como "horas e minutos"!
     r = r.replace(/(\d+)\s*:\s*(\d+)\s*[-–—]\s*(\d+)/g, 'capítulo $1, versículos $2 a $3');
+    r = r.replace(/(\d+)\s*:\s*(\d+)\s*,\s*(\d+)/g, 'capítulo $1, versículos $2 e $3');
     r = r.replace(/(\d+)\s*:\s*(\d+)/g, 'capítulo $1, versículo $2');
+
+    // 5. Suavização de pontuação e pausas
+    r = r.replace(/\.{3,}/g, '. '); // Reticências viram ponto e pausa, sem soletrar "ponto ponto"
+    r = r.replace(/["“”«»]/g, ' '); // Aspas não devem causar estalidos mecânicos
+    r = r.replace(/\s+/g, ' ');
 
     return r.trim();
   }
 
   // ==========================================================================
-  // CONSTRUÇÃO DE SEGMENTOS DEVOCIONAIS COM EMOÇÃO E PROSÓDIA SÉNIOR
+  // CONSTRUÇÃO DE SEGMENTOS DEVOCIONAIS COM CADÊNCIA NATURAL
   // ==========================================================================
   function montarSegmentosDevocionais() {
     var reader = document.getElementById('reader');
@@ -253,9 +269,9 @@
         id: 'titulo',
         elemento: elTitulo,
         label: 'Título',
-        texto: 'Ministério Pão Diário. Mensagem: ' + tituloTexto + '.',
-        pausa: config.pausasMeditativas ? 650 : 250,
-        rateFactor: 0.98,
+        texto: humanizarTextoCompleto('Ministério Pão Diário. Mensagem: ' + tituloTexto + '.'),
+        pausa: config.pausasMeditativas ? 350 : 150,
+        rateFactor: 1.04,
         pitchFactor: 1.00
       });
     }
@@ -264,7 +280,7 @@
     var elVbox = reader.querySelector('.vbox');
     var elAline = reader.querySelector('.vbox .aline') || reader.querySelector('.rh .bdgt');
     var refBruta = elAline ? elAline.textContent.replace(/^[-—\s]+/, '').trim() : '';
-    var refHumanizada = humanizarReferenciaBiblica(refBruta);
+    var refHumanizada = humanizarTextoCompleto(refBruta);
 
     var versiculoTexto = '';
     if (elVbox) {
@@ -279,10 +295,10 @@
         id: 'ref',
         elemento: elVbox || elAline,
         label: 'Leitura Bíblica',
-        texto: 'Leitura da Palavra de Deus em ' + refHumanizada + ':',
-        pausa: config.pausasMeditativas ? 450 : 200,
-        rateFactor: 0.96,
-        pitchFactor: 0.98
+        texto: humanizarTextoCompleto('Leitura da Palavra de Deus em ' + refHumanizada + ':'),
+        pausa: config.pausasMeditativas ? 300 : 150,
+        rateFactor: 1.02,
+        pitchFactor: 1.00
       });
     }
 
@@ -291,10 +307,10 @@
         id: 'versiculo',
         elemento: elVbox,
         label: 'Versículo',
-        texto: '“' + versiculoTexto + '”',
-        pausa: config.pausasMeditativas ? 900 : 350,
-        rateFactor: 0.92, // Leitura serena e reverente
-        pitchFactor: 0.96 // Tom mais grave e solene para as Escrituras
+        texto: humanizarTextoCompleto('“' + versiculoTexto + '”'),
+        pausa: config.pausasMeditativas ? 500 : 250,
+        rateFactor: 1.00, // Reverente e focado
+        pitchFactor: 1.00
       });
     }
 
@@ -313,39 +329,39 @@
       }
 
       paragrafos.forEach(function (item, idx) {
-        var txt = limparEmojis(item.txt);
-        if (!txt) return;
+        var txtBruto = item.txt;
+        if (!txtBruto) return;
 
         // Se for momento de oração
-        if (/^ora[çc][ãa]o\s*:/i.test(txt)) {
-          var corpoOracao = txt.replace(/^ora[çc][ãa]o\s*:\s*/i, '').trim();
+        if (/^ora[çc][ãa]o\s*:/i.test(txtBruto)) {
+          var corpoOracao = txtBruto.replace(/^ora[çc][ãa]o\s*:\s*/i, '').trim();
           segmentos.push({
             id: 'oracao_intro',
             elemento: item.el,
             label: 'Oração',
             texto: 'Momento de oração:',
-            pausa: config.pausasMeditativas ? 500 : 200,
-            rateFactor: 0.92,
-            pitchFactor: 0.98
+            pausa: 250,
+            rateFactor: 1.02,
+            pitchFactor: 1.00
           });
           segmentos.push({
             id: 'oracao_corpo',
             elemento: item.el,
             label: 'Oração',
-            texto: corpoOracao,
-            pausa: config.pausasMeditativas ? 850 : 300,
-            rateFactor: 0.88, // Oração íntima e acolhedora
-            pitchFactor: 0.95 // Tom profundo e solene
+            texto: humanizarTextoCompleto(corpoOracao),
+            pausa: config.pausasMeditativas ? 450 : 200,
+            rateFactor: 1.00,
+            pitchFactor: 1.00
           });
         } else {
           segmentos.push({
             id: 'paragrafo_' + idx,
             elemento: item.el,
             label: 'Reflexão',
-            texto: txt,
-            pausa: config.pausasMeditativas ? 550 : 200,
-            rateFactor: 1.0,
-            pitchFactor: 1.0
+            texto: humanizarTextoCompleto(txtBruto),
+            pausa: config.pausasMeditativas ? 320 : 150,
+            rateFactor: 1.05, // Leitura fluida e engajadora
+            pitchFactor: 1.00
           });
         }
       });
@@ -354,25 +370,25 @@
     // 4. HORA DE REFLETIR (MEDITAÇÃO FINAL)
     var elMbox = reader.querySelector('.mbox');
     var elMboxP = reader.querySelector('.mbox p');
-    var meditacaoTexto = elMboxP ? limparEmojis(elMboxP.textContent) : '';
+    var meditacaoTexto = elMboxP ? elMboxP.textContent : '';
     if (meditacaoTexto) {
       segmentos.push({
         id: 'meditacao_intro',
         elemento: elMbox,
         label: 'Hora de Refletir',
         texto: 'Hora de refletir:',
-        pausa: config.pausasMeditativas ? 500 : 200,
-        rateFactor: 0.94,
+        pausa: 250,
+        rateFactor: 1.02,
         pitchFactor: 1.00
       });
       segmentos.push({
         id: 'meditacao_corpo',
         elemento: elMbox,
         label: 'Hora de Refletir',
-        texto: meditacaoTexto,
-        pausa: config.pausasMeditativas ? 900 : 300,
-        rateFactor: 0.90,
-        pitchFactor: 0.97
+        texto: humanizarTextoCompleto(meditacaoTexto),
+        pausa: config.pausasMeditativas ? 450 : 200,
+        rateFactor: 1.04,
+        pitchFactor: 1.00
       });
     }
 
@@ -382,9 +398,9 @@
       elemento: null,
       label: 'Conclusão',
       texto: 'Que a paz e a bênção de Deus acompanhem o seu dia. Amém.',
-      pausa: 200,
-      rateFactor: 0.88,
-      pitchFactor: 0.96
+      pausa: 150,
+      rateFactor: 1.02,
+      pitchFactor: 1.00
     });
 
     return segmentos;
@@ -447,13 +463,13 @@
     var voz = obterMelhorVoz();
     if (voz) ut.voice = voz;
 
-    // Aplica parâmetros personalizados multiplicados pelo fator de expressão do segmento
-    var baseRate = parseFloat(config.rate) || 0.84;
-    var basePitch = parseFloat(config.pitch) || 0.80;
+    // Aplica velocidade ágil e tom natural humano
+    var baseRate = parseFloat(config.rate) || 1.10;
+    var basePitch = parseFloat(config.pitch) || 1.00;
     var baseVolume = parseFloat(config.volume) !== undefined ? parseFloat(config.volume) : 1.0;
 
-    ut.rate = Math.max(0.4, Math.min(2.0, baseRate * (seg.rateFactor || 1.0)));
-    ut.pitch = Math.max(0.4, Math.min(1.8, basePitch * (seg.pitchFactor || 1.0)));
+    ut.rate = Math.max(0.6, Math.min(2.0, baseRate * (seg.rateFactor || 1.0)));
+    ut.pitch = Math.max(0.7, Math.min(1.4, basePitch * (seg.pitchFactor || 1.0)));
     ut.volume = Math.max(0.0, Math.min(1.0, baseVolume));
     ut.lang = voz ? voz.lang : 'pt-PT';
 
@@ -462,7 +478,7 @@
 
     ut.onend = function () {
       if (estado.status !== 'playing') return;
-      var pausa = seg.pausa || 300;
+      var pausa = seg.pausa || 200;
       estado.timerPausa = setTimeout(function () {
         if (estado.status === 'playing') {
           tocarSegmento(indice + 1);
@@ -478,7 +494,7 @@
       // Avança para o próximo segmento mesmo com erro transitório
       setTimeout(function () {
         if (estado.status === 'playing') tocarSegmento(indice + 1);
-      }, 200);
+      }, 150);
     };
 
     window.speechSynthesis.speak(ut);
@@ -540,7 +556,7 @@
         if (!window.speechSynthesis.speaking && estado.status === 'playing') {
           tocarSegmento(estado.indiceAtual >= 0 ? estado.indiceAtual : 0);
         }
-      }, 250);
+      }, 200);
     }
   }
 
@@ -570,7 +586,7 @@
       if (txt) txt.textContent = '✨ Narração concluída';
       setTimeout(function () {
         if (estado.status === 'idle') pill.style.display = 'none';
-      }, 4000);
+      }, 3500);
     }
   }
 
@@ -591,9 +607,9 @@
               iniciarHeartbeat();
               tocarSegmento(estado.indiceAtual);
             }
-          }, 40);
+          }, 35);
         }
-      }, 90);
+      }, 80);
     } else if (tocarAmostraSeOcioso) {
       testarExemploDeVoz();
     }
@@ -601,7 +617,6 @@
 
   function testarExemploDeVoz() {
     if (estado.status === 'playing' && estado.indiceAtual >= 0) {
-      // Se estiver a tocar, atualiza o segmento atual
       aplicarAjusteAoVivo(false);
       return;
     }
@@ -610,17 +625,17 @@
     testeTimer = setTimeout(function () {
       if (estado.status !== 'playing') {
         window.speechSynthesis.cancel();
-        var ut = new SpeechSynthesisUtterance('O Senhor é o meu pastor; nada me faltará. Que a paz e a bênção de Deus acompanhem o seu dia.');
+        var ut = new SpeechSynthesisUtterance('O Senhor é o meu pastor; nada me faltará. O amor tudo sofre, tudo crê, tudo espera. Que a paz de Deus esteja convosco.');
         var voz = obterMelhorVoz();
         if (voz) ut.voice = voz;
-        ut.rate = parseFloat(config.rate) || 0.84;
-        ut.pitch = parseFloat(config.pitch) || 0.80;
+        ut.rate = parseFloat(config.rate) || 1.10;
+        ut.pitch = parseFloat(config.pitch) || 1.00;
         ut.volume = parseFloat(config.volume) !== undefined ? parseFloat(config.volume) : 1.0;
         ut.lang = voz ? voz.lang : 'pt-PT';
         window.__pd_current_utterance = ut;
         window.speechSynthesis.speak(ut);
       }
-    }, 70);
+    }, 60);
   }
 
   // ==========================================================================
@@ -718,7 +733,7 @@
 
       /* Painel de Ajustes Retrátil */
       .voz-settings-panel {
-        background: rgba(30, 12, 1, 0.97);
+        background: rgba(28, 11, 1, 0.97);
         border: 1px solid rgba(245, 185, 66, 0.45);
         border-radius: 16px;
         padding: 18px 20px;
@@ -781,7 +796,7 @@
         font-weight: 700;
       }
 
-      /* Presets Pastorais */
+      /* Presets Rápidos */
       .voz-presets-wrap {
         display: flex;
         gap: 8px;
@@ -911,7 +926,7 @@
 
     wrapper.innerHTML = `
       <div class="voz-bar-controls">
-        <button type="button" class="voz-btn voz-btn-primary" id="vozBtnPlay" title="Ouvir reflexão narrada em voz sénior">
+        <button type="button" class="voz-btn voz-btn-primary" id="vozBtnPlay" title="Ouvir reflexão narrada">
           <span id="vozPlayIcon">▶</span>
           <span id="vozPlayTexto">Ouvir mensagem</span>
         </button>
@@ -921,7 +936,7 @@
           <span>Parar</span>
         </button>
 
-        <button type="button" class="voz-btn voz-btn-settings" id="vozBtnSettings" title="Personalizar voz sénior, tom grave e velocidade">
+        <button type="button" class="voz-btn voz-btn-settings" id="vozBtnSettings" title="Personalizar voz natural, velocidade e estilo">
           <span>⚙</span>
           <span>Ajustes de Áudio</span>
         </button>
@@ -936,63 +951,63 @@
         <div class="voz-panel-head">
           <div class="voz-panel-title">
             <span>🎙️</span>
-            <span>Personalizar Narração Devocional Sénior</span>
+            <span>Narração Devocional Humanizada</span>
           </div>
           <button type="button" class="voz-panel-close" id="vozBtnCloseSettings" aria-label="Fechar ajustes">✕</button>
         </div>
 
         <div class="voz-setting-row">
-          <label class="voz-setting-label">Estilo & Cadência Devocional:</label>
+          <label class="voz-setting-label">Estilo & Ritmo de Leitura:</label>
           <div class="voz-presets-wrap">
-            <button type="button" class="voz-preset-chip active" data-preset="pastoral" title="Tom grave e maduro com ritmo compassado e acolhedor">
-              🎙️ Pastoral Sénior (Grave & Sereno)
+            <button type="button" class="voz-preset-chip active" data-preset="natural" title="Leitura fluida, viva e conversacional (Recomendado)">
+              🌟 Natural & Fluida (1.10x)
             </button>
-            <button type="button" class="voz-preset-chip" data-preset="oracao" title="Tom muito profundo e reverente para oração profunda">
-              🕊️ Oração Profunda (Solene)
+            <button type="button" class="voz-preset-chip" data-preset="rapida" title="Leitura ágil para escuta dinâmica">
+              ⚡ Rápida & Ágil (1.22x)
             </button>
-            <button type="button" class="voz-preset-chip" data-preset="suave" title="Tom aveludado e cadência equilibrada">
-              📖 Leitura Suave (0.90x)
+            <button type="button" class="voz-preset-chip" data-preset="estudio" title="Ritmo de podcast e rádio devocional">
+              🎙️ Narrador de Estúdio (1.05x)
             </button>
-            <button type="button" class="voz-preset-chip" data-preset="dinamico" title="Ritmo mais dinâmico para escuta rápida">
-              ⚡ Dinâmico (1.05x)
+            <button type="button" class="voz-preset-chip" data-preset="serena" title="Cadência tranquila e pausada para meditação">
+              🕊️ Serena & Calma (0.96x)
             </button>
           </div>
         </div>
 
         <div class="voz-setting-row">
           <div class="voz-setting-label">
-            <label for="vozSelectVoz">🎙️ Voz da Mensagem:</label>
-            <span class="voz-badge-val" id="vozBadgeNome">Automático (Sénior)</span>
+            <label for="vozSelectVoz">🎙️ Voz da Narração:</label>
+            <span class="voz-badge-val" id="vozBadgeNome">Automático (Natural)</span>
           </div>
           <select id="vozSelectVoz" class="voz-select"></select>
           <div class="voz-help-tip" id="vozHelpTip">
-            ✨ Prioridade ativa: Vozes masculinas e seniores (Duarte, Antonio, Daniel) para máxima gravidade e reflexão.
+            ✨ Prioridade ativa: Vozes neurais e naturais de estúdio (Duarte, Antonio, Raquel, Google) para pronúncia fluida e sem efeito mecânico.
           </div>
         </div>
 
         <div class="voz-setting-row">
           <div class="voz-setting-label">
-            <label for="vozRangePitch">🎵 Tom & Gravidade (Timbre Sénior):</label>
-            <span class="voz-badge-val" id="vozBadgePitch">0.80 (Grave & Maduro)</span>
+            <label for="vozRangeRate">⏱️ Velocidade da Fala:</label>
+            <span class="voz-badge-val" id="vozBadgeRate">1.10x (Fluida & Natural)</span>
           </div>
-          <input type="range" id="vozRangePitch" class="voz-range" min="0.50" max="1.30" step="0.02" value="0.80">
+          <input type="range" id="vozRangeRate" class="voz-range" min="0.80" max="1.45" step="0.02" value="1.10">
           <div class="voz-range-sub">
-            <span>Muito Grave / Solene (0.50)</span>
-            <span>Ideal Sénior (0.80)</span>
-            <span>Mais Agudo (1.30)</span>
+            <span>Mais Calma (0.80x)</span>
+            <span>Fluida & Natural (1.10x)</span>
+            <span>Mais Rápida (1.45x)</span>
           </div>
         </div>
 
         <div class="voz-setting-row">
           <div class="voz-setting-label">
-            <label for="vozRangeRate">⏱️ Velocidade do Ritmo:</label>
-            <span class="voz-badge-val" id="vozBadgeRate">0.84x (Pastoral)</span>
+            <label for="vozRangePitch">🎵 Tom de Voz (Timbre):</label>
+            <span class="voz-badge-val" id="vozBadgePitch">1.00 (Natural Humano)</span>
           </div>
-          <input type="range" id="vozRangeRate" class="voz-range" min="0.55" max="1.45" step="0.02" value="0.84">
+          <input type="range" id="vozRangePitch" class="voz-range" min="0.85" max="1.15" step="0.02" value="1.00">
           <div class="voz-range-sub">
-            <span>Mais Lento / Meditativo (0.55x)</span>
-            <span>Ideal Pastoral (0.84x)</span>
-            <span>Mais Rápido (1.45x)</span>
+            <span>Mais Encorpado</span>
+            <span>Natural Humano (1.00)</span>
+            <span>Mais Agudo</span>
           </div>
         </div>
 
@@ -1007,7 +1022,7 @@
         <div class="voz-setting-row">
           <label class="voz-checkbox-row">
             <input type="checkbox" id="vozCheckPausas" checked>
-            <span>Inserir pausas contemplativas entre versículos e reflexão</span>
+            <span>Pausas naturais entre títulos, versículos e reflexão</span>
           </label>
           <label class="voz-checkbox-row">
             <input type="checkbox" id="vozCheckRef" checked>
@@ -1021,10 +1036,10 @@
 
         <div class="voz-panel-footer">
           <button type="button" class="voz-btn-link" id="vozBtnRestaurar">
-            ↺ Restaurar Padrão Pastoral Sénior
+            ↺ Restaurar Padrão Natural
           </button>
           <button type="button" class="voz-btn voz-btn-primary" id="vozBtnTestarExemplo" style="padding:6px 16px;font-size:0.78rem;">
-            ▶ Testar Tom e Velocidade
+            ▶ Testar Voz e Ritmo
           </button>
         </div>
       </div>
@@ -1079,7 +1094,7 @@
 
     var optAuto = document.createElement('option');
     optAuto.value = '';
-    optAuto.textContent = '🌟 Melhor Voz Masculina / Sénior Automática (Recomendado)';
+    optAuto.textContent = '🌟 Melhor Voz Natural de Estúdio Automática (Recomendado)';
     select.appendChild(optAuto);
 
     if (!vozesCache || vozesCache.length === 0) return;
@@ -1087,52 +1102,54 @@
     var vozesPT = vozesCache.filter(function (v) { return (v.lang || '').toLowerCase().indexOf('pt') === 0; });
     var outras = vozesCache.filter(function (v) { return (v.lang || '').toLowerCase().indexOf('pt') !== 0; });
 
-    var vozesSeniores = [];
-    var outrasPT = [];
+    var vozesNaturais = [];
+    var vozesLocais = [];
 
     vozesPT.forEach(function (v) {
-      if (ehVozMasculinaSenior(v)) {
-        vozesSeniores.push(v);
+      if (ehVozNaturalEstudio(v)) {
+        vozesNaturais.push(v);
       } else {
-        outrasPT.push(v);
+        vozesLocais.push(v);
       }
     });
 
-    vozesSeniores.sort(function (a, b) { return classificarVoz(b) - classificarVoz(a); });
-    outrasPT.sort(function (a, b) { return classificarVoz(b) - classificarVoz(a); });
+    vozesNaturais.sort(function (a, b) { return classificarVoz(b) - classificarVoz(a); });
+    vozesLocais.sort(function (a, b) { return classificarVoz(b) - classificarVoz(a); });
 
-    if (vozesSeniores.length > 0) {
-      var grupoSenior = document.createElement('optgroup');
-      grupoSenior.label = '🎙️ Vozes Masculinas & Seniores (Recomendadas para Ministério)';
-      vozesSeniores.forEach(function (v) {
+    if (vozesNaturais.length > 0) {
+      var grupoNatural = document.createElement('optgroup');
+      grupoNatural.label = '✨ Vozes Naturais de Alta Definição (Humanizadas)';
+      vozesNaturais.forEach(function (v) {
         var opt = document.createElement('option');
         opt.value = v.voiceURI;
-        var rotulo = '👨 ' + v.name;
-        if (v.name.toLowerCase().indexOf('daniel') !== -1) {
-          rotulo += ' (Tom Grave Ajustável)';
+        var rotulo = '🎙️ ' + v.name + ' (' + v.lang + ')';
+        if (v.name.toLowerCase().indexOf('duarte') !== -1) {
+          rotulo = '🎙️ Duarte Natural (PT-PT) — Estúdio Devocional';
         } else if (v.name.toLowerCase().indexOf('antonio') !== -1 || v.name.toLowerCase().indexOf('antónio') !== -1) {
-          rotulo += ' (Voz Madura & Aveludada)';
-        } else if (v.name.toLowerCase().indexOf('duarte') !== -1) {
-          rotulo += ' (Voz Solene & Serena)';
+          rotulo = '🎙️ Antonio Natural (PT-BR) — Voz Madura de Estúdio';
+        } else if (v.name.toLowerCase().indexOf('raquel') !== -1) {
+          rotulo = '🎙️ Raquel Natural (PT-PT) — Clara e Serena';
+        } else if (v.name.toLowerCase().indexOf('francisca') !== -1) {
+          rotulo = '🎙️ Francisca Natural (PT-BR) — Suave e Fluida';
         }
         opt.textContent = rotulo;
         if (config.voiceURI === v.voiceURI) opt.selected = true;
-        grupoSenior.appendChild(opt);
+        grupoNatural.appendChild(opt);
       });
-      select.appendChild(grupoSenior);
+      select.appendChild(grupoNatural);
     }
 
-    if (outrasPT.length > 0) {
-      var grupoOutrasPT = document.createElement('optgroup');
-      grupoOutrasPT.label = '🔊 Outras Vozes em Português';
-      outrasPT.forEach(function (v) {
+    if (vozesLocais.length > 0) {
+      var grupoLocais = document.createElement('optgroup');
+      grupoLocais.label = '🔊 Outras Vozes do Sistema';
+      vozesLocais.forEach(function (v) {
         var opt = document.createElement('option');
         opt.value = v.voiceURI;
         opt.textContent = '🗣️ ' + v.name + ' (' + v.lang + ')';
         if (config.voiceURI === v.voiceURI) opt.selected = true;
-        grupoOutrasPT.appendChild(opt);
+        grupoLocais.appendChild(opt);
       });
-      select.appendChild(grupoOutrasPT);
+      select.appendChild(grupoLocais);
     }
 
     if (outras.length > 0) {
@@ -1166,19 +1183,19 @@
     var checkRef = document.getElementById('vozCheckRef');
     var checkDestaque = document.getElementById('vozCheckDestaque');
 
-    var r = parseFloat(config.rate) || 0.84;
-    var p = parseFloat(config.pitch) || 0.80;
+    var r = parseFloat(config.rate) || 1.10;
+    var p = parseFloat(config.pitch) || 1.00;
     var vol = parseFloat(config.volume) !== undefined ? parseFloat(config.volume) : 1.0;
 
     if (rangeRate && badgeRate) {
       rangeRate.value = r;
-      var descRate = r <= 0.72 ? 'Muito Pausado' : (r <= 0.88 ? 'Ideal Pastoral' : (r <= 1.05 ? 'Moderado' : 'Dinâmico'));
+      var descRate = r < 0.95 ? 'Calma' : (r <= 1.15 ? 'Fluida & Natural' : 'Rápida & Dinâmica');
       badgeRate.textContent = r.toFixed(2) + 'x (' + descRate + ')';
     }
 
     if (rangePitch && badgePitch) {
       rangePitch.value = p;
-      var descPitch = p <= 0.65 ? 'Muito Grave / Solene' : (p <= 0.82 ? 'Grave & Maduro' : (p <= 0.95 ? 'Aveludado' : (p <= 1.05 ? 'Neutro' : 'Agudo')));
+      var descPitch = p < 0.94 ? 'Encorpado' : (p <= 1.06 ? 'Natural Humano' : 'Mais Agudo');
       badgePitch.textContent = p.toFixed(2) + ' (' + descPitch + ')';
     }
 
@@ -1195,31 +1212,31 @@
     document.querySelectorAll('.voz-preset-chip').forEach(function (chip) {
       var preset = chip.getAttribute('data-preset');
       var ativo = false;
-      if (preset === 'pastoral' && Math.abs(r - 0.84) < 0.04 && Math.abs(p - 0.80) < 0.04) ativo = true;
-      if (preset === 'oracao' && Math.abs(r - 0.78) < 0.04 && Math.abs(p - 0.72) < 0.04) ativo = true;
-      if (preset === 'suave' && Math.abs(r - 0.90) < 0.04 && Math.abs(p - 0.86) < 0.04) ativo = true;
-      if (preset === 'dinamico' && Math.abs(r - 1.05) < 0.04 && Math.abs(p - 0.95) < 0.04) ativo = true;
+      if (preset === 'natural' && Math.abs(r - 1.10) < 0.04 && Math.abs(p - 1.00) < 0.04) ativo = true;
+      if (preset === 'rapida' && Math.abs(r - 1.22) < 0.04 && Math.abs(p - 1.00) < 0.04) ativo = true;
+      if (preset === 'estudio' && Math.abs(r - 1.05) < 0.04 && Math.abs(p - 1.00) < 0.04) ativo = true;
+      if (preset === 'serena' && Math.abs(r - 0.96) < 0.04 && Math.abs(p - 1.00) < 0.04) ativo = true;
       chip.classList.toggle('active', ativo);
     });
   }
 
   function aplicarPreset(preset) {
-    if (preset === 'pastoral') {
-      config.rate = 0.84;
-      config.pitch = 0.80;
+    if (preset === 'natural') {
+      config.rate = 1.10;
+      config.pitch = 1.00;
       config.pausasMeditativas = true;
-    } else if (preset === 'oracao') {
-      config.rate = 0.78;
-      config.pitch = 0.72;
-      config.pausasMeditativas = true;
-    } else if (preset === 'suave') {
-      config.rate = 0.90;
-      config.pitch = 0.86;
-      config.pausasMeditativas = true;
-    } else if (preset === 'dinamico') {
-      config.rate = 1.05;
-      config.pitch = 0.95;
+    } else if (preset === 'rapida') {
+      config.rate = 1.22;
+      config.pitch = 1.00;
       config.pausasMeditativas = false;
+    } else if (preset === 'estudio') {
+      config.rate = 1.05;
+      config.pitch = 1.00;
+      config.pausasMeditativas = true;
+    } else if (preset === 'serena') {
+      config.rate = 0.96;
+      config.pitch = 1.00;
+      config.pausasMeditativas = true;
     }
     salvarConfig();
     sincronizarValoresAjustes();
