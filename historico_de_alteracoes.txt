@@ -42,3 +42,15 @@ Arquivo de histórico de alterações
     * Função gerar_mensagem_do_email() e pré-visualização adaptadas para preencher genealogia ([]) e aplicacao reflexiva por padrão.
   - voz.js:
     * Função montarSegmentosDevocionais() enriquecida para narrar ordenadamente Genealogia Bíblica, blocos de oração (internos e dedicados), meditação e Pergunta de Aplicação prática, com destaque visual sincronizado.
+[2026-09-27 02:40:00] Correção acústica e motor de música ambiente em voz.js:
+  - Resolução da inaudibilidade:
+    * Frequências dos acordes transpostas da gama sub-grave inaudível (49-87 Hz) para a gama acústica musical de alta sensibilidade (110 Hz a 440 Hz: Fmaj9 -> Cadd9 -> Am9 -> Gsus4).
+    * Adicionados harmónicos celestiais suaves (+1 oitava) que garantem ressonância clara em colunas de computadores portáteis, smartphones e auscultadores.
+    * Calibração de ganho por nota aumentada de 0.044 para 0.18 (nível sonoro claramente percetível e encorpado).
+    * Abertura do filtro aveludado de 520 Hz para 2200 Hz (elimina ruídos duros mantendo a riqueza harmónica).
+    * Ataque ágil (0.8s) substituindo a rampa lenta de 2.2s.
+  - Painel de ajustes e controlo total:
+    * Escala do slider de volume da música expandida para 100% (min 5% a max 100%, padrão 35%).
+    * Adicionado botão direto "🎵 Ouvir / Testar Música" no painel de configurações para teste sonoro imediato com um só clique, sem necessidade de iniciar narração.
+    * A reprodução da amostra de voz ("▶ Testar Voz e Ritmo") agora toca também a música de fundo em harmonia com a voz.
+    * Resolução de restrições de autoplay do AudioContext nos navegadores modernos.

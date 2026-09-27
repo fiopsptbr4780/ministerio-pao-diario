@@ -17,7 +17,7 @@
 (function () {
   'use strict';
 
-  var STORAGE_KEY = 'pao_diario_audio_config_v8';
+  var STORAGE_KEY = 'pao_diario_audio_config_v9';
 
   var CONFIG_DEFAULT = {
     rate: 1.15,               // Ritmo ágil e dinâmico (permite ajustar até 2.80x)
@@ -25,7 +25,7 @@
     volume: 1.0,              // Volume da voz de narração
     voiceURI: '',             // Melhor voz neural/natural detetada automaticamente
     musicaFundo: true,        // Música suave e tranquila ao fundo
-    volumeMusica: 0.18,       // Volume equilibrado da música ambiente (18%)
+    volumeMusica: 0.35,       // Volume equilibrado e claramente audível da música ambiente (35%)
     pausasMeditativas: true,  // Pausas naturais de respiração entre blocos
     humanizarReferencias: true,// "João 15:13" -> "João capítulo 15, versículo 13"
     destacarTexto: true       // Iluminação visual do parágrafo lido
@@ -58,9 +58,14 @@
       var guardado = localStorage.getItem(STORAGE_KEY);
       if (guardado) {
         var parsed = JSON.parse(guardado);
-        return Object.assign({}, CONFIG_DEFAULT, parsed);
+        var merged = Object.assign({}, CONFIG_DEFAULT, parsed);
+        if (typeof merged.volumeMusica !== 'number' || isNaN(merged.volumeMusica) || merged.volumeMusica < 0.05) {
+          merged.volumeMusica = 0.35;
+        }
+        return merged;
       }
       try {
+        localStorage.removeItem('pao_diario_audio_config_v8');
         localStorage.removeItem('pao_diario_audio_config_v7');
         localStorage.removeItem('pao_diario_audio_config_v6');
         localStorage.removeItem('pao_diario_audio_config_v5');
@@ -91,23 +96,29 @@
   var musicPlaying = false;
   var chordIndex = 0;
 
-  // Progressão harmónica orquestral de acolhimento e paz (Fmaj9 -> Cmaj7 -> Am9 -> Gsus4)
+  // Progressão harmónica orquestral de acolhimento e paz (Fmaj9 -> Cadd9 -> Am9 -> Gsus4)
+  // Frequências calibradas na gama acústica de alta sensibilidade do ouvido humano (110 Hz a 440 Hz)
+  // Perfeitamente audível em colunas de computadores portáteis, telemóveis e auscultadores.
   var CHORDS = [
-    [87.31, 130.81, 220.00, 329.63, 392.00], // Fmaj9: Paz profunda
-    [65.41, 98.00, 164.81, 246.94, 293.66],  // Cmaj7: Esperança e luz
-    [55.00, 82.41, 130.81, 196.00, 246.94],  // Am9: Reflexão e intimidade
-    [49.00, 73.42, 98.00, 246.94, 293.66]   // Gsus4: Gratidão e serenidade
+    [174.61, 261.63, 329.63, 392.00, 440.00], // Fmaj9: Paz profunda e acolhimento
+    [130.81, 196.00, 261.63, 293.66, 329.63], // Cadd9: Esperança e luz
+    [110.00, 164.81, 220.00, 261.63, 329.63], // Am9: Reflexão e intimidade
+    [146.83, 196.00, 246.94, 293.66, 392.00]  // Gsus4 / G: Gratidão e serenidade
   ];
 
   function getAudioContext() {
-    if (!audioCtx) {
-      var AudioContextClass = window.AudioContext || window.webkitAudioContext;
-      if (AudioContextClass) {
-        audioCtx = new AudioContextClass();
+    try {
+      if (!audioCtx) {
+        var AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          audioCtx = new AudioContextClass();
+        }
       }
-    }
-    if (audioCtx && audioCtx.state === 'suspended') {
-      audioCtx.resume();
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume().catch(function () {});
+      }
+    } catch (e) {
+      console.warn('AudioContext inicialização:', e);
     }
     return audioCtx;
   }
@@ -117,28 +128,45 @@
     var ctx = getAudioContext();
     if (!ctx) return;
 
-    if (!musicMasterGain) {
-      musicMasterGain = ctx.createGain();
-      musicFilter = ctx.createBiquadFilter();
-      musicFilter.type = 'lowpass';
-      musicFilter.frequency.value = 520; // Filtro aveludado e quente
-      musicFilter.Q.value = 1.0;
+    var targetVol = (parseFloat(config.volumeMusica) !== undefined ? parseFloat(config.volumeMusica) : 0.35);
 
-      musicFilter.connect(musicMasterGain);
-      musicMasterGain.connect(ctx.destination);
+    if (musicPlaying) {
+      if (musicMasterGain) {
+        try {
+          musicMasterGain.gain.setValueAtTime(targetVol, ctx.currentTime);
+        } catch (e) {}
+      }
+      return;
     }
 
-    var targetVol = (parseFloat(config.volumeMusica) !== undefined ? parseFloat(config.volumeMusica) : 0.18);
-    musicMasterGain.gain.cancelScheduledValues(ctx.currentTime);
-    musicMasterGain.gain.setValueAtTime(musicMasterGain.gain.value, ctx.currentTime);
-    musicMasterGain.gain.linearRampToValueAtTime(targetVol, ctx.currentTime + 1.8);
+    try {
+      if (!musicMasterGain) {
+        musicMasterGain = ctx.createGain();
+        musicFilter = ctx.createBiquadFilter();
+        musicFilter.type = 'lowpass';
+        musicFilter.frequency.setValueAtTime(2200, ctx.currentTime); // Filtro aveludado (elimina asperezas, mantém calor)
+        musicFilter.Q.setValueAtTime(0.7, ctx.currentTime);
 
-    musicPlaying = true;
-    tocarProximoAcorde();
+        musicFilter.connect(musicMasterGain);
+        musicMasterGain.connect(ctx.destination);
+      }
+
+      var agora = ctx.currentTime;
+      musicMasterGain.gain.cancelScheduledValues(agora);
+      musicMasterGain.gain.setValueAtTime(0.0001, agora);
+      musicMasterGain.gain.linearRampToValueAtTime(targetVol, agora + 0.35);
+
+      musicPlaying = true;
+      atualizarBotaoTestarMusica();
+      tocarProximoAcorde();
+    } catch (err) {
+      console.warn('Erro ao iniciar música ambiente:', err);
+    }
   }
 
   function pararMusicaAmbiente(imediato) {
     musicPlaying = false;
+    atualizarBotaoTestarMusica();
     if (musicTimer) {
       clearTimeout(musicTimer);
       musicTimer = null;
@@ -147,16 +175,44 @@
     if (!audioCtx || !musicMasterGain) return;
 
     var ctx = audioCtx;
-    var fadeTime = imediato ? 0.15 : 1.2;
-    musicMasterGain.gain.cancelScheduledValues(ctx.currentTime);
-    musicMasterGain.gain.setValueAtTime(musicMasterGain.gain.value, ctx.currentTime);
-    musicMasterGain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + fadeTime);
+    var agora = ctx.currentTime;
+    var fadeTime = imediato ? 0.1 : 0.8;
+
+    try {
+      musicMasterGain.gain.cancelScheduledValues(agora);
+      musicMasterGain.gain.setValueAtTime(musicMasterGain.gain.value, agora);
+      musicMasterGain.gain.linearRampToValueAtTime(0.0001, agora + fadeTime);
+    } catch (e) {}
 
     setTimeout(function () {
       if (!musicPlaying) {
         desconectarAcordesAtuais();
       }
     }, (fadeTime + 0.1) * 1000);
+  }
+
+  function toggleTestarMusica() {
+    if (musicPlaying) {
+      pararMusicaAmbiente(false);
+    } else {
+      config.musicaFundo = true;
+      var chk = document.getElementById('vozCheckMusica');
+      if (chk) chk.checked = true;
+      salvarConfig();
+      iniciarMusicaAmbiente();
+    }
+  }
+
+  function atualizarBotaoTestarMusica() {
+    var btn = document.getElementById('vozBtnTestarMusica');
+    if (!btn) return;
+    if (musicPlaying) {
+      btn.innerHTML = '⏸ Parar Música';
+      btn.style.color = '#ff9999';
+    } else {
+      btn.innerHTML = '🎵 Ouvir / Testar Música';
+      btn.style.color = '#f5b942';
+    }
   }
 
   function desconectarAcordesAtuais() {
@@ -174,13 +230,21 @@
     if (!musicPlaying || !audioCtx) return;
     var ctx = audioCtx;
 
+    // Se o AudioContext estiver suspenso por política do browser, acorda-o
+    if (ctx.state === 'suspended') {
+      ctx.resume().then(function () {
+        if (musicPlaying) tocarProximoAcorde();
+      }).catch(function () {});
+      return;
+    }
+
     var freqs = CHORDS[chordIndex % CHORDS.length];
     chordIndex++;
 
     var agora = ctx.currentTime;
-    var duracaoAcorde = 7.5;
-    var attackTime = 2.2;
-    var releaseTime = 3.2;
+    var duracaoAcorde = 6.5;
+    var attackTime = 0.8;
+    var releaseTime = 2.0;
 
     var velhosNos = currentChordNodes;
     currentChordNodes = [];
@@ -192,38 +256,58 @@
         velho.gain.gain.cancelScheduledValues(agora);
         velho.gain.gain.setValueAtTime(velho.gain.gain.value, agora);
         velho.gain.gain.linearRampToValueAtTime(0.0001, agora + releaseTime);
-        velho.osc.stop(agora + releaseTime + 0.1);
+        velho.osc.stop(agora + releaseTime + 0.05);
       } catch (e) {}
     }
 
-    // Novos osciladores com timbre celestial quente (mistura sine e triangle)
+    // Novos osciladores com harmonia celestial acolhedora:
+    // Mistura de ondas senoidais puras e triangulares quentes + leve harmónico de estúdio (+1 oitava)
     for (var k = 0; k < freqs.length; k++) {
       var f = freqs[k];
 
-      var osc = ctx.createOscillator();
-      var gain = ctx.createGain();
+      // 1. Oscilador fundamental do acorde
+      var osc1 = ctx.createOscillator();
+      var gain1 = ctx.createGain();
 
-      osc.type = (k % 2 === 0) ? 'sine' : 'triangle';
-      osc.frequency.setValueAtTime(f, agora);
-      osc.detune.setValueAtTime((k % 2 === 0 ? 3 : -3), agora);
+      osc1.type = (k % 2 === 0) ? 'sine' : 'triangle';
+      osc1.frequency.setValueAtTime(f, agora);
+      osc1.detune.setValueAtTime((k % 2 === 0 ? 3 : -3), agora);
 
-      var notaGain = 0.22 / freqs.length;
-      gain.gain.setValueAtTime(0.0001, agora);
-      gain.gain.linearRampToValueAtTime(notaGain, agora + attackTime);
-      gain.gain.linearRampToValueAtTime(notaGain * 0.75, agora + duracaoAcorde - 1.0);
+      var notaGain = 0.18; // Nível sonoro claramente audível e encorpado
+      gain1.gain.setValueAtTime(0.0001, agora);
+      gain1.gain.linearRampToValueAtTime(notaGain, agora + attackTime);
+      gain1.gain.linearRampToValueAtTime(notaGain * 0.85, agora + duracaoAcorde - 0.5);
 
-      osc.connect(gain);
-      gain.connect(musicFilter);
+      osc1.connect(gain1);
+      gain1.connect(musicFilter);
 
-      osc.start(agora);
-      currentChordNodes.push({ osc: osc, gain: gain });
+      osc1.start(agora);
+      currentChordNodes.push({ osc: osc1, gain: gain1 });
+
+      // 2. Harmónico de claridade (som celestial tipo celesta/harpa suave)
+      var osc2 = ctx.createOscillator();
+      var gain2 = ctx.createGain();
+
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(f * 2, agora);
+
+      var harmGain = 0.05; // Leve brilho de estúdio
+      gain2.gain.setValueAtTime(0.0001, agora);
+      gain2.gain.linearRampToValueAtTime(harmGain, agora + attackTime * 1.2);
+      gain2.gain.linearRampToValueAtTime(harmGain * 0.7, agora + duracaoAcorde - 0.5);
+
+      osc2.connect(gain2);
+      gain2.connect(musicFilter);
+
+      osc2.start(agora);
+      currentChordNodes.push({ osc: osc2, gain: gain2 });
     }
 
     musicTimer = setTimeout(function () {
       if (musicPlaying) {
         tocarProximoAcorde();
       }
-    }, (duracaoAcorde - 1.8) * 1000);
+    }, (duracaoAcorde - 1.2) * 1000);
   }
 
   // ==========================================================================
@@ -874,6 +958,16 @@
         ut.volume = parseFloat(config.volume) !== undefined ? parseFloat(config.volume) : 1.0;
         ut.lang = voz ? voz.lang : 'pt-PT';
         window.__pd_current_utterance = ut;
+
+        if (config.musicaFundo) {
+          iniciarMusicaAmbiente();
+          ut.onend = function () {
+            if (estado.status !== 'playing') {
+              pararMusicaAmbiente(false);
+            }
+          };
+        }
+
         window.speechSynthesis.speak(ut);
       }
     }, 50);
@@ -1219,16 +1313,24 @@
         </div>
 
         <!-- MÚSICA AMBIENTE SUAVE -->
-        <div class="voz-setting-row" style="background:rgba(245,185,66,0.1);padding:12px 14px;border-radius:12px;border:1px solid rgba(245,185,66,0.3);">
-          <label class="voz-checkbox-row" style="margin-top:0;font-weight:700;color:#f5b942;">
-            <input type="checkbox" id="vozCheckMusica" checked>
-            <span>🎵 Música Suave de Fundo (Ambiente de Paz & Tranquilidade)</span>
-          </label>
+        <div class="voz-setting-row" style="background:rgba(245,185,66,0.12);padding:14px 16px;border-radius:12px;border:1px solid rgba(245,185,66,0.35);">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <label class="voz-checkbox-row" style="margin-top:0;font-weight:700;color:#f5b942;">
+              <input type="checkbox" id="vozCheckMusica" checked>
+              <span>🎵 Música Suave de Fundo (Paz Devocional)</span>
+            </label>
+          </div>
           <div class="voz-setting-label" style="margin-top:10px;margin-bottom:4px;">
             <label for="vozRangeVolMusica" style="font-size:0.75rem;opacity:0.9;">Volume da Música Ambiente:</label>
-            <span class="voz-badge-val" id="vozBadgeVolMusica">18%</span>
+            <span class="voz-badge-val" id="vozBadgeVolMusica">35%</span>
           </div>
-          <input type="range" id="vozRangeVolMusica" class="voz-range" min="0.02" max="0.50" step="0.02" value="0.18">
+          <input type="range" id="vozRangeVolMusica" class="voz-range" min="0.05" max="1.00" step="0.05" value="0.35">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+            <span style="font-size:0.68rem;color:#f0dbc0;opacity:0.85;">Suave (20%) — Média (50%) — Máxima (100%)</span>
+            <button type="button" id="vozBtnTestarMusica" style="background:rgba(245,185,66,0.2);border:1px solid rgba(245,185,66,0.45);color:#f5b942;padding:4px 12px;border-radius:12px;font-size:0.74rem;font-weight:700;cursor:pointer;">
+              🎵 Ouvir / Testar Música
+            </button>
+          </div>
         </div>
 
         <div class="voz-setting-row">
@@ -1446,7 +1548,7 @@
     var r = parseFloat(config.rate) || 1.15;
     var p = parseFloat(config.pitch) || 1.00;
     var vol = parseFloat(config.volume) !== undefined ? parseFloat(config.volume) : 1.0;
-    var volM = parseFloat(config.volumeMusica) !== undefined ? parseFloat(config.volumeMusica) : 0.18;
+    var volM = parseFloat(config.volumeMusica) !== undefined ? parseFloat(config.volumeMusica) : 0.35;
 
     if (rangeRate && badgeRate) {
       rangeRate.value = r;
@@ -1613,11 +1715,17 @@
       });
     }
 
+    var btnTestarMusica = wrapper.querySelector('#vozBtnTestarMusica');
+
+    if (btnTestarMusica) {
+      btnTestarMusica.addEventListener('click', toggleTestarMusica);
+    }
+
     if (checkMusica) {
       checkMusica.addEventListener('change', function () {
         config.musicaFundo = this.checked;
         salvarConfig();
-        if (config.musicaFundo && estado.status === 'playing') {
+        if (config.musicaFundo && (estado.status === 'playing' || musicPlaying)) {
           iniciarMusicaAmbiente();
         } else if (!config.musicaFundo) {
           pararMusicaAmbiente(false);
@@ -1631,7 +1739,14 @@
         salvarConfig();
         sincronizarValoresAjustes();
         if (musicMasterGain && audioCtx && musicPlaying) {
-          musicMasterGain.gain.setValueAtTime(config.volumeMusica, audioCtx.currentTime);
+          try {
+            musicMasterGain.gain.setValueAtTime(config.volumeMusica, audioCtx.currentTime);
+          } catch (e) {}
+        }
+      });
+      rangeVolMusica.addEventListener('change', function () {
+        if (!musicPlaying && config.musicaFundo) {
+          iniciarMusicaAmbiente();
         }
       });
     }
