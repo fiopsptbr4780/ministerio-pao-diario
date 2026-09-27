@@ -13,15 +13,22 @@
   },
   {
     "id": 2,
-    "titulo": "Competir ou convergir",
+    "titulo": "Competir ou Convergir",
     "data": "2026-06-15",
     "mes": "Junho 2026",
     "icone": "📖",
-    "ref": "Rute 4:13-22",
+    "ref": "Rute 1-4",
     "tema": "proposito",
-    "versiculoTexto": "Assim tomou Boaz a Rute, e ela lhe foi por mulher; e ele a possuiu, e o Senhor lhe concedeu que concebesse, e deu à luz um filho.",
-    "texto": "A história de Rute é um lindo relato de fidelidade e redenção. Em vez de competir por seu próprio espaço ou murmurar sobre as perdas do passado, ela escolheu convergir com os planos divinos e servir com amor. Ao chegar a Belém, Deus guiou seus passos até os campos de Boaz. O casamento deles não foi apenas uma união, mas uma convergência com o propósito eterno de Deus. Da linhagem de Rute nasceu Obede, pai de Jessé, que foi pai de Davi — pavimentando o caminho humano para a vinda do Messias. Quando alinhamos a nossa vontade com a de Deus, nossas vidas deixam de competir com o mundo e passam a fazer parte de uma história muito maior.",
-    "meditacao": "De que maneiras você pode convergir seus planos pessoais com a soberana vontade de Deus hoje?"
+    "versiculoTexto": "O casamento deles não foi apenas uma união, mas uma convergência com o propósito eterno de Deus.",
+    "texto": "A história de Rute é um lindo relato de fidelidade e redenção. Em vez de competir por seu próprio espaço ou murmurar sobre as perdas do passado, ela escolheu convergir com os planos divinos e servir com amor.\n\nAo chegar a Belém, Deus guiou seus passos até os campos de Boaz. O casamento deles não foi apenas uma união, mas uma convergência com o propósito eterno de Deus.\n\nDa linhagem de Rute nasceu Obede, pai de Jessé, que foi pai de Davi — pavimentando o caminho humano para a vinda do Messias.",
+    "genealogiaTitulo": "Da linhagem de Rute nasceu:",
+    "genealogia": [
+      "Obede",
+      "Jessé",
+      "Davi"
+    ],
+    "meditacao": "Quando alinhamos a nossa vontade com a de Deus, nossas vidas deixam de competir com o mundo e passam a fazer parte de uma história muito maior.",
+    "aplicacao": "De que maneiras você pode convergir seus planos pessoais com a soberana vontade de Deus hoje?"
   },
   {
     "id": 3,

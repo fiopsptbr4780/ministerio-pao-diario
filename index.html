@@ -116,6 +116,74 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 .pbox{background:linear-gradient(135deg,#7a3e00,#c8790a);color:#fff;border-radius:14px;padding:22px 26px;margin:28px 0;text-align:center;font-style:italic;font-size:1.08rem;line-height:1.6}
 .aline{text-align:right;font-style:italic;color:#a0652a;font-size:.88rem;margin-top:18px}
 
+/* Genealogia estilizada */
+.genealogia {
+  background: linear-gradient(135deg, #fff8ee, #fdebc8);
+  border-left: 4px solid #c8790a;
+  border-radius: 0 12px 12px 0;
+  padding: 16px 22px;
+  margin: 24px 0;
+}
+.genealogia h3 {
+  font-size: 0.9rem;
+  color: #7a3e00;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+.genealogia ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.genealogia ul li {
+  padding: 6px 0 6px 20px;
+  position: relative;
+  font-size: 1rem;
+  color: #2c1a0e;
+  border-bottom: 1px solid #f0dbc0;
+}
+.genealogia ul li:last-child {
+  border-bottom: none;
+}
+.genealogia ul li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  color: #c8790a;
+  font-size: 0.8rem;
+}
+
+/* Aplicação / Pergunta final */
+.aplicacao-box {
+  background: linear-gradient(135deg, #7a3e00, #c8790a);
+  color: #fff;
+  border-radius: 14px;
+  padding: 22px 26px;
+  margin: 28px 0;
+  text-align: center;
+  font-style: italic;
+  font-size: 1.08rem;
+  line-height: 1.6;
+}
+.aplicacao-box .label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  opacity: 0.8;
+  margin-bottom: 8px;
+  font-family: sans-serif;
+  font-style: normal;
+}
+
+.autor-sign {
+  text-align: right;
+  font-style: italic;
+  color: #a0652a;
+  font-size: 0.9rem;
+  margin-top: 14px;
+}
+
 .mbox{background:#fff9f2;border:1px solid #f0dbc0;border-left:5px solid #c8790a;border-radius:4px 14px 14px 4px;padding:18px 22px;margin-top:32px;display:flex;gap:14px;align-items:flex-start}
 .mbox .mi{font-size:1.8rem}
 .mbox .ml{font-size:.75rem;font-weight:800;color:#c8790a;letter-spacing:1.5px;margin-bottom:5px;font-family:sans-serif;text-transform:uppercase}
@@ -358,19 +426,60 @@ function showReader(i){
   hide('cover'); hide('index-page'); hide('gallery-page');
   const r = document.getElementById('reader');
   
-  const mboxHtml = m.meditacao ? `<div class="mbox"><div class="mi">💡</div><div><div class="ml">Hora de Refletir</div><p>${esc(m.meditacao)}</p></div></div>` : '';
+  // Renderiza genealogia como lista
+  const tituloGenealogia = m.genealogiaTitulo ? esc(m.genealogiaTitulo) : (m.ref && m.ref.toLowerCase().includes('rute') ? 'Da linhagem de Rute nasceu:' : 'Linhagem e Genealogia:');
+  const genealogiaHtml = m.genealogia && m.genealogia.length > 0 ? `
+    <div class="genealogia">
+      <h3>${tituloGenealogia}</h3>
+      <ul>
+        ${m.genealogia.map(nome => `<li>${esc(nome)}</li>`).join('')}
+      </ul>
+    </div>` : '';
+
+  // Renderiza meditação (já existente)
+  const mboxHtml = m.meditacao ? `
+    <div class="mbox">
+      <div class="mi">💡</div>
+      <div>
+        <div class="ml">Hora de Refletir</div>
+        <p>${esc(m.meditacao)}</p>
+      </div>
+    </div>` : '';
+
+  // Renderiza oração dedicada (se vier em campo próprio e não estiver já no texto)
+  const oracaoHtml = m.oracao && !m.texto.toLowerCase().includes('oração:') && !m.texto.toLowerCase().includes('oracao:') ? `
+    <div class="pbox">
+      <div class="label" style="font-size:0.75rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;opacity:0.85;font-style:normal;">🙏 Momento de Oração</div>
+      <p>${esc(m.oracao)}</p>
+    </div>` : '';
+
+  // Renderiza aplicação / pergunta final
+  const aplicacaoHtml = m.aplicacao ? `
+    <div class="aplicacao-box">
+      <div class="label">Pergunta para Reflexão</div>
+      ${esc(m.aplicacao)}
+    </div>` : '';
   
   r.innerHTML = `
   <div class="rh">
     <button class="bb" onclick="showIndex()">← Índice</button>
     <div class="pn">MENSAGEM ${String(m.id).padStart(2,'0')}</div>
     <h1>${esc(m.icone || '🌱')} ${esc(m.titulo)}</h1>
-    <div class="badges"><span class="bdg">${esc(m.mes)}</span><span class="bdg bdgt">${esc(m.ref)}</span></div>
+    <div class="badges">
+      <span class="bdg">${esc(m.mes)}</span>
+      <span class="bdg bdgt">${esc(m.ref)}</span>
+    </div>
   </div>
   <div class="rb">
-    <div class="vbox">"${esc(m.versiculoTexto || '')}"<div class="aline">— ${esc(m.ref)}</div></div>
+    <div class="vbox">
+      "${esc(m.versiculoTexto || '')}"
+      <div class="aline">— ${esc(m.ref)}</div>
+    </div>
     <div class="mtxt">${formatarTexto(m.texto)}</div>
+    ${genealogiaHtml}
     ${mboxHtml}
+    ${oracaoHtml}
+    ${aplicacaoHtml}
     <div class="navb">
       <button class="nb" onclick="showReader(${i-1})" ${i===0?'disabled':''}>← Anterior</button>
       <button class="nb p" onclick="showIndex()">Índice</button>
@@ -417,7 +526,19 @@ document.getElementById('subscriptionForm').addEventListener('submit', function(
 
 function formatarTexto(txt){ 
   if(!txt) return ''; 
-  return txt.split('\n').filter(p=>p.trim()!=='').map(p=>`<p>${esc(p)}</p>`).join(''); 
+  const linhas = txt.split('\n').map(p=>p.trim()).filter(p=>p!=='');
+  return linhas.map(p => {
+    // Se for bloco de oração dentro do texto
+    if (/^ora[çc][ãa]o\s*:/i.test(p)) {
+      const oracaoCorpo = p.replace(/^ora[çc][ãa]o\s*:\s*/i, '');
+      return `<div class="pbox"><div class="label" style="font-size:0.75rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;opacity:0.85;font-style:normal;">🙏 Momento de Oração</div><p>${esc(oracaoCorpo)}</p></div>`;
+    }
+    // Se for assinatura de autor (ex: "Por Patricia Raybon")
+    if (/^(?:por|autor[a]?)\s*[:—\-]?\s+[A-ZÀ-Ú]/i.test(p) && p.length < 90) {
+      return `<p class="autor-sign">${esc(p)}</p>`;
+    }
+    return `<p>${esc(p)}</p>`;
+  }).join(''); 
 }
 
 function getMensagensEmbutidas(){

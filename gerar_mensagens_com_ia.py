@@ -118,9 +118,12 @@ CAMPOS OBRIGATÓRIOS:
   "ref": "Referência bíblica completa (ex: João 3:16)",
   "tema": "Um de: {', '.join(TEMAS_VALIDOS)}",
   "versiculoTexto": "Texto completo do versículo citado",
-  "texto": "Texto devocional completo, bem formatado com parágrafos",
+  "texto": "Texto devocional completo, bem formatado com parágrafos separados por \\n",
+  "genealogia": ["Nome 1", "Nome 2"] (array de strings com linhagem bíblica se mencionada no texto; se não houver genealogia, use array vazio []),
+  "genealogiaTitulo": "Título descritivo da genealogia (opcional, ex: 'Da linhagem de Rute nasceu:')",
   "oracao": "Oração final (se houver no e-mail, senão gere uma apropriada)",
-  "meditacao": "Pergunta reflexiva para meditação pessoal"
+  "meditacao": "Frase de reflexão ou síntese para meditação pessoal",
+  "aplicacao": "Pergunta reflexiva prática para aplicar na vida diária (ex: 'De que maneiras você pode...?')"
 }}
 
 REGRAS:
@@ -129,8 +132,10 @@ REGRAS:
 3. O ícone deve combinar com o tema (use a tabela: {json.dumps(ICONE_POR_TEMA, ensure_ascii=False)})
 4. Mantenha o texto original do devocional, apenas formate melhor
 5. Se houver oração no e-mail, use ela; senão crie uma coerente
-6. A meditação deve ser uma pergunta profunda e pessoal
-7. Retorne APENAS o JSON, sem markdown, sem explicações
+6. A meditação deve ser uma reflexão ou síntese devocional
+7. A aplicação deve ser uma pergunta aberta e prática para o leitor responder interiormente
+8. Se houver nomes de linhagem/genealogia citados (como de Rute a Davi), preencha o array "genealogia"; caso contrário, deixe como []
+9. Retorne APENAS o JSON, sem markdown, sem explicações
 """
 
 
@@ -367,10 +372,18 @@ def validate_message(msg: Dict, next_id: int) -> Dict:
     # Garante ícone compatível
     msg["icone"] = ICONE_POR_TEMA.get(msg["tema"], "📖")
     
+    # Garante genealogia como lista
+    if "genealogia" not in msg or not isinstance(msg["genealogia"], list):
+        msg["genealogia"] = []
+
     # Garante campos obrigatórios
     for campo in ["titulo", "data", "mes", "ref", "versiculoTexto", "texto", "oracao", "meditacao"]:
         if not msg.get(campo):
             msg[campo] = f"[{campo} não preenchido]"
+
+    # Garante aplicacao (pergunta reflexiva prática)
+    if not msg.get("aplicacao"):
+        msg["aplicacao"] = msg.get("meditacao") or "Como você pode aplicar esta verdade na sua vida hoje?"
     
     return msg
 
@@ -660,8 +673,12 @@ def processar_com_ia(limit: int, account_name: str | None, provider_name: str, m
         print(f"   Tema: {msg['tema']} | Ref: {msg['ref'][:50]}")
         print(f"   Versículo: {msg['versiculoTexto'][:80]}...")
         print(f"   Texto: {msg['texto'][:150]}...")
+        if msg.get('genealogia'):
+            print(f"   Genealogia: {', '.join(msg['genealogia'])}")
         print(f"   Oração: {msg['oracao'][:80]}...")
         print(f"   Meditação: {msg['meditacao'][:80]}...")
+        if msg.get('aplicacao'):
+            print(f"   Aplicação: {msg['aplicacao'][:80]}...")
     
     if len(novas_mensagens) > 5:
         print(f"\n... e mais {len(novas_mensagens) - 5} mensagens")
@@ -746,8 +763,10 @@ def gerar_mensagem_basica(email_data: dict, next_id: int) -> dict:
         "tema": tema,
         "versiculoTexto": "Versículo não identificado automaticamente - revisar manualmente",
         "texto": corpo[:3000],
+        "genealogia": [],
         "oracao": f"Senhor, ajuda-me a viver a mensagem de '{assunto}'. Amém.",
-        "meditacao": f"Como aplicar '{assunto}' na minha vida hoje?"
+        "meditacao": f"Como aplicar '{assunto}' na minha vida hoje?",
+        "aplicacao": f"De que maneiras você pode viver a mensagem de '{assunto}' no seu dia a dia?"
     }
 
 

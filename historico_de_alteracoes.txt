@@ -27,4 +27,18 @@ Arquivo de histórico de alterações
   - Extensão do controlo de velocidade para suportar até 2.80x (com presets de 1.15x, 1.50x, 2.00x e 2.50x).
   - Pausas dinâmicas proporcionais: eliminação de estagnação ou paragens entre parágrafos em velocidades altas.
   - Implementação de música ambiente suave gerada em tempo real com Web Audio API (progressão harmónica orquestral de acolhimento e paz com filtro aveludado e fade in/out).
-  - Controlo independente de ativação da música de fundo e regulação de volume (padrão 18%).
+  [2026-09-27 02:30:00] Modernização estrutural do leitor devocional e integração completa:
+  - index.html:
+    * Adicionados estilos modernos para listas de Genealogia Bíblica (.genealogia) e blocos de Pergunta para Reflexão / Aplicação (.aplicacao-box).
+    * Atualizada a função showReader(i) para suportar blocos dinâmicos de genealogia (genealogiaHtml), meditação (.mbox), oração dedicada (.pbox) e aplicação (.aplicacao-box).
+    * Função formatarTexto(txt) aprimorada para formatar automaticamente blocos de oração (com ícone e estilo dedicado) e assinaturas de autores (.autor-sign).
+  - mensagens.json:
+    * Atualizada mensagem ID 2 ("Competir ou Convergir") com os novos campos "genealogia", "genealogiaTitulo" e "aplicacao", mantendo total retrocompatibilidade com as 51 mensagens.
+  - gerar_mensagens_com_ia.py:
+    * Prompt de engenharia devocional atualizado para solicitar os novos campos (genealogia, genealogiaTitulo e aplicacao).
+    * Validação em validate_message() ajustada para garantir arrays de genealogia e fallback inteligente de aplicação.
+    * Fallback gerar_mensagem_basica() e pré-visualização atualizados com os novos campos.
+  - gerar_mensagens_do_outlook.py:
+    * Função gerar_mensagem_do_email() e pré-visualização adaptadas para preencher genealogia ([]) e aplicacao reflexiva por padrão.
+  - voz.js:
+    * Função montarSegmentosDevocionais() enriquecida para narrar ordenadamente Genealogia Bíblica, blocos de oração (internos e dedicados), meditação e Pergunta de Aplicação prática, com destaque visual sincronizado.

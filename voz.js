@@ -463,11 +463,15 @@
         var txtBruto = item.txt;
         if (!txtBruto) return;
 
-        if (/^ora[çc][ãa]o\s*:/i.test(txtBruto)) {
+        var pboxPai = item.el.closest ? item.el.closest('.pbox') : null;
+        var ehOracao = /^ora[çc][ãa]o\s*:/i.test(txtBruto) || !!pboxPai;
+
+        if (ehOracao) {
           var corpoOracao = txtBruto.replace(/^ora[çc][ãa]o\s*:\s*/i, '').trim();
+          var alvoEl = pboxPai || item.el;
           segmentos.push({
-            id: 'oracao_intro',
-            elemento: item.el,
+            id: 'oracao_intro_' + idx,
+            elemento: alvoEl,
             label: 'Oração',
             texto: 'Momento de oração:',
             pausa: 160,
@@ -475,11 +479,21 @@
             pitchFactor: 1.0
           });
           segmentos.push({
-            id: 'oracao_corpo',
-            elemento: item.el,
+            id: 'oracao_corpo_' + idx,
+            elemento: alvoEl,
             label: 'Oração',
             texto: humanizarTextoCompleto(corpoOracao),
             pausa: config.pausasMeditativas ? 300 : 120,
+            rateFactor: 1.0,
+            pitchFactor: 1.0
+          });
+        } else if (item.el.classList && item.el.classList.contains('autor-sign')) {
+          segmentos.push({
+            id: 'autor_' + idx,
+            elemento: item.el,
+            label: 'Autor',
+            texto: humanizarTextoCompleto(txtBruto),
+            pausa: 160,
             rateFactor: 1.0,
             pitchFactor: 1.0
           });
@@ -497,7 +511,40 @@
       });
     }
 
-    // 4. HORA DE REFLETIR
+    // 3.1 GENEALOGIA BÍBLICA
+    var elGenealogia = reader.querySelector('.genealogia');
+    if (elGenealogia) {
+      var h3Gen = elGenealogia.querySelector('h3');
+      var tituloGen = h3Gen ? h3Gen.textContent.trim() : 'Linhagem e genealogia:';
+      var lisGen = elGenealogia.querySelectorAll('li');
+      var nomesGen = [];
+      lisGen.forEach(function (li) {
+        var t = li.textContent.trim();
+        if (t) nomesGen.push(t);
+      });
+      if (nomesGen.length > 0) {
+        segmentos.push({
+          id: 'genealogia_intro',
+          elemento: elGenealogia,
+          label: 'Genealogia',
+          texto: humanizarTextoCompleto(tituloGen),
+          pausa: 180,
+          rateFactor: 1.0,
+          pitchFactor: 1.0
+        });
+        segmentos.push({
+          id: 'genealogia_lista',
+          elemento: elGenealogia,
+          label: 'Genealogia',
+          texto: humanizarTextoCompleto(nomesGen.join(', ') + '.'),
+          pausa: config.pausasMeditativas ? 260 : 120,
+          rateFactor: 1.0,
+          pitchFactor: 1.0
+        });
+      }
+    }
+
+    // 4. HORA DE REFLETIR (MEDITAÇÃO)
     var elMbox = reader.querySelector('.mbox');
     var elMboxP = reader.querySelector('.mbox p');
     var meditacaoTexto = elMboxP ? elMboxP.textContent : '';
@@ -520,6 +567,64 @@
         rateFactor: 1.02,
         pitchFactor: 1.0
       });
+    }
+
+    // 4.1 ORAÇÃO DEDICADA (fora do corpo de texto)
+    var elOracaoDedicada = reader.querySelector('.rb > .pbox');
+    if (elOracaoDedicada) {
+      var elOracaoP = elOracaoDedicada.querySelector('p');
+      var oracaoTexto = elOracaoP ? elOracaoP.textContent.trim() : '';
+      if (oracaoTexto) {
+        segmentos.push({
+          id: 'oracao_dedicada_intro',
+          elemento: elOracaoDedicada,
+          label: 'Momento de Oração',
+          texto: 'Momento de oração:',
+          pausa: 160,
+          rateFactor: 1.0,
+          pitchFactor: 1.0
+        });
+        segmentos.push({
+          id: 'oracao_dedicada_corpo',
+          elemento: elOracaoDedicada,
+          label: 'Momento de Oração',
+          texto: humanizarTextoCompleto(oracaoTexto),
+          pausa: config.pausasMeditativas ? 300 : 120,
+          rateFactor: 1.0,
+          pitchFactor: 1.0
+        });
+      }
+    }
+
+    // 4.2 APLICAÇÃO PRÁTICA / PERGUNTA FINAL
+    var elAplicacao = reader.querySelector('.aplicacao-box');
+    if (elAplicacao) {
+      var elAppLabel = elAplicacao.querySelector('.label');
+      var labelApp = elAppLabel ? elAppLabel.textContent.trim() : 'Pergunta para Reflexão';
+      var cloneApp = elAplicacao.cloneNode(true);
+      var cloneLabel = cloneApp.querySelector('.label');
+      if (cloneLabel) cloneLabel.remove();
+      var textoApp = cloneApp.textContent.trim();
+      if (textoApp) {
+        segmentos.push({
+          id: 'aplicacao_intro',
+          elemento: elAplicacao,
+          label: 'Aplicação',
+          texto: humanizarTextoCompleto(labelApp + ':'),
+          pausa: 160,
+          rateFactor: 1.0,
+          pitchFactor: 1.0
+        });
+        segmentos.push({
+          id: 'aplicacao_corpo',
+          elemento: elAplicacao,
+          label: 'Aplicação',
+          texto: humanizarTextoCompleto(textoApp),
+          pausa: config.pausasMeditativas ? 280 : 120,
+          rateFactor: 1.02,
+          pitchFactor: 1.0
+        });
+      }
     }
 
     // 5. ENCERRAMENTO COM BÊNÇÃO

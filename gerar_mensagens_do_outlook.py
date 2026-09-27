@@ -371,8 +371,10 @@ def gerar_mensagem_do_email(email_data: dict, next_id: int) -> dict | None:
         "tema": tema,
         "versiculoTexto": versiculo_texto,
         "texto": texto_principal,
+        "genealogia": [],
         "oracao": oracao,
-        "meditacao": meditacao
+        "meditacao": meditacao,
+        "aplicacao": f"De que maneiras você pode viver a mensagem de '{assunto}' no seu dia a dia?"
     }
 
 
@@ -476,6 +478,8 @@ def processar_emails_para_mensagens(limit: int, account_name: str | None, dry_ru
         print(f"\n{i}. ID: {msg['id']} | {msg['data']} | {msg['icone']} {msg['titulo'][:60]}")
         print(f"   Tema: {msg['tema']} | Ref: {msg['ref'][:50]}")
         print(f"   Texto: {msg['texto'][:150]}...")
+        if msg.get('aplicacao'):
+            print(f"   Aplicação: {msg['aplicacao'][:80]}...")
     
     if len(novas_mensagens) > 5:
         print(f"\n... e mais {len(novas_mensagens) - 5} mensagens")
