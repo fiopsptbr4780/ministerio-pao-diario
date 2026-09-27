@@ -10,3 +10,10 @@ Arquivo de histórico de alterações
   - Fallback automático para extração básica se IA falhar
 [2026-09-26 23:45:00] Arquivo .env.example criado para configuração de chaves de API[2026-09-27 00:55:19] Adicionadas 5 mensagens via IA (openrouter/nvidia/nemotron-3-ultra-550b-a55b:free) - backup: mensagens_backup_20260927_005519.json
 [2026-09-27 01:47:31] Adicionadas 1 mensagens via IA (ollama/qwen2.5:7b-instruct) - backup: mensagens_backup_20260927_014730.json
+[2026-09-27 02:00:00] Ajuste da narração devocional em voz.js:
+  - Implementação de voz sénior, madura e grave por defeito (Duarte, Antonio, Daniel).
+  - Algoritmo de deteção com prioridade para vozes masculinas e penalização para vozes agudas femininas no padrão automático.
+  - Reatividade imediata em tempo real: alteração de tom, velocidade e voz atualiza instantaneamente a leitura em reprodução.
+  - Feedback sonoro instantâneo ao ajustar sliders ou selecionar presets quando inativo.
+  - Ampliação da escala de tom (0.50 a 1.30) para personalização de gravidade perceptível.
+  - Novos presets devocionais: Pastoral Sénior (Grave & Sereno), Oração Profunda (Solene), Leitura Suave e Dinâmica.
