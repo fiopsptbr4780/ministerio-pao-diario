@@ -1,16 +1,15 @@
 /*
-  voz.js — Narração Devocional Humanizada com Voz Natural de Estúdio e Ritmo Fluido
+  voz.js — Narração Devocional Humanizada com Ritmo Acelerado (até 2.80x) e Música Suave de Fundo
   Ministério Pão Diário
 
   Recursos implementados:
-  - Síntese com vozes neurais e naturais de alta definição (Duarte, Antonio, Raquel, Google).
-  - Ritmo ágil, dinâmico e natural (cadência humana padrão: 1.10x, tom neutro humano: 1.00).
+  - Velocidade ampliada e ágil: suporte de 0.80x até 2.80x (com presets de 1.15x, 1.50x, 2.00x e 2.50x).
+  - Música ambiente suave devocional integrada (Web Audio API com acordes orquestrais pacíficos e relaxantes em fade-in/fade-out).
   - Conversão integral de citações e referências bíblicas em todo o texto (impede leitura de "horas e minutos" em passagens como João 15:13).
   - Expansão de abreviações de livros bíblicos e versículos (v.15 -> versículo 15, vv. 15-17 -> versículos 15 a 17).
-  - Remoção inteligente de emojis e suavização de pontuação para evitar pausas mecânicas.
-  - Ajustes em tempo real: alteração imediata de velocidade e tom com atualização instantânea.
-  - Amostra audível imediata ao mudar opções ou presets.
-  - Presets rápidos de 1 clique: Natural & Fluida, Rápida & Ágil, Narrador de Estúdio, Serena.
+  - Síntese com vozes neurais e naturais de alta definição (Duarte, Antonio, Raquel, Google) sem robotização.
+  - Pausas dinâmicas proporcionais à velocidade (elimina estagnação em ritmos rápidos).
+  - Ajustes em tempo real: alteração imediata de velocidade, tom e volume durante a reprodução.
   - Destaque visual sincronizado no versículo e parágrafo em leitura.
   - Proteção ativa contra corte de áudio e recolha de lixo da Web Speech API.
 */
@@ -18,13 +17,15 @@
 (function () {
   'use strict';
 
-  var STORAGE_KEY = 'pao_diario_audio_config_v7';
+  var STORAGE_KEY = 'pao_diario_audio_config_v8';
 
   var CONFIG_DEFAULT = {
-    rate: 1.10,               // Ritmo ágil, dinâmico, natural e envolvente (sem lentidão)
-    pitch: 1.00,              // Tom neutro humano (preserva a entonação natural da voz de estúdio)
-    volume: 1.0,              // Volume total
+    rate: 1.15,               // Ritmo ágil e dinâmico (permite ajustar até 2.80x)
+    pitch: 1.00,              // Tom neutro humano (preserva a voz natural de estúdio)
+    volume: 1.0,              // Volume da voz de narração
     voiceURI: '',             // Melhor voz neural/natural detetada automaticamente
+    musicaFundo: true,        // Música suave e tranquila ao fundo
+    volumeMusica: 0.18,       // Volume equilibrado da música ambiente (18%)
     pausasMeditativas: true,  // Pausas naturais de respiração entre blocos
     humanizarReferencias: true,// "João 15:13" -> "João capítulo 15, versículo 13"
     destacarTexto: true       // Iluminação visual do parágrafo lido
@@ -59,12 +60,11 @@
         var parsed = JSON.parse(guardado);
         return Object.assign({}, CONFIG_DEFAULT, parsed);
       }
-      // Limpeza de versões anteriores com configurações lentas ou vozes robóticas antigas
       try {
+        localStorage.removeItem('pao_diario_audio_config_v7');
         localStorage.removeItem('pao_diario_audio_config_v6');
         localStorage.removeItem('pao_diario_audio_config_v5');
         localStorage.removeItem('pao_diario_audio_config_v4');
-        localStorage.removeItem('pao_diario_audio_config_v3');
       } catch (err) {}
     } catch (e) {
       console.warn('Erro ao carregar preferências de áudio:', e);
@@ -81,7 +81,153 @@
   }
 
   // ==========================================================================
-  // GESTÃO DE VOZES E DETEÇÃO DA MELHOR VOZ NATURAL (HUMANIZADA)
+  // MOTOR DE MÚSICA AMBIENTE SUAVE (TRANQUILIDADE & PAZ DEVOCIONAL)
+  // ==========================================================================
+  var audioCtx = null;
+  var musicMasterGain = null;
+  var musicFilter = null;
+  var currentChordNodes = [];
+  var musicTimer = null;
+  var musicPlaying = false;
+  var chordIndex = 0;
+
+  // Progressão harmónica orquestral de acolhimento e paz (Fmaj9 -> Cmaj7 -> Am9 -> Gsus4)
+  var CHORDS = [
+    [87.31, 130.81, 220.00, 329.63, 392.00], // Fmaj9: Paz profunda
+    [65.41, 98.00, 164.81, 246.94, 293.66],  // Cmaj7: Esperança e luz
+    [55.00, 82.41, 130.81, 196.00, 246.94],  // Am9: Reflexão e intimidade
+    [49.00, 73.42, 98.00, 246.94, 293.66]   // Gsus4: Gratidão e serenidade
+  ];
+
+  function getAudioContext() {
+    if (!audioCtx) {
+      var AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (AudioContextClass) {
+        audioCtx = new AudioContextClass();
+      }
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    return audioCtx;
+  }
+
+  function iniciarMusicaAmbiente() {
+    if (!config.musicaFundo) return;
+    var ctx = getAudioContext();
+    if (!ctx) return;
+
+    if (!musicMasterGain) {
+      musicMasterGain = ctx.createGain();
+      musicFilter = ctx.createBiquadFilter();
+      musicFilter.type = 'lowpass';
+      musicFilter.frequency.value = 520; // Filtro aveludado e quente
+      musicFilter.Q.value = 1.0;
+
+      musicFilter.connect(musicMasterGain);
+      musicMasterGain.connect(ctx.destination);
+    }
+
+    var targetVol = (parseFloat(config.volumeMusica) !== undefined ? parseFloat(config.volumeMusica) : 0.18);
+    musicMasterGain.gain.cancelScheduledValues(ctx.currentTime);
+    musicMasterGain.gain.setValueAtTime(musicMasterGain.gain.value, ctx.currentTime);
+    musicMasterGain.gain.linearRampToValueAtTime(targetVol, ctx.currentTime + 1.8);
+
+    musicPlaying = true;
+    tocarProximoAcorde();
+  }
+
+  function pararMusicaAmbiente(imediato) {
+    musicPlaying = false;
+    if (musicTimer) {
+      clearTimeout(musicTimer);
+      musicTimer = null;
+    }
+
+    if (!audioCtx || !musicMasterGain) return;
+
+    var ctx = audioCtx;
+    var fadeTime = imediato ? 0.15 : 1.2;
+    musicMasterGain.gain.cancelScheduledValues(ctx.currentTime);
+    musicMasterGain.gain.setValueAtTime(musicMasterGain.gain.value, ctx.currentTime);
+    musicMasterGain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + fadeTime);
+
+    setTimeout(function () {
+      if (!musicPlaying) {
+        desconectarAcordesAtuais();
+      }
+    }, (fadeTime + 0.1) * 1000);
+  }
+
+  function desconectarAcordesAtuais() {
+    for (var i = 0; i < currentChordNodes.length; i++) {
+      try {
+        currentChordNodes[i].osc.stop();
+        currentChordNodes[i].osc.disconnect();
+        currentChordNodes[i].gain.disconnect();
+      } catch (e) {}
+    }
+    currentChordNodes = [];
+  }
+
+  function tocarProximoAcorde() {
+    if (!musicPlaying || !audioCtx) return;
+    var ctx = audioCtx;
+
+    var freqs = CHORDS[chordIndex % CHORDS.length];
+    chordIndex++;
+
+    var agora = ctx.currentTime;
+    var duracaoAcorde = 7.5;
+    var attackTime = 2.2;
+    var releaseTime = 3.2;
+
+    var velhosNos = currentChordNodes;
+    currentChordNodes = [];
+
+    // Fade-out suave dos osciladores do acorde anterior
+    for (var j = 0; j < velhosNos.length; j++) {
+      var velho = velhosNos[j];
+      try {
+        velho.gain.gain.cancelScheduledValues(agora);
+        velho.gain.gain.setValueAtTime(velho.gain.gain.value, agora);
+        velho.gain.gain.linearRampToValueAtTime(0.0001, agora + releaseTime);
+        velho.osc.stop(agora + releaseTime + 0.1);
+      } catch (e) {}
+    }
+
+    // Novos osciladores com timbre celestial quente (mistura sine e triangle)
+    for (var k = 0; k < freqs.length; k++) {
+      var f = freqs[k];
+
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+
+      osc.type = (k % 2 === 0) ? 'sine' : 'triangle';
+      osc.frequency.setValueAtTime(f, agora);
+      osc.detune.setValueAtTime((k % 2 === 0 ? 3 : -3), agora);
+
+      var notaGain = 0.22 / freqs.length;
+      gain.gain.setValueAtTime(0.0001, agora);
+      gain.gain.linearRampToValueAtTime(notaGain, agora + attackTime);
+      gain.gain.linearRampToValueAtTime(notaGain * 0.75, agora + duracaoAcorde - 1.0);
+
+      osc.connect(gain);
+      gain.connect(musicFilter);
+
+      osc.start(agora);
+      currentChordNodes.push({ osc: osc, gain: gain });
+    }
+
+    musicTimer = setTimeout(function () {
+      if (musicPlaying) {
+        tocarProximoAcorde();
+      }
+    }, (duracaoAcorde - 1.8) * 1000);
+  }
+
+  // ==========================================================================
+  // GESTÃO DE VOZES E DETEÇÃO DA MELHOR VOZ NATURAL DE ESTÚDIO
   // ==========================================================================
   function atualizarVozes() {
     if (!('speechSynthesis' in window)) return;
@@ -113,22 +259,20 @@
     if (lang === 'pt-pt') pontuacao += 100;
     else if (lang === 'pt-br') pontuacao += 95;
     else if (lang.indexOf('pt') === 0) pontuacao += 80;
-    else return -500; // Desconsiderar idiomas estrangeiros do topo
+    else return -500;
 
-    // 2. PRIORIDADE MÁXIMA ABSOLUTA: VOZES NATURAIS / NEURAIS DE ESTÚDIO
-    // Evita a todo custo vozes robóticas legadas (SAPI5 antigas tipo Daniel/Maria)
+    // 2. Prioridade máxima absoluta: vozes neurais e de estúdio
     if (nome.indexOf('natural') !== -1 || nome.indexOf('neural') !== -1 || nome.indexOf('online') !== -1) {
-      pontuacao += 350; // Vozes neurais de alta fidelidade do Microsoft Edge / Azure
+      pontuacao += 350; // Microsoft Edge / Azure Neural
     } else if (nome.indexOf('google') !== -1) {
-      pontuacao += 220; // Voz neural do Google Chrome
+      pontuacao += 220; // Google Cloud Neural
     } else if (nome.indexOf('premium') !== -1 || nome.indexOf('enhanced') !== -1) {
-      pontuacao += 220; // Vozes de estúdio Apple Siri / macOS
+      pontuacao += 220; // Apple Siri / Mac Studio
     } else {
-      // Vozes locais antigas de sistema sintetizadas por formantes mecânicos
-      pontuacao -= 80;
+      pontuacao -= 80; // Vozes SAPI5 legadas desfavorecidas
     }
 
-    // 3. Preferência de oradores de estúdio acolhedores e solenes
+    // 3. Oradores acolhedores e solenes
     if (nome.indexOf('duarte') !== -1) pontuacao += 40;
     if (nome.indexOf('antonio') !== -1 || nome.indexOf('antónio') !== -1) pontuacao += 35;
     if (nome.indexOf('raquel') !== -1) pontuacao += 30;
@@ -141,26 +285,23 @@
     atualizarVozes();
     if (!vozesCache || vozesCache.length === 0) return null;
 
-    // Se o utilizador já escolheu uma voz específica
     if (config.voiceURI) {
       var encontrada = vozesCache.find(function (v) { return v.voiceURI === config.voiceURI; });
       if (encontrada) return encontrada;
     }
 
-    // Selecionar a melhor voz portuguesa pelo algoritmo de qualidade neural
     var vozesPT = vozesCache
       .filter(function (v) { return (v.lang || '').toLowerCase().indexOf('pt') === 0; })
       .sort(function (a, b) { return classificarVoz(b) - classificarVoz(a); });
 
     if (vozesPT.length > 0) return vozesPT[0];
 
-    // Fallback geral
     var todas = vozesCache.slice().sort(function (a, b) { return classificarVoz(b) - classificarVoz(a); });
     return todas[0] || vozesCache[0] || null;
   }
 
   // ==========================================================================
-  // HUMANIZAÇÃO COMPLETA DE TEXTO E TRATAMENTO DE CITAÇÕES BÍBLICAS
+  // HUMANIZAÇÃO COMPLETA DE TEXTO E CITAÇÕES BÍBLICAS
   // ==========================================================================
   function limparEmojis(str) {
     if (!str) return '';
@@ -173,27 +314,19 @@
       .trim();
   }
 
-  /*
-    humanizarTextoCompleto:
-    Resolve definitivamente a leitura mecânica de passagens bíblicas,
-    impedindo que o motor leia "João 15:13" como "15 horas e 13 minutos",
-    expandindo abreviações como (v.15), (vv. 15-17), livros abreviados
-    e suavizando a pontuação para fala natural.
-  */
   function humanizarTextoCompleto(str) {
     if (!str) return '';
     var r = ' ' + str.trim() + ' ';
 
-    // 1. Limpeza de emojis e caracteres especiais
     r = limparEmojis(r);
 
-    // 2. Abreviações de versículos no texto: (v.15), (vv. 15-17), (v. 15)
+    // Abreviações de versículos no texto: (v.15), (vv. 15-17), (v. 15)
     r = r.replace(/\bvv\.\s*(\d+)\s*[-–—]\s*(\d+)/gi, 'versículos $1 a $2');
     r = r.replace(/\bv\.\s*(\d+)\s*[-–—]\s*(\d+)/gi, 'versículos $1 a $2');
     r = r.replace(/\bv\.\s*(\d+)/gi, 'versículo $1');
     r = r.replace(/\(v\s*(\d+)\)/gi, '(versículo $1)');
 
-    // 3. Livros bíblicos (com proteção Unicode contra substituições indevidas)
+    // Nomes de livros bíblicos com proteção Unicode
     var mapeamento = [
       [/\b1\s*Cor[íi]ntios\b/gi, 'Primeira Coríntios'],
       [/\b2\s*Cor[íi]ntios\b/gi, 'Segunda Coríntios'],
@@ -237,23 +370,21 @@
       r = r.replace(par[0], par[1]);
     });
 
-    // 4. Conversão essencial de capítulos e versículos
-    // Transforma padrões como 15:13-17 ou 15:13 em texto por extenso
-    // Isto IMPEDE que o navegador interprete números como "horas e minutos"!
+    // Conversão de capítulos e versículos (impede o erro de leitura de "horas e minutos")
     r = r.replace(/(\d+)\s*:\s*(\d+)\s*[-–—]\s*(\d+)/g, 'capítulo $1, versículos $2 a $3');
     r = r.replace(/(\d+)\s*:\s*(\d+)\s*,\s*(\d+)/g, 'capítulo $1, versículos $2 e $3');
     r = r.replace(/(\d+)\s*:\s*(\d+)/g, 'capítulo $1, versículo $2');
 
-    // 5. Suavização de pontuação e pausas
-    r = r.replace(/\.{3,}/g, '. '); // Reticências viram ponto e pausa, sem soletrar "ponto ponto"
-    r = r.replace(/["“”«»]/g, ' '); // Aspas não devem causar estalidos mecânicos
+    // Suavização de pontuação
+    r = r.replace(/\.{3,}/g, '. ');
+    r = r.replace(/["“”«»]/g, ' ');
     r = r.replace(/\s+/g, ' ');
 
     return r.trim();
   }
 
   // ==========================================================================
-  // CONSTRUÇÃO DE SEGMENTOS DEVOCIONAIS COM CADÊNCIA NATURAL
+  // CONSTRUÇÃO DE SEGMENTOS DEVOCIONAIS
   // ==========================================================================
   function montarSegmentosDevocionais() {
     var reader = document.getElementById('reader');
@@ -269,14 +400,14 @@
         id: 'titulo',
         elemento: elTitulo,
         label: 'Título',
-        texto: humanizarTextoCompleto('Ministério Pão Diário. Mensagem: ' + tituloTexto + '.'),
-        pausa: config.pausasMeditativas ? 350 : 150,
-        rateFactor: 1.04,
-        pitchFactor: 1.00
+        texto: humanizarTextoCompleto('Ministério Pão Diário. ' + tituloTexto + '.'),
+        pausa: config.pausasMeditativas ? 220 : 80,
+        rateFactor: 1.0,
+        pitchFactor: 1.0
       });
     }
 
-    // 2. REFERÊNCIA BÍBLICA E VERSÍCULO SAGRADO
+    // 2. REFERÊNCIA BÍBLICA E VERSÍCULO
     var elVbox = reader.querySelector('.vbox');
     var elAline = reader.querySelector('.vbox .aline') || reader.querySelector('.rh .bdgt');
     var refBruta = elAline ? elAline.textContent.replace(/^[-—\s]+/, '').trim() : '';
@@ -296,9 +427,9 @@
         elemento: elVbox || elAline,
         label: 'Leitura Bíblica',
         texto: humanizarTextoCompleto('Leitura da Palavra de Deus em ' + refHumanizada + ':'),
-        pausa: config.pausasMeditativas ? 300 : 150,
-        rateFactor: 1.02,
-        pitchFactor: 1.00
+        pausa: config.pausasMeditativas ? 180 : 80,
+        rateFactor: 1.0,
+        pitchFactor: 1.0
       });
     }
 
@@ -308,9 +439,9 @@
         elemento: elVbox,
         label: 'Versículo',
         texto: humanizarTextoCompleto('“' + versiculoTexto + '”'),
-        pausa: config.pausasMeditativas ? 500 : 250,
-        rateFactor: 1.00, // Reverente e focado
-        pitchFactor: 1.00
+        pausa: config.pausasMeditativas ? 300 : 120,
+        rateFactor: 1.0,
+        pitchFactor: 1.0
       });
     }
 
@@ -332,7 +463,6 @@
         var txtBruto = item.txt;
         if (!txtBruto) return;
 
-        // Se for momento de oração
         if (/^ora[çc][ãa]o\s*:/i.test(txtBruto)) {
           var corpoOracao = txtBruto.replace(/^ora[çc][ãa]o\s*:\s*/i, '').trim();
           segmentos.push({
@@ -340,18 +470,18 @@
             elemento: item.el,
             label: 'Oração',
             texto: 'Momento de oração:',
-            pausa: 250,
-            rateFactor: 1.02,
-            pitchFactor: 1.00
+            pausa: 160,
+            rateFactor: 1.0,
+            pitchFactor: 1.0
           });
           segmentos.push({
             id: 'oracao_corpo',
             elemento: item.el,
             label: 'Oração',
             texto: humanizarTextoCompleto(corpoOracao),
-            pausa: config.pausasMeditativas ? 450 : 200,
-            rateFactor: 1.00,
-            pitchFactor: 1.00
+            pausa: config.pausasMeditativas ? 300 : 120,
+            rateFactor: 1.0,
+            pitchFactor: 1.0
           });
         } else {
           segmentos.push({
@@ -359,15 +489,15 @@
             elemento: item.el,
             label: 'Reflexão',
             texto: humanizarTextoCompleto(txtBruto),
-            pausa: config.pausasMeditativas ? 320 : 150,
-            rateFactor: 1.05, // Leitura fluida e engajadora
-            pitchFactor: 1.00
+            pausa: config.pausasMeditativas ? 200 : 90,
+            rateFactor: 1.02,
+            pitchFactor: 1.0
           });
         }
       });
     }
 
-    // 4. HORA DE REFLETIR (MEDITAÇÃO FINAL)
+    // 4. HORA DE REFLETIR
     var elMbox = reader.querySelector('.mbox');
     var elMboxP = reader.querySelector('.mbox p');
     var meditacaoTexto = elMboxP ? elMboxP.textContent : '';
@@ -377,18 +507,18 @@
         elemento: elMbox,
         label: 'Hora de Refletir',
         texto: 'Hora de refletir:',
-        pausa: 250,
-        rateFactor: 1.02,
-        pitchFactor: 1.00
+        pausa: 160,
+        rateFactor: 1.0,
+        pitchFactor: 1.0
       });
       segmentos.push({
         id: 'meditacao_corpo',
         elemento: elMbox,
         label: 'Hora de Refletir',
         texto: humanizarTextoCompleto(meditacaoTexto),
-        pausa: config.pausasMeditativas ? 450 : 200,
-        rateFactor: 1.04,
-        pitchFactor: 1.00
+        pausa: config.pausasMeditativas ? 280 : 120,
+        rateFactor: 1.02,
+        pitchFactor: 1.0
       });
     }
 
@@ -398,16 +528,16 @@
       elemento: null,
       label: 'Conclusão',
       texto: 'Que a paz e a bênção de Deus acompanhem o seu dia. Amém.',
-      pausa: 150,
-      rateFactor: 1.02,
-      pitchFactor: 1.00
+      pausa: 120,
+      rateFactor: 1.0,
+      pitchFactor: 1.0
     });
 
     return segmentos;
   }
 
   // ==========================================================================
-  // DESTAQUE VISUAL (REALCE SUAVE DE LEITURA)
+  // DESTAQUE VISUAL
   // ==========================================================================
   function destacarElemento(el) {
     removerDestaque();
@@ -431,7 +561,6 @@
   // ==========================================================================
   function iniciarHeartbeat() {
     pararHeartbeat();
-    // Previne que navegadores silenciem o áudio aos 14 segundos em leituras longas
     estado.heartbeatTimer = setInterval(function () {
       if (window.speechSynthesis && window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
         window.speechSynthesis.pause();
@@ -463,22 +592,28 @@
     var voz = obterMelhorVoz();
     if (voz) ut.voice = voz;
 
-    // Aplica velocidade ágil e tom natural humano
-    var baseRate = parseFloat(config.rate) || 1.10;
+    // Velocidade ágil e dinâmica: suporta de 0.80x até 2.80x
+    var baseRate = parseFloat(config.rate) || 1.15;
     var basePitch = parseFloat(config.pitch) || 1.00;
     var baseVolume = parseFloat(config.volume) !== undefined ? parseFloat(config.volume) : 1.0;
 
-    ut.rate = Math.max(0.6, Math.min(2.0, baseRate * (seg.rateFactor || 1.0)));
+    ut.rate = Math.max(0.5, Math.min(3.0, baseRate * (seg.rateFactor || 1.0)));
     ut.pitch = Math.max(0.7, Math.min(1.4, basePitch * (seg.pitchFactor || 1.0)));
     ut.volume = Math.max(0.0, Math.min(1.0, baseVolume));
     ut.lang = voz ? voz.lang : 'pt-PT';
 
     estado.utteranceAtual = ut;
-    window.__pd_current_utterance = ut; // Evita garbage collection precoce no motor do navegador
+    window.__pd_current_utterance = ut;
 
     ut.onend = function () {
       if (estado.status !== 'playing') return;
-      var pausa = seg.pausa || 200;
+
+      // Pausas dinâmicas ajustadas à velocidade (elimina paragens lentas a velocidades altas)
+      var basePausa = seg.pausa || 160;
+      var pausa = Math.round(basePausa / Math.max(1, baseRate));
+      if (baseRate >= 1.4) pausa = Math.min(pausa, 50);
+      if (baseRate >= 2.0) pausa = Math.min(pausa, 20);
+
       estado.timerPausa = setTimeout(function () {
         if (estado.status === 'playing') {
           tocarSegmento(indice + 1);
@@ -491,10 +626,9 @@
       if (estado.status !== 'playing') return;
       if (e.error === 'interrupted' || e.error === 'canceled') return;
 
-      // Avança para o próximo segmento mesmo com erro transitório
       setTimeout(function () {
         if (estado.status === 'playing') tocarSegmento(indice + 1);
-      }, 150);
+      }, 100);
     };
 
     window.speechSynthesis.speak(ut);
@@ -506,7 +640,6 @@
       return;
     }
 
-    // Se já estiver pausado, retoma
     if (estado.status === 'paused') {
       retomarLeitura();
       return;
@@ -523,13 +656,14 @@
 
     estado.status = 'playing';
     iniciarHeartbeat();
+    iniciarMusicaAmbiente(); // Inicia música ambiente suave
     atualizarBotoesUI();
 
     if (!vozesPronto) {
       atualizarVozes();
       setTimeout(function () {
         tocarSegmento(0);
-      }, 150);
+      }, 120);
     } else {
       tocarSegmento(0);
     }
@@ -541,6 +675,7 @@
       if (estado.timerPausa) clearTimeout(estado.timerPausa);
       window.speechSynthesis.pause();
       pararHeartbeat();
+      pararMusicaAmbiente(false); // Fade out suave da música
       atualizarBotoesUI();
       atualizarBarraEstado('Pausado', estado.indiceAtual + 1, estado.segmentos.length);
     }
@@ -550,13 +685,14 @@
     if (estado.status === 'paused') {
       estado.status = 'playing';
       iniciarHeartbeat();
+      iniciarMusicaAmbiente(); // Retoma música ambiente suave
       atualizarBotoesUI();
       window.speechSynthesis.resume();
       setTimeout(function () {
         if (!window.speechSynthesis.speaking && estado.status === 'playing') {
           tocarSegmento(estado.indiceAtual >= 0 ? estado.indiceAtual : 0);
         }
-      }, 200);
+      }, 180);
     }
   }
 
@@ -567,6 +703,7 @@
 
     if (estado.timerPausa) clearTimeout(estado.timerPausa);
     pararHeartbeat();
+    pararMusicaAmbiente(false); // Fade out suave da música
     removerDestaque();
 
     if ('speechSynthesis' in window) {
@@ -595,7 +732,6 @@
   // ==========================================================================
   function aplicarAjusteAoVivo(tocarAmostraSeOcioso) {
     if (estado.status === 'playing') {
-      // Re-aplica imediatamente as alterações ao segmento atual que está a tocar
       if (liveUpdateTimer) clearTimeout(liveUpdateTimer);
       liveUpdateTimer = setTimeout(function () {
         if (estado.status === 'playing' && estado.indiceAtual >= 0) {
@@ -607,9 +743,9 @@
               iniciarHeartbeat();
               tocarSegmento(estado.indiceAtual);
             }
-          }, 35);
+          }, 30);
         }
-      }, 80);
+      }, 70);
     } else if (tocarAmostraSeOcioso) {
       testarExemploDeVoz();
     }
@@ -628,14 +764,14 @@
         var ut = new SpeechSynthesisUtterance('O Senhor é o meu pastor; nada me faltará. O amor tudo sofre, tudo crê, tudo espera. Que a paz de Deus esteja convosco.');
         var voz = obterMelhorVoz();
         if (voz) ut.voice = voz;
-        ut.rate = parseFloat(config.rate) || 1.10;
+        ut.rate = parseFloat(config.rate) || 1.15;
         ut.pitch = parseFloat(config.pitch) || 1.00;
         ut.volume = parseFloat(config.volume) !== undefined ? parseFloat(config.volume) : 1.0;
         ut.lang = voz ? voz.lang : 'pt-PT';
         window.__pd_current_utterance = ut;
         window.speechSynthesis.speak(ut);
       }
-    }, 60);
+    }, 50);
   }
 
   // ==========================================================================
@@ -926,7 +1062,7 @@
 
     wrapper.innerHTML = `
       <div class="voz-bar-controls">
-        <button type="button" class="voz-btn voz-btn-primary" id="vozBtnPlay" title="Ouvir reflexão narrada">
+        <button type="button" class="voz-btn voz-btn-primary" id="vozBtnPlay" title="Ouvir reflexão narrada com música suave">
           <span id="vozPlayIcon">▶</span>
           <span id="vozPlayTexto">Ouvir mensagem</span>
         </button>
@@ -936,9 +1072,9 @@
           <span>Parar</span>
         </button>
 
-        <button type="button" class="voz-btn voz-btn-settings" id="vozBtnSettings" title="Personalizar voz natural, velocidade e estilo">
+        <button type="button" class="voz-btn voz-btn-settings" id="vozBtnSettings" title="Personalizar voz natural, velocidade até 2.8x e música">
           <span>⚙</span>
-          <span>Ajustes de Áudio</span>
+          <span>Ajustes & Música</span>
         </button>
 
         <div class="voz-status-pill" id="vozStatusPill" style="display:none;">
@@ -951,27 +1087,43 @@
         <div class="voz-panel-head">
           <div class="voz-panel-title">
             <span>🎙️</span>
-            <span>Narração Devocional Humanizada</span>
+            <span>Narração Humanizada & Música de Fundo</span>
           </div>
           <button type="button" class="voz-panel-close" id="vozBtnCloseSettings" aria-label="Fechar ajustes">✕</button>
         </div>
 
         <div class="voz-setting-row">
-          <label class="voz-setting-label">Estilo & Ritmo de Leitura:</label>
+          <label class="voz-setting-label">Velocidade Pré-definida:</label>
           <div class="voz-presets-wrap">
-            <button type="button" class="voz-preset-chip active" data-preset="natural" title="Leitura fluida, viva e conversacional (Recomendado)">
-              🌟 Natural & Fluida (1.10x)
+            <button type="button" class="voz-preset-chip active" data-preset="natural" title="Leitura fluida e expressiva">
+              🌟 Natural (1.15x)
             </button>
-            <button type="button" class="voz-preset-chip" data-preset="rapida" title="Leitura ágil para escuta dinâmica">
-              ⚡ Rápida & Ágil (1.22x)
+            <button type="button" class="voz-preset-chip" data-preset="rapida" title="Leitura rápida e envolvente">
+              ⚡ Rápida (1.50x)
             </button>
-            <button type="button" class="voz-preset-chip" data-preset="estudio" title="Ritmo de podcast e rádio devocional">
-              🎙️ Narrador de Estúdio (1.05x)
+            <button type="button" class="voz-preset-chip" data-preset="super" title="Leitura acelerada">
+              🚀 Super Rápida (2.00x)
             </button>
-            <button type="button" class="voz-preset-chip" data-preset="serena" title="Cadência tranquila e pausada para meditação">
-              🕊️ Serena & Calma (0.96x)
+            <button type="button" class="voz-preset-chip" data-preset="maxima" title="Velocidade máxima de escuta">
+              ⚡⚡ Máxima (2.50x)
+            </button>
+            <button type="button" class="voz-preset-chip" data-preset="serena" title="Cadência tranquila para meditação">
+              🕊️ Serena (0.95x)
             </button>
           </div>
+        </div>
+
+        <!-- MÚSICA AMBIENTE SUAVE -->
+        <div class="voz-setting-row" style="background:rgba(245,185,66,0.1);padding:12px 14px;border-radius:12px;border:1px solid rgba(245,185,66,0.3);">
+          <label class="voz-checkbox-row" style="margin-top:0;font-weight:700;color:#f5b942;">
+            <input type="checkbox" id="vozCheckMusica" checked>
+            <span>🎵 Música Suave de Fundo (Ambiente de Paz & Tranquilidade)</span>
+          </label>
+          <div class="voz-setting-label" style="margin-top:10px;margin-bottom:4px;">
+            <label for="vozRangeVolMusica" style="font-size:0.75rem;opacity:0.9;">Volume da Música Ambiente:</label>
+            <span class="voz-badge-val" id="vozBadgeVolMusica">18%</span>
+          </div>
+          <input type="range" id="vozRangeVolMusica" class="voz-range" min="0.02" max="0.50" step="0.02" value="0.18">
         </div>
 
         <div class="voz-setting-row">
@@ -981,20 +1133,20 @@
           </div>
           <select id="vozSelectVoz" class="voz-select"></select>
           <div class="voz-help-tip" id="vozHelpTip">
-            ✨ Prioridade ativa: Vozes neurais e naturais de estúdio (Duarte, Antonio, Raquel, Google) para pronúncia fluida e sem efeito mecânico.
+            ✨ Prioridade ativa: Vozes neurais e de estúdio (Duarte, Antonio, Raquel, Google) para pronúncia fluida e sem efeito mecânico.
           </div>
         </div>
 
         <div class="voz-setting-row">
           <div class="voz-setting-label">
-            <label for="vozRangeRate">⏱️ Velocidade da Fala:</label>
-            <span class="voz-badge-val" id="vozBadgeRate">1.10x (Fluida & Natural)</span>
+            <label for="vozRangeRate">⏱️ Velocidade da Fala (Até 2.80x):</label>
+            <span class="voz-badge-val" id="vozBadgeRate">1.15x (Fluida & Natural)</span>
           </div>
-          <input type="range" id="vozRangeRate" class="voz-range" min="0.80" max="1.45" step="0.02" value="1.10">
+          <input type="range" id="vozRangeRate" class="voz-range" min="0.80" max="2.80" step="0.05" value="1.15">
           <div class="voz-range-sub">
             <span>Mais Calma (0.80x)</span>
-            <span>Fluida & Natural (1.10x)</span>
-            <span>Mais Rápida (1.45x)</span>
+            <span>Fluida (1.15x)</span>
+            <span>2.50x Ultra Rápida</span>
           </div>
         </div>
 
@@ -1013,7 +1165,7 @@
 
         <div class="voz-setting-row">
           <div class="voz-setting-label">
-            <label for="vozRangeVolume">🔊 Volume:</label>
+            <label for="vozRangeVolume">🔊 Volume da Voz:</label>
             <span class="voz-badge-val" id="vozBadgeVolume">100%</span>
           </div>
           <input type="range" id="vozRangeVolume" class="voz-range" min="0" max="1" step="0.05" value="1">
@@ -1036,7 +1188,7 @@
 
         <div class="voz-panel-footer">
           <button type="button" class="voz-btn-link" id="vozBtnRestaurar">
-            ↺ Restaurar Padrão Natural
+            ↺ Restaurar Padrão
           </button>
           <button type="button" class="voz-btn voz-btn-primary" id="vozBtnTestarExemplo" style="padding:6px 16px;font-size:0.78rem;">
             ▶ Testar Voz e Ritmo
@@ -1179,17 +1331,21 @@
     var badgePitch = document.getElementById('vozBadgePitch');
     var rangeVolume = document.getElementById('vozRangeVolume');
     var badgeVolume = document.getElementById('vozBadgeVolume');
+    var checkMusica = document.getElementById('vozCheckMusica');
+    var rangeVolMusica = document.getElementById('vozRangeVolMusica');
+    var badgeVolMusica = document.getElementById('vozBadgeVolMusica');
     var checkPausas = document.getElementById('vozCheckPausas');
     var checkRef = document.getElementById('vozCheckRef');
     var checkDestaque = document.getElementById('vozCheckDestaque');
 
-    var r = parseFloat(config.rate) || 1.10;
+    var r = parseFloat(config.rate) || 1.15;
     var p = parseFloat(config.pitch) || 1.00;
     var vol = parseFloat(config.volume) !== undefined ? parseFloat(config.volume) : 1.0;
+    var volM = parseFloat(config.volumeMusica) !== undefined ? parseFloat(config.volumeMusica) : 0.18;
 
     if (rangeRate && badgeRate) {
       rangeRate.value = r;
-      var descRate = r < 0.95 ? 'Calma' : (r <= 1.15 ? 'Fluida & Natural' : 'Rápida & Dinâmica');
+      var descRate = r < 1.0 ? 'Calma' : (r <= 1.25 ? 'Fluida & Natural' : (r <= 1.75 ? 'Rápida' : (r <= 2.25 ? 'Super Rápida' : 'Velocidade Máxima')));
       badgeRate.textContent = r.toFixed(2) + 'x (' + descRate + ')';
     }
 
@@ -1204,6 +1360,13 @@
       badgeVolume.textContent = Math.round(vol * 100) + '%';
     }
 
+    if (checkMusica) checkMusica.checked = !!config.musicaFundo;
+
+    if (rangeVolMusica && badgeVolMusica) {
+      rangeVolMusica.value = volM;
+      badgeVolMusica.textContent = Math.round(volM * 100) + '%';
+    }
+
     if (checkPausas) checkPausas.checked = !!config.pausasMeditativas;
     if (checkRef) checkRef.checked = !!config.humanizarReferencias;
     if (checkDestaque) checkDestaque.checked = !!config.destacarTexto;
@@ -1212,29 +1375,34 @@
     document.querySelectorAll('.voz-preset-chip').forEach(function (chip) {
       var preset = chip.getAttribute('data-preset');
       var ativo = false;
-      if (preset === 'natural' && Math.abs(r - 1.10) < 0.04 && Math.abs(p - 1.00) < 0.04) ativo = true;
-      if (preset === 'rapida' && Math.abs(r - 1.22) < 0.04 && Math.abs(p - 1.00) < 0.04) ativo = true;
-      if (preset === 'estudio' && Math.abs(r - 1.05) < 0.04 && Math.abs(p - 1.00) < 0.04) ativo = true;
-      if (preset === 'serena' && Math.abs(r - 0.96) < 0.04 && Math.abs(p - 1.00) < 0.04) ativo = true;
+      if (preset === 'natural' && Math.abs(r - 1.15) < 0.05) ativo = true;
+      if (preset === 'rapida' && Math.abs(r - 1.50) < 0.05) ativo = true;
+      if (preset === 'super' && Math.abs(r - 2.00) < 0.05) ativo = true;
+      if (preset === 'maxima' && Math.abs(r - 2.50) < 0.05) ativo = true;
+      if (preset === 'serena' && Math.abs(r - 0.95) < 0.05) ativo = true;
       chip.classList.toggle('active', ativo);
     });
   }
 
   function aplicarPreset(preset) {
     if (preset === 'natural') {
-      config.rate = 1.10;
+      config.rate = 1.15;
       config.pitch = 1.00;
       config.pausasMeditativas = true;
     } else if (preset === 'rapida') {
-      config.rate = 1.22;
-      config.pitch = 1.00;
-      config.pausasMeditativas = false;
-    } else if (preset === 'estudio') {
-      config.rate = 1.05;
+      config.rate = 1.50;
       config.pitch = 1.00;
       config.pausasMeditativas = true;
+    } else if (preset === 'super') {
+      config.rate = 2.00;
+      config.pitch = 1.00;
+      config.pausasMeditativas = false;
+    } else if (preset === 'maxima') {
+      config.rate = 2.50;
+      config.pitch = 1.00;
+      config.pausasMeditativas = false;
     } else if (preset === 'serena') {
-      config.rate = 0.96;
+      config.rate = 0.95;
       config.pitch = 1.00;
       config.pausasMeditativas = true;
     }
@@ -1256,6 +1424,8 @@
     var rangeRate = wrapper.querySelector('#vozRangeRate');
     var rangePitch = wrapper.querySelector('#vozRangePitch');
     var rangeVolume = wrapper.querySelector('#vozRangeVolume');
+    var checkMusica = wrapper.querySelector('#vozCheckMusica');
+    var rangeVolMusica = wrapper.querySelector('#vozRangeVolMusica');
     var checkPausas = wrapper.querySelector('#vozCheckPausas');
     var checkRef = wrapper.querySelector('#vozCheckRef');
     var checkDestaque = wrapper.querySelector('#vozCheckDestaque');
@@ -1338,6 +1508,29 @@
       });
     }
 
+    if (checkMusica) {
+      checkMusica.addEventListener('change', function () {
+        config.musicaFundo = this.checked;
+        salvarConfig();
+        if (config.musicaFundo && estado.status === 'playing') {
+          iniciarMusicaAmbiente();
+        } else if (!config.musicaFundo) {
+          pararMusicaAmbiente(false);
+        }
+      });
+    }
+
+    if (rangeVolMusica) {
+      rangeVolMusica.addEventListener('input', function () {
+        config.volumeMusica = parseFloat(this.value);
+        salvarConfig();
+        sincronizarValoresAjustes();
+        if (musicMasterGain && audioCtx && musicPlaying) {
+          musicMasterGain.gain.setValueAtTime(config.volumeMusica, audioCtx.currentTime);
+        }
+      });
+    }
+
     if (checkPausas) {
       checkPausas.addEventListener('change', function () {
         config.pausasMeditativas = this.checked;
@@ -1403,7 +1596,6 @@
   // INTERCEÇÃO INTELIGENTE DE NAVEGAÇÃO DO LEITOR
   // ==========================================================================
   function interceptarFuncoesNavegacao() {
-    // Intercetar showReader
     if (typeof window.showReader === 'function' && !window.showReader.__vozInterceptado) {
       var origemShowReader = window.showReader;
       var novoShowReader = function (i) {
@@ -1414,7 +1606,6 @@
       window.showReader = novoShowReader;
     }
 
-    // Intercetar ecrãs que fecham a leitura
     ['showIndex', 'showCover', 'showGallery'].forEach(function (nome) {
       if (typeof window[nome] === 'function' && !window[nome].__vozInterceptado) {
         var original = window[nome];
@@ -1455,6 +1646,7 @@
   }
 
   window.addEventListener('beforeunload', function () {
+    pararMusicaAmbiente(true);
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   });
 })();

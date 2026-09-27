@@ -23,3 +23,8 @@ Arquivo de histórico de alterações
   - Eliminação do som mecânico/robótico: prioridade absoluta a vozes neurais e naturais de estúdio (Duarte, Antonio, Raquel, Google) e afastamento de vozes SAPI5 legadas.
   - Aumento da velocidade de leitura para 1.10x padrão (ritmo ágil, dinâmico e natural) com tom neutro de estúdio (1.00).
   - Novos presets dinâmicos: Natural & Fluida (1.10x), Rápida & Ágil (1.22x), Narrador de Estúdio (1.05x) e Serena (0.96x).
+[2026-09-27 02:18:00] Expansão de velocidade (até 2.80x) e música ambiente suave em voz.js:
+  - Extensão do controlo de velocidade para suportar até 2.80x (com presets de 1.15x, 1.50x, 2.00x e 2.50x).
+  - Pausas dinâmicas proporcionais: eliminação de estagnação ou paragens entre parágrafos em velocidades altas.
+  - Implementação de música ambiente suave gerada em tempo real com Web Audio API (progressão harmónica orquestral de acolhimento e paz com filtro aveludado e fade in/out).
+  - Controlo independente de ativação da música de fundo e regulação de volume (padrão 18%).
