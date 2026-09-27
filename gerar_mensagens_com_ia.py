@@ -35,6 +35,7 @@ logging.basicConfig(
 log = logging.getLogger("gerar_mensagens_com_ia")
 
 TARGET_FOLDER_NAME = "MINISTÉRIO PÃO DIÁRIO"
+PROCESSED_FOLDER_NAME = "Processados - Ministério Pão Diário"
 
 PROJECT_ROOT = Path(__file__).parent
 MENSAGENS_JSON = PROJECT_ROOT / "mensagens.json"
@@ -428,6 +429,37 @@ def find_target_folder(ns, account_name: str | None = None):
     raise ValueError(f"Pasta '{TARGET_FOLDER_NAME}' não encontrada na conta '{store.Name}'")
 
 
+def find_or_create_processed_folder(ns, account_name: str | None = None):
+    """Encontra ou cria a pasta para e-mails processados."""
+    store = get_account_store(ns, account_name)
+    
+    # Tenta encontrar na Caixa de Entrada primeiro
+    try:
+        inbox = store.Folders("Caixa de Entrada")
+    except Exception:
+        try:
+            inbox = store.Folders("Inbox")
+        except Exception:
+            inbox = None
+    
+    search_root = inbox if inbox else store
+    
+    # Busca pasta existente
+    folder = find_folder_recursive(search_root, PROCESSED_FOLDER_NAME)
+    if folder:
+        log.info("Pasta de processados encontrada: %s", folder.Name)
+        return folder
+    
+    # Cria a pasta se não existir
+    try:
+        new_folder = search_root.Folders.Add(PROCESSED_FOLDER_NAME)
+        log.info("Pasta de processados criada: %s", new_folder.Name)
+        return new_folder
+    except Exception as e:
+        log.error("Erro ao criar pasta de processados: %s", e)
+        return None
+
+
 def get_folder_stats(folder):
     try:
         total = folder.Items.Count
@@ -556,6 +588,9 @@ def processar_com_ia(limit: int, account_name: str | None, provider_name: str, m
     ignorados = 0
     erros_ia = 0
     
+    # Lista para guardar itens processados (para mover depois)
+    itens_processados = []
+    
     for item in items:
         if processados >= limit:
             break
@@ -596,6 +631,8 @@ def processar_com_ia(limit: int, account_name: str | None, provider_name: str, m
             mensagem_ia["icone"] = ICONE_POR_TEMA.get(mensagem_ia.get("tema", "reflexao"), "📖")
             
             novas_mensagens.append(mensagem_ia)
+            # Guardar o item para mover depois
+            itens_processados.append(item)
             next_id += 1
             processados += 1
             
@@ -643,6 +680,24 @@ def processar_com_ia(limit: int, account_name: str | None, provider_name: str, m
     mensagens_atualizadas = mensagens_existentes + novas_mensagens
     mensagens_atualizadas.sort(key=lambda m: m.get("data", ""))
     save_mensagens(mensagens_atualizadas)
+    
+    # NOVO: Mover e-mails processados para pasta "Processados"
+    if itens_processados:
+        log.info("Movendo %d e-mails para pasta '%s'...", len(itens_processados), PROCESSED_FOLDER_NAME)
+        processed_folder = find_or_create_processed_folder(ns, account_name)
+        if processed_folder:
+            movidos = 0
+            for item in itens_processados:
+                try:
+                    item.Move(processed_folder)
+                    movidos += 1
+                except Exception as e:
+                    log.error("Erro ao mover e-mail '%s': %s", item.Subject[:50], e)
+            log.info("%d e-mails movidos para pasta de processados", movidos)
+            print(f"📁 {movidos} e-mails movidos para pasta '{PROCESSED_FOLDER_NAME}'")
+        else:
+            log.warning("Não foi possível encontrar/criar pasta de processados")
+            print("⚠️  Não foi possível mover e-mails (pasta de processados não encontrada)")
     
     log_msg = f"Adicionadas {len(novas_mensagens)} mensagens via IA ({provider_name}/{model}) - backup: {backup_file.name}"
     log_change(log_msg)

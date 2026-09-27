@@ -9,3 +9,4 @@ Arquivo de histórico de alterações
   - Ollama local (qwen3:4b, qwen2.5:7b, phi4-mini, etc.)
   - Fallback automático para extração básica se IA falhar
 [2026-09-26 23:45:00] Arquivo .env.example criado para configuração de chaves de API[2026-09-27 00:55:19] Adicionadas 5 mensagens via IA (openrouter/nvidia/nemotron-3-ultra-550b-a55b:free) - backup: mensagens_backup_20260927_005519.json
+[2026-09-27 01:47:31] Adicionadas 1 mensagens via IA (ollama/qwen2.5:7b-instruct) - backup: mensagens_backup_20260927_014730.json
