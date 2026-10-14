@@ -37,8 +37,53 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 .btn-group {display: flex;flex-direction: column;gap: 10px;width: 100%;max-width: 280px;margin: 15px 0}
 .btn-start {padding:14px 20px;background:#fff;color:#7a3e00;border:none;border-radius:50px;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.3);transition:transform .2s;width:100%}
 .btn-start:hover{transform:translateY(-2px)}
+.btn-reels {background: linear-gradient(135deg, #f5b942, #e08e0b);color: #3d1a00;border: none}
+.btn-reels:hover {background: #fff;transform:translateY(-2px)}
 .btn-gallery {background: transparent;color: #fff;border: 2px solid #fff;box-shadow: none}
 .btn-gallery:hover {background: rgba(255,255,255,0.15);transform:translateY(-2px)}
+
+/* Barra de Navegação Superior (Abas) */
+.main-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(253, 246, 238, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(200, 121, 10, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+}
+.nav-tab {
+  padding: 8px 16px;
+  border-radius: 30px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #7a3e00;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.nav-tab:hover {
+  background: rgba(200, 121, 10, 0.12);
+}
+.nav-tab.active {
+  background: #c8790a;
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(200, 121, 10, 0.3);
+}
+.nav-tab.nav-cover {
+  border-color: rgba(200, 121, 10, 0.3);
+  font-size: 0.8rem;
+}
+@media(max-width: 600px) {
+  .main-nav { gap: 4px; padding: 6px 8px; }
+  .nav-tab { padding: 6px 10px; font-size: 0.78rem; }
+}
 
 /* Caixa de Subscrição */
 .sub-box {background: rgba(255,255,255,0.12);border: 1px solid rgba(255,255,255,0.2);border-radius: 16px;padding: 20px;width: 100%;max-width: 340px;margin: 15px auto 0 auto;backdrop-filter: blur(5px);text-align:center}
@@ -61,6 +106,131 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 .isub{text-align:center;color:#a0652a;font-size:.9rem;margin-bottom:28px}
 
 #grid, #gallery-grid {display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;max-width:1050px;margin:0 auto 36px}
+
+/* Estilos de Reels */
+#reels-page {
+  min-height: 100vh;
+  background: #170b03;
+  color: #fff8ee;
+  padding: 30px 16px 60px;
+  text-align: center;
+}
+#reels-page h2 {
+  font-size: 2rem;
+  color: #f5b942;
+  margin-bottom: 6px;
+}
+#reels-page .isub {
+  color: rgba(255, 248, 238, 0.75);
+}
+.reels-feed {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  margin: 20px auto 40px;
+}
+.reel-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 30px rgba(200, 121, 10, 0.25);
+  border: 2px solid rgba(245, 185, 66, 0.4);
+}
+.reel-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  cursor: pointer;
+}
+.reel-mute-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 20;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: transform 0.2s, background 0.2s;
+}
+.reel-mute-btn:hover {
+  background: rgba(200, 121, 10, 0.85);
+  transform: scale(1.08);
+}
+.reel-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px 22px 22px;
+  background: linear-gradient(to top, rgba(10, 4, 0, 0.95) 0%, rgba(10, 4, 0, 0.7) 60%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+  text-align: left;
+}
+.reel-tag {
+  align-self: flex-start;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: rgba(245, 185, 66, 0.25);
+  color: #f5b942;
+  border: 1px solid rgba(245, 185, 66, 0.5);
+  text-transform: uppercase;
+}
+.reel-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff8ee;
+  line-height: 1.25;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+.reel-ref {
+  font-size: 0.9rem;
+  color: rgba(255, 248, 238, 0.85);
+  font-style: italic;
+}
+.reel-cta-btn {
+  margin-top: 6px;
+  padding: 12px 20px;
+  border-radius: 50px;
+  border: none;
+  background: linear-gradient(135deg, #c8790a, #f5b942);
+  color: #1a0a00;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.92rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(200, 121, 10, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.reel-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(245, 185, 66, 0.6);
+}
 
 /* Cards de Texto e Acessibilidade */
 .card {background:#fff;border-radius:12px;padding:16px 18px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.08);border-top:4px solid #c8790a;transition:transform .15s,box-shadow .15s}
@@ -215,6 +385,13 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 </div>
 
 <main id="app-content">
+  <nav class="main-nav" id="main-nav" style="display:none">
+    <button class="nav-tab" id="tab-index" onclick="showIndex()">📖 Reflexões</button>
+    <button class="nav-tab" id="tab-gallery" onclick="showGallery()">🎨 Galeria</button>
+    <button class="nav-tab" id="tab-reels" onclick="showReels()">🎬 Reels</button>
+    <button class="nav-tab nav-cover" onclick="showCover()">🏠 Capa</button>
+  </nav>
+
   <div id="cover" style="display:none">
     <div class="cover-content">
       <div class="icon">📖</div>
@@ -225,7 +402,8 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
       
       <div class="btn-group">
         <button class="btn-start" onclick="showIndex()">Começar a Ler ›</button>
-        <button class="btn-start btn-gallery" onclick="showGallery()">Galeria de Inspirações ✨</button>
+        <button class="btn-start btn-reels" onclick="showReels()">🎬 Reels Inspiradores ✨</button>
+        <button class="btn-start btn-gallery" onclick="showGallery()">Galeria de Inspirações 🎨</button>
       </div>
 
       <div class="sub-box">
@@ -265,6 +443,13 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
     <button class="back" onclick="showCover()">← Capa</button>
   </div>
 
+  <div id="reels-page" style="display:none">
+    <h2>🎬 Reels Inspiradores</h2>
+    <p class="isub">Reflexões verticais em vídeo com versículo e mensagem do dia</p>
+    <div class="reels-feed" id="reels-feed"></div>
+    <button class="back" onclick="showCover()" style="margin-top: 10px;">← Capa</button>
+  </div>
+
   <div id="reader" style="display:none"></div>
 </main>
 
@@ -283,9 +468,12 @@ body{font-family:Georgia,serif;background:#1a0a00;color:#2c1a0e;min-height:100vh
 <script>
 let msgs = [];
 let galeriaItens = [];
+let videosItens = [];
 let cur = 0;
 let indexRendered = false;   // Cache de performance (Bug #12)
 let galleryRendered = false; // Cache de performance (Bug #12)
+let reelsRendered = false;
+let reelsObserver = null;
 
 // Segurança (Bug #4 / #5): Substitua pelo Hash MD5 do FormSubmit ou pelo seu e-mail real
 const EMAIL_DESTINO_HASH = "5f7cd653dfe248789d1177757db28bde"; 
@@ -309,20 +497,41 @@ function show(id) { document.getElementById(id).style.display = flexIds.includes
 function hide(id) { document.getElementById(id).style.display = 'none'; }
 function scrollTopo() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
+function pararTodosReels() {
+  document.querySelectorAll('.reel-video').forEach(v => {
+    try { v.pause(); } catch(e) {}
+  });
+}
+
+function atualizarAbasAtivas(ativa) {
+  const nav = document.getElementById('main-nav');
+  if (!nav) return;
+  if (ativa === 'cover') {
+    nav.style.display = 'none';
+    return;
+  }
+  nav.style.display = 'flex';
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  const btn = document.getElementById('tab-' + ativa);
+  if (btn) btn.classList.add('active');
+}
+
 const d = new Date();
 const hoje = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
 Promise.all([
   fetch('./mensagens.json').then(r => r.json()).catch(() => getMensagensEmbutidas()),
-  fetch('./galeria.json').then(r => r.json()).catch(() => [])
+  fetch('./galeria.json').then(r => r.json()).catch(() => []),
+  fetch('./videos.json').then(r => r.json()).catch(() => [])
 ])
-.then(([dadosMensagens, dadosGaleria]) => {
+.then(([dadosMensagens, dadosGaleria, dadosVideos]) => {
   // Normalização e Proteção de Chaves de Data (Bug #7)
   dadosMensagens.forEach(m => { m._date = m.date || m.data || ''; });
   dadosGaleria.forEach(g => { g._date = g.date || g.data || ''; });
 
   msgs = dadosMensagens.filter(m => !m._date || m._date <= hoje);
   galeriaItens = dadosGaleria.filter(g => !g._date || g._date <= hoje);
+  videosItens = dadosVideos || [];
 
   init();
 })
@@ -344,10 +553,18 @@ function init(){
   showCover();
 }
 
-function showCover(){ hide('index-page'); hide('reader'); hide('gallery-page'); show('cover'); scrollTopo(); }
+function showCover(){
+  pararTodosReels();
+  hide('index-page'); hide('reader'); hide('gallery-page'); hide('reels-page');
+  atualizarAbasAtivas('cover');
+  show('cover');
+  scrollTopo();
+}
 
 function showIndex(){
-  hide('cover'); hide('reader'); hide('gallery-page');
+  pararTodosReels();
+  hide('cover'); hide('reader'); hide('gallery-page'); hide('reels-page');
+  atualizarAbasAtivas('index');
   const g = document.getElementById('grid'); 
   
   if (!indexRendered) { // Renderiza apenas uma vez para máxima performance (Bug #12)
@@ -375,7 +592,9 @@ function showIndex(){
 }
 
 function showGallery() {
-  hide('cover'); hide('reader'); hide('index-page');
+  pararTodosReels();
+  hide('cover'); hide('reader'); hide('index-page'); hide('reels-page');
+  atualizarAbasAtivas('gallery');
   const gGrid = document.getElementById('gallery-grid');
 
   if (!galleryRendered) { // Cache de performance (Bug #12)
@@ -411,6 +630,96 @@ function showGallery() {
   show('gallery-page'); scrollTopo();
 }
 
+function showReels() {
+  pararTodosReels();
+  hide('cover'); hide('reader'); hide('index-page'); hide('gallery-page');
+  atualizarAbasAtivas('reels');
+  const feed = document.getElementById('reels-feed');
+  
+  if (!reelsRendered) {
+    feed.innerHTML = '';
+    if (!videosItens || videosItens.length === 0) {
+      feed.innerHTML = `<p style="text-align:center; color:#f5b942; padding: 40px 20px;">Novos vídeos inspiradores em produção! ✨</p>`;
+    } else {
+      videosItens.forEach((v, idx) => {
+        const card = document.createElement('div');
+        card.className = 'reel-card';
+        card.setAttribute('data-reel-index', idx);
+        
+        const temaLimpo = esc(v.tema || 'fe');
+        
+        card.innerHTML = `
+          <video class="reel-video" src="${esc(v.arquivo)}" loop playsinline preload="metadata" muted></video>
+          <button class="reel-mute-btn" onclick="toggleReelAudio(this)" aria-label="Ligar ou desligar áudio" title="Som">🔇</button>
+          <div class="reel-overlay">
+            <span class="reel-tag">#${temaLimpo.toUpperCase()}</span>
+            <h3 class="reel-title">${esc(v.icone || '✨')} ${esc(v.titulo)}</h3>
+            <p class="reel-ref">📖 ${esc(v.referencia || '')}</p>
+            <button class="reel-cta-btn" onclick="abrirReflexaoPorId(${v.mensagem_id || v.id})">
+              📖 Ler Reflexão Completa ›
+            </button>
+          </div>
+        `;
+        
+        const videoEl = card.querySelector('.reel-video');
+        videoEl.onclick = () => {
+          if (videoEl.paused) {
+            videoEl.play();
+          } else {
+            videoEl.pause();
+          }
+        };
+
+        feed.appendChild(card);
+      });
+      initReelsObserver();
+    }
+    reelsRendered = true;
+  }
+  show('reels-page');
+  scrollTopo();
+}
+
+function toggleReelAudio(btn) {
+  const card = btn.closest('.reel-card');
+  const video = card.querySelector('.reel-video');
+  if (video) {
+    video.muted = !video.muted;
+    btn.textContent = video.muted ? '🔇' : '🔊';
+  }
+}
+
+function abrirReflexaoPorId(id) {
+  pararTodosReels();
+  const idx = msgs.findIndex(m => m.id === id);
+  if (idx !== -1) {
+    cur = idx;
+    showReader(idx);
+  } else {
+    showIndex();
+  }
+}
+
+function initReelsObserver() {
+  if (reelsObserver) reelsObserver.disconnect();
+  
+  reelsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const video = entry.target.querySelector('.reel-video');
+      if (!video) return;
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+  }, { threshold: [0.5] });
+
+  document.querySelectorAll('.reel-card').forEach(card => {
+    reelsObserver.observe(card);
+  });
+}
+
 function showLightbox(src) {
   const lb = document.getElementById('lightbox');
   document.getElementById('lightbox-img').src = src;
@@ -422,8 +731,10 @@ function hideLightbox() { hide('lightbox'); }
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hideLightbox(); });
 
 function showReader(i){
+  pararTodosReels();
   cur = i; const m = msgs[i];
-  hide('cover'); hide('index-page'); hide('gallery-page');
+  hide('cover'); hide('index-page'); hide('gallery-page'); hide('reels-page');
+  atualizarAbasAtivas('reader');
   const r = document.getElementById('reader');
   
   // Renderiza genealogia como lista

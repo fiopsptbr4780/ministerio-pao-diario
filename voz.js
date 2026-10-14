@@ -1826,7 +1826,7 @@
       window.showReader = novoShowReader;
     }
 
-    ['showIndex', 'showCover', 'showGallery'].forEach(function (nome) {
+    ['showIndex', 'showCover', 'showGallery', 'showReels'].forEach(function (nome) {
       if (typeof window[nome] === 'function' && !window[nome].__vozInterceptado) {
         var original = window[nome];
         var novo = function () {

@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "mensagem_id": 1,
+    "titulo": "Endividado",
+    "referencia": "Romanos 1:14",
+    "tema": "proposito",
+    "icone": "✝️",
+    "arquivo": "videos/devocional_01.mp4",
+    "narrador": "pt-PT-DuarteNeural",
+    "duracao_segundos": 32.2,
+    "gerado_em": "2026-10-14 23:37:57"
+  },
+  {
+    "id": 2,
+    "mensagem_id": 2,
+    "titulo": "Competir ou Convergir",
+    "referencia": "Rute 1-4",
+    "tema": "proposito",
+    "icone": "📖",
+    "arquivo": "videos/devocional_02.mp4",
+    "narrador": "pt-PT-DuarteNeural",
+    "duracao_segundos": 35.1,
+    "gerado_em": "2026-10-14 23:39:51"
+  },
+  {
+    "id": 3,
+    "mensagem_id": 3,
+    "titulo": "Morto e morto",
+    "referencia": "1 Coríntios 15:55",
+    "tema": "esperanca",
+    "icone": "📖",
+    "arquivo": "videos/devocional_03.mp4",
+    "narrador": "pt-PT-RaquelNeural",
+    "duracao_segundos": 42.6,
+    "gerado_em": "2026-10-14 23:50:03"
+  },
+  {
+    "id": 4,
+    "mensagem_id": 4,
+    "titulo": "A Fonte que Nunca Seca",
+    "referencia": "João 4:14",
+    "tema": "esperanca",
+    "icone": "💧",
+    "arquivo": "videos/devocional_04.mp4",
+    "narrador": "pt-PT-DuarteNeural",
+    "duracao_segundos": 38.5,
+    "gerado_em": "2026-10-14 23:52:17"
+  },
+  {
+    "id": 5,
+    "mensagem_id": 5,
+    "titulo": "O Pão Que Sustenta",
+    "referencia": "João 6:35",
+    "tema": "fe",
+    "icone": "🍞",
+    "arquivo": "videos/devocional_05.mp4",
+    "narrador": "pt-PT-RaquelNeural",
+    "duracao_segundos": 43.4,
+    "gerado_em": "2026-10-14 23:54:41"
+  },
+  {
+    "id": 6,
+    "mensagem_id": 6,
+    "titulo": "Luz no Caminho",
+    "referencia": "Salmos 119:105",
+    "tema": "proposito",
+    "icone": "🕯️",
+    "arquivo": "videos/devocional_06.mp4",
+    "narrador": "pt-PT-DuarteNeural",
+    "duracao_segundos": 33.9,
+    "gerado_em": "2026-10-14 23:56:31"
+  },
+  {
+    "id": 7,
+    "mensagem_id": 7,
+    "titulo": "Forças Renovadas",
+    "referencia": "Isaías 40:31",
+    "tema": "coragem",
+    "icone": "🦅",
+    "arquivo": "videos/devocional_07.mp4",
+    "narrador": "pt-PT-RaquelNeural",
+    "duracao_segundos": 45.8,
+    "gerado_em": "2026-10-14 23:59:03"
+  },
+  {
+    "id": 8,
+    "mensagem_id": 8,
+    "titulo": "Paz que Excede",
+    "referencia": "Filipenses 4:7",
+    "tema": "reflexao",
+    "icone": "🕊️",
+    "arquivo": "videos/devocional_08.mp4",
+    "narrador": "pt-PT-DuarteNeural",
+    "duracao_segundos": 38.0,
+    "gerado_em": "2026-10-15 00:01:07"
+  },
+  {
+    "id": 9,
+    "mensagem_id": 9,
+    "titulo": "A Fonte que Nunca Seca",
+    "referencia": "João 4:14",
+    "tema": "esperanca",
+    "icone": "💧",
+    "arquivo": "videos/devocional_09.mp4",
+    "narrador": "pt-PT-RaquelNeural",
+    "duracao_segundos": 45.6,
+    "gerado_em": "2026-10-15 00:03:36"
+  },
+  {
+    "id": 10,
+    "mensagem_id": 10,
+    "titulo": "O Pão Que Sustenta",
+    "referencia": "João 6:35",
+    "tema": "fe",
+    "icone": "🍞",
+    "arquivo": "videos/devocional_10.mp4",
+    "narrador": "pt-PT-DuarteNeural",
+    "duracao_segundos": 36.1,
+    "gerado_em": "2026-10-15 00:05:35"
+  }
+]

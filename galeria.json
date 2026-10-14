@@ -2,19 +2,101 @@
   {
     "id": 1,
     "mensagem_id": 1,
-    "titulo": "Reflexão sobre a Gratidão",
-    "arquivo": "imagens/gratidao.png",
+    "titulo": "Endividado — Gratidão Redentora",
+    "referencia": "Romanos 1:14",
+    "arquivo": "imagens/id_1.png",
     "date": "2026-06-15",
-    "tipo": "imagem"
+    "tipo": "Inspiração",
+    "tema": "proposito"
   },
-{
-  "id": 2,
-  "mensagem_id": 2,
-  "titulo": "Reflexão sobre Assim como o pão alimenta o corpo, a Palavra de Deus alimenta a nossa alma. Cada manhã, ao abrir as Escrituras, recebemos o sustento espiritual de que precisamos para enfrentar o dia. Não negligencie este alimento precioso; sem ele, a alma definha.",
-  "arquivo": "imagens/id_2.png",
-  "date": "2026-06-16",
-  "tipo": "imagem",
-  "prompt": "Imagem inspiradora vertical com atmosfera de paz e serenidade, estilo anime leve, cores suaves, iluminação natural, figuras humanas simples e harmoniosas, união entre culturas, fundo minimalista com céu claro e luz dourada suave, frase curta inspiradora ao fundo, tema: Assim como o pão alimenta o corpo, a Palavra de Deus alimenta a nossa alma. Cada manhã, ao abrir as Escrituras, recebemos o sustento espiritual de que precisamos para enfrentar o dia. Não negligencie este alimento precioso; sem ele, a alma definha."
-}
-
+  {
+    "id": 2,
+    "mensagem_id": 2,
+    "titulo": "Competir ou Convergir — Rute e Boaz",
+    "referencia": "Rute 1-4",
+    "arquivo": "imagens/id_2.png",
+    "date": "2026-06-15",
+    "tipo": "Inspiração",
+    "tema": "proposito"
+  },
+  {
+    "id": 3,
+    "mensagem_id": 3,
+    "titulo": "Vitória sobre a Morte — A Ressurreição",
+    "referencia": "1 Coríntios 15:55",
+    "arquivo": "imagens/id_3.png",
+    "date": "2026-06-15",
+    "tipo": "Inspiração",
+    "tema": "esperanca"
+  },
+  {
+    "id": 4,
+    "mensagem_id": 4,
+    "titulo": "A Fonte que Nunca Seca — Água Viva",
+    "referencia": "João 4:14",
+    "arquivo": "imagens/id_4.png",
+    "date": "2026-06-15",
+    "tipo": "Inspiração",
+    "tema": "esperanca"
+  },
+  {
+    "id": 5,
+    "mensagem_id": 5,
+    "titulo": "O Pão Que Sustenta — Alimento da Fé",
+    "referencia": "João 6:35",
+    "arquivo": "imagens/id_5.png",
+    "date": "2026-06-15",
+    "tipo": "Inspiração",
+    "tema": "fe"
+  },
+  {
+    "id": 6,
+    "mensagem_id": 6,
+    "titulo": "Luz no Caminho — Direção Sagrada",
+    "referencia": "Salmos 119:105",
+    "arquivo": "imagens/id_6.png",
+    "date": "2026-06-15",
+    "tipo": "Inspiração",
+    "tema": "proposito"
+  },
+  {
+    "id": 7,
+    "mensagem_id": 7,
+    "titulo": "Forças Renovadas — Voo da Esperança",
+    "referencia": "Isaías 40:31",
+    "arquivo": "imagens/id_7.png",
+    "date": "2026-06-15",
+    "tipo": "Inspiração",
+    "tema": "coragem"
+  },
+  {
+    "id": 8,
+    "mensagem_id": 8,
+    "titulo": "Paz que Excede Todo Entendimento",
+    "referencia": "Filipenses 4:7",
+    "arquivo": "imagens/id_8.png",
+    "date": "2026-06-15",
+    "tipo": "Inspiração",
+    "tema": "reflexao"
+  },
+  {
+    "id": 9,
+    "mensagem_id": 9,
+    "titulo": "Refrigério para a Alma Sedenta",
+    "referencia": "João 4:14",
+    "arquivo": "imagens/id_9.png",
+    "date": "2026-06-15",
+    "tipo": "Inspiração",
+    "tema": "esperanca"
+  },
+  {
+    "id": 10,
+    "mensagem_id": 10,
+    "titulo": "Comunhão Fraterna e o Pão da Vida",
+    "referencia": "João 6:35",
+    "arquivo": "imagens/id_10.png",
+    "date": "2026-06-15",
+    "tipo": "Inspiração",
+    "tema": "fe"
+  }
 ]
