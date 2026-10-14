@@ -1,2 +1,27 @@
-ia_keys.local.json
-ia_keys.local.json
+# Segredos e chaves locais
+.env
+.env.*
+*.local.json
+ia_keys*.json
+*.key
+*.pem
+
+# Python caches e ambientes virtuais
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# IDEs e Sistema Operacional
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+.DS_Store
+
+# Logs e arquivos de teste temporários
+*.log
+nim_test_results_*.csv
+openrouter_test_results_*.csv
